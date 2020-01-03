@@ -1,4 +1,7 @@
 # testnt
+Example Test Management system Project using 
+1. ASP.NET Core 3.1
+2. IdentityServer4
 
 ## To create database 
 ```sh

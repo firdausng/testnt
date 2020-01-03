@@ -1,8 +1,12 @@
 # testnt
 Example Test Management system Project using 
-1. ASP.NET Core 3.1
+1. ASP.NET Core 3.1 (Domain Driven Design - Clean Architecture)
 2. IdentityServer4
 3. EF Core using PostgreSQL
+
+## Domain Driven Design - Clean Architecture
+inspired by https://github.com/JasonGT/NorthwindTraders
+
 
 ## To create database 
 ```sh

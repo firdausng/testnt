@@ -41,7 +41,8 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    IsEnabled = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

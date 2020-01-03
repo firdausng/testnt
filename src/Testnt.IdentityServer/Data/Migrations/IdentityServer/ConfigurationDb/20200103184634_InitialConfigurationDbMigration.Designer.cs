@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Testnt.IdentityServer.Data.Migrations.IdentityServer.ConfigurationDb
 {
     [DbContext(typeof(ConfigurationDbContext))]
-    [Migration("20200101154016_InitialConfigurationDbMigration")]
+    [Migration("20200103184634_InitialConfigurationDbMigration")]
     partial class InitialConfigurationDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

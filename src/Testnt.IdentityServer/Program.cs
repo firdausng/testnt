@@ -50,6 +50,7 @@ namespace Testnt.IdentityServer
                         Users.EnsureSeedData(serviceScope);
                         Config.EnsureSeedData(serviceScope);
                     }
+                    return 0;
                 }
 
                 host.Run();

@@ -4,4 +4,18 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="FluentValidation" Version="8.6.0" />
+    <PackageReference Include="MediatR" Version="7.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Testnt.Common\Testnt.Common.csproj" />
+    <ProjectReference Include="..\Testnt.Main.Domain\Testnt.Main.Domain.csproj" />
+    <ProjectReference Include="..\Testnt.Main.Infrastructure\Testnt.Main.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

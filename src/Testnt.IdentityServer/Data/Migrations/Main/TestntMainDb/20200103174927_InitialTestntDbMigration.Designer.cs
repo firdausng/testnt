@@ -10,7 +10,7 @@ using Testnt.IdentityServer.Data;
 namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
 {
     [DbContext(typeof(TestntIdentityDbContext))]
-    [Migration("20200101153911_InitialTestntDbMigration")]
+    [Migration("20200103174927_InitialTestntDbMigration")]
     partial class InitialTestntDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,6 +170,9 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsEnabled")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("LockoutEnabled")

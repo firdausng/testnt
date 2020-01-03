@@ -28,7 +28,7 @@ namespace IdentityServer.Data.Seed
         {
             return new List<ApiResource>
             {
-                new ApiResource("web_api", "My Web API")
+                new ApiResource("testnt.main.api", "Testnt Rest API")
             };
         }
 
@@ -91,21 +91,20 @@ namespace IdentityServer.Data.Seed
                 // JavaScript Client
                 new Client
                 {
-                    ClientId = "js",
-                    ClientName = "JavaScript Client",
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
+                    ClientId = "testnt.main.web.client",
+                    ClientName = "Testnt Web Client",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
                     RequireClientSecret = false,
-
-                    RedirectUris =           { "http://localhost:5003/callback.html" },
-                    PostLogoutRedirectUris = { "http://localhost:5003/index.html" },
-                    AllowedCorsOrigins =     { "http://localhost:5003" },
 
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "web_api"
+                        "testnt.main.api"
                     }
                 }
             };

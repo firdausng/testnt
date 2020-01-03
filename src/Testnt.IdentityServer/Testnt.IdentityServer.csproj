@@ -3,6 +3,27 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200101154016_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200101154016_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200103173311_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200103173311_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200103174958_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200103174958_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200101154010_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200101154010_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200103173302_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200103173302_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200103174948_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200103174948_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200101153911_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200101153911_InitialTestntDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200102141645_IdentityUserCustomProperties.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200102141645_IdentityUserCustomProperties.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200103173626_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200103173626_InitialTestntDbMigration.Designer.cs" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="3.1.0" />

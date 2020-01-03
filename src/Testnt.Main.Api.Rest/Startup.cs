@@ -19,6 +19,7 @@ using Testnt.Common.Mappings;
 using Testnt.Main.Api.Rest.Middleware;
 using Testnt.Main.Api.Rest.Services;
 using Testnt.Main.Application;
+using Testnt.Main.Infrastructure;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Api.Rest
@@ -36,30 +37,19 @@ namespace Testnt.Main.Api.Rest
         public void ConfigureServices(IServiceCollection services)
         {
             var assembly = AppDomain.CurrentDomain.Load("testnt.Main.Application");
-            var allAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            var applicationAssemblies = allAssemblies.Where(a => a.GetName().Name.StartsWith("testnt.Main.Application")).ToArray();
 
             services.AddApplication();
+            services.AddInfrastructure(Configuration);
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddHttpContextAccessor();
 
             services.AddMiniProfiler().AddEntityFramework();
             services.AddHealthChecks();
-            AddAutoMapper(services);
-
-            services.AddDbContext<TestntDbContext>(cfg =>
-            {
-                cfg.UseNpgsql(Configuration.GetConnectionString("PostgresTestntMainConnectionString"),
-                    options =>
-                    {
-                        options.EnableRetryOnFailure(3);
-                    });
-            });
+            services.AddMediatR(assembly);
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson()
-                .AddFeatureFolders()
-                ;
+                .AddFeatureFolders();
 
             services.AddAuthentication("Bearer")
             .AddJwtBearer("Bearer", options =>
@@ -69,12 +59,6 @@ namespace Testnt.Main.Api.Rest
 
                 options.Audience = "testnt.main.api";
             });
-
-            // not using FluentValidation.AspNetCore package due to issue - https://github.com/JasonGT/NorthwindTraders/issues/76
-            // manually register fluent validation
-            services.AddValidatorsFromAssemblies(applicationAssemblies);
-
-            services.AddMediatR(assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -108,18 +92,6 @@ namespace Testnt.Main.Api.Rest
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
-        }
-
-        private static void AddAutoMapper(IServiceCollection services)
-        {
-            // Auto Mapper Configurations
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new MappingProfile());
-            });
-
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
         }
     }
 }

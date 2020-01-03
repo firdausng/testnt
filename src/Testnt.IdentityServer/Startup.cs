@@ -9,6 +9,7 @@ using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Testnt.IdentityServer.Data;
+using Testnt.IdentityServer.Infrastructure.Services.Email;
 
 namespace Testnt.IdentityServer
 {
@@ -33,6 +35,10 @@ namespace Testnt.IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // setup dummy data
+            services.AddTransient<IEmailSender, DummyEmailSender>();
+            services.Configure<DummyAuthMessageSenderOptions>(Configuration);
+
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 

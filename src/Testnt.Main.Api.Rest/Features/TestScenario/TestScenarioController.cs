@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using Testnt.Main.Application.TestScenarios.List.Query;
 namespace Testnt.Main.Api.Rest.Features.TestScenario
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class TestScenarioController : ControllerBase
     {

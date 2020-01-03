@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using Testnt.Main.Application.TestCases.List.Query.GetTestCaseList;
 namespace Testnt.Main.Api.Rest.Features.TestCase
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class TestCaseController : ControllerBase
     {

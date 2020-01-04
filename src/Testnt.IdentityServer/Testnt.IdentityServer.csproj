@@ -11,18 +11,36 @@
     <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200103173311_InitialConfigurationDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200103174958_InitialConfigurationDbMigration.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200103174958_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200103184634_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200103184634_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200104144953_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200104144953_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200104153951_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200104153951_InitialConfigurationDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200101154010_InitialPersistedGrantDbMigration.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200101154010_InitialPersistedGrantDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200103173302_InitialPersistedGrantDbMigration.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200103173302_InitialPersistedGrantDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200103174948_InitialPersistedGrantDbMigration.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200103174948_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200103184828_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200103184828_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200104144941_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200104144941_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200104153940_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200104153940_InitialPersistedGrantDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200101153911_InitialTestntDbMigration.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200101153911_InitialTestntDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200102141645_IdentityUserCustomProperties.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200102141645_IdentityUserCustomProperties.Designer.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200103173626_InitialTestntDbMigration.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200103173626_InitialTestntDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200103174927_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200103174927_InitialTestntDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200104145056_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200104145056_InitialTestntDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200104154123_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200104154123_InitialTestntDbMigration.Designer.cs" />
   </ItemGroup>
   
   <ItemGroup>

@@ -10,7 +10,7 @@ using Testnt.IdentityServer.Data;
 namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
 {
     [DbContext(typeof(TestntIdentityDbContext))]
-    [Migration("20200103174927_InitialTestntDbMigration")]
+    [Migration("20200104155843_InitialTestntDbMigration")]
     partial class InitialTestntDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -201,6 +201,9 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
@@ -217,7 +220,23 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                         .IsUnique()
                         .HasName("UserNameIndex");
 
+                    b.HasIndex("TenantId");
+
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Testnt.IdentityServer.Data.Entity.Tenant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenants");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -269,6 +288,13 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Testnt.IdentityServer.Data.ApplicationUser", b =>
+                {
+                    b.HasOne("Testnt.IdentityServer.Data.Entity.Tenant", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId");
                 });
 #pragma warning restore 612, 618
         }

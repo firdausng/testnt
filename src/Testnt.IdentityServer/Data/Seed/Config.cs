@@ -21,6 +21,12 @@ namespace IdentityServer.Data.Seed
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResources.Email(),
+                new IdentityResource
+                {
+                    Name= "Tenant",
+                    UserClaims = {"tenant_id", "organization_id"}
+                }
             };
         }
 
@@ -102,9 +108,13 @@ namespace IdentityServer.Data.Seed
 
                     AllowedScopes =
                     {
+                        // IdentityResource
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "testnt.main.api"
+                        "Tenant",
+
+                        // API Resources
+                        "testnt.main.api"   
                     }
                 }
             };

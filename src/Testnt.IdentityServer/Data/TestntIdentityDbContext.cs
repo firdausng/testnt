@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Testnt.IdentityServer.Data.Entity;
 
 namespace Testnt.IdentityServer.Data
 {
@@ -13,7 +14,7 @@ namespace Testnt.IdentityServer.Data
         : base(options)
         { }
 
-        //public DbSet<Account> Accounts { get; set; }
+        public DbSet<Tenant> Tenants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

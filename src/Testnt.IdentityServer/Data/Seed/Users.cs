@@ -20,6 +20,18 @@ namespace IdentityServer.Data.Seed
             var context = scope.ServiceProvider.GetService<TestntIdentityDbContext>();
             context.Database.Migrate();
 
+            var mainTenant = context.Tenants.Where(t => t.Name.Equals("Testnt")).FirstOrDefaultAsync().Result;
+            if (mainTenant == null)
+            {
+                mainTenant = new Testnt.IdentityServer.Data.Entity.Tenant
+                {
+                    Name = "Testnt"
+                };
+                context.Tenants.Add(mainTenant);
+                context.SaveChanges();
+            }
+
+
             var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var alice = userMgr.FindByNameAsync("alice").Result;
             if (alice == null)
@@ -28,7 +40,8 @@ namespace IdentityServer.Data.Seed
                 {
                     UserName = "alice",
                     Email = "AliceSmith@email.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    Tenant = mainTenant
                 };
                 var result = userMgr.CreateAsync(alice, "Password@01").Result;
                 if (!result.Succeeded)
@@ -37,6 +50,7 @@ namespace IdentityServer.Data.Seed
                 }
 
                 result = userMgr.AddClaimsAsync(alice, new Claim[]{
+                        new Claim("tenant_id", alice.Tenant.Id.ToString()),
                         new Claim(JwtClaimTypes.Name, "Alice Smith"),
                         new Claim(JwtClaimTypes.GivenName, "Alice"),
                         new Claim(JwtClaimTypes.FamilyName, "Smith"),
@@ -63,7 +77,9 @@ namespace IdentityServer.Data.Seed
                 {
                     UserName = "bob",
                     Email = "BobSmith@email.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    Tenant = mainTenant,
+                    IsEnabled = true
                 };
                 var result = userMgr.CreateAsync(bob, "Password@01").Result;
                 if (!result.Succeeded)
@@ -72,6 +88,7 @@ namespace IdentityServer.Data.Seed
                 }
 
                 result = userMgr.AddClaimsAsync(bob, new Claim[]{
+                        new Claim("tenant_id", bob.Tenant.Id.ToString()),
                         new Claim(JwtClaimTypes.Name, "Bob Smith"),
                         new Claim(JwtClaimTypes.GivenName, "Bob"),
                         new Claim(JwtClaimTypes.FamilyName, "Smith"),

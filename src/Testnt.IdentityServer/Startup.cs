@@ -4,6 +4,7 @@
 
 using IdentityServer.Data.Seed;
 using IdentityServer4.Configuration;
+using IdentityServer4.Stores;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +20,8 @@ using System.Linq;
 using System.Reflection;
 using Testnt.IdentityServer.Data;
 using Testnt.IdentityServer.Infrastructure.Services.Email;
+using IdentityServer4.EntityFramework.Stores;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Testnt.IdentityServer
 {
@@ -63,7 +66,7 @@ namespace Testnt.IdentityServer
                 .AddEntityFrameworkStores<TestntIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            
+
             var builder = services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
@@ -87,7 +90,10 @@ namespace Testnt.IdentityServer
                     options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
                     options.EnableTokenCleanup = true;
                 })
-                .AddAspNetIdentity<ApplicationUser>();
+                //.AddClientStore<ClientStore>()
+                //.AddResourceStore<ResourceStore>()
+                .AddAspNetIdentity<ApplicationUser>()
+                .AddSigningCredential(new X509Certificate2(Configuration.GetValue<string>("Certificate:Path"), "password"));
 
 
             // not recommended for production - you need to store your key material somewhere secure
@@ -116,7 +122,7 @@ namespace Testnt.IdentityServer
             });
         }
 
-        
+
 
     }
 }

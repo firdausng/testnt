@@ -8,6 +8,7 @@ using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,7 +26,8 @@ namespace IdentityServer.Data.Seed
                 new IdentityResource
                 {
                     Name= "Tenant",
-                    UserClaims = {"tenant_id", "organization_id"}
+                    UserClaims = {"tenant_id", "organization_id"},
+                    Required = true
                 }
             };
         }
@@ -35,6 +37,13 @@ namespace IdentityServer.Data.Seed
             return new List<ApiResource>
             {
                 new ApiResource("testnt.main.api", "Testnt Rest API")
+                {
+                    UserClaims = new[]
+                    {
+                        "email",
+                        "tenant_id"
+                    }
+                }
             };
         }
 
@@ -76,7 +85,7 @@ namespace IdentityServer.Data.Seed
                     ClientId = "mvc",
                     ClientName = "MVC Client",
                     AllowedGrantTypes = GrantTypes.Hybrid,
-
+                    
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
@@ -87,9 +96,13 @@ namespace IdentityServer.Data.Seed
 
                     AllowedScopes =
                     {
+                         // IdentityResource
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "web_api"
+                        "Tenant",
+
+                        // API Resources
+                        "testnt.main.api"
                     },
 
                     AllowOfflineAccess = true
@@ -105,7 +118,7 @@ namespace IdentityServer.Data.Seed
                         new Secret("secret".Sha256())
                     },
                     RequireClientSecret = false,
-
+                    RequireConsent = false,
                     AllowedScopes =
                     {
                         // IdentityResource
@@ -126,10 +139,13 @@ namespace IdentityServer.Data.Seed
 
             var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
             context.Database.Migrate();
+            
             if (!context.Clients.Any())
             {
-                foreach (var client in Config.GetClients())
+                Console.WriteLine("Adding Client operation");
+                foreach (var client in GetClients())
                 {
+                    Console.WriteLine($"Adding {client.ToEntity().ClientName}");
                     context.Clients.Add(client.ToEntity());
                 }
                 context.SaveChanges();
@@ -137,8 +153,10 @@ namespace IdentityServer.Data.Seed
 
             if (!context.IdentityResources.Any())
             {
-                foreach (var resource in Config.GetIdentityResources())
+                Console.WriteLine("Adding Identity resource operation");
+                foreach (var resource in GetIdentityResources())
                 {
+                    Console.WriteLine($"Adding {resource.ToEntity().Name}");
                     context.IdentityResources.Add(resource.ToEntity());
                 }
                 context.SaveChanges();
@@ -146,8 +164,10 @@ namespace IdentityServer.Data.Seed
 
             if (!context.ApiResources.Any())
             {
+                Console.WriteLine("Adding API resource operation");
                 foreach (var resource in Config.GetApis())
                 {
+                    Console.WriteLine($"Adding {resource.ToEntity().Name}");
                     context.ApiResources.Add(resource.ToEntity());
                 }
                 context.SaveChanges();

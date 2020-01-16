@@ -53,72 +53,28 @@ namespace IdentityServer.Data.Seed
             {
                 new Client
                 {
-                    ClientId = "client",
 
-                    // no interactive user, use the clientid/secret for authentication
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-
-                    // secret for authentication
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-
-                    // scopes that client has access to
-                    AllowedScopes = { "web_api" }
-                },
-                // resource owner password grant client
-                new Client
-                {
-                    ClientId = "ro.client",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    AllowedScopes = { "web_api" }
-                },
-                // OpenID Connect hybrid flow client (MVC)
-                new Client
-                {
-                    ClientId = "mvc",
-                    ClientName = "MVC Client",
-                    AllowedGrantTypes = GrantTypes.Hybrid,
-                    
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-
-                    RedirectUris           = { "http://localhost:5002/signin-oidc" },
-                    PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
-
-                    AllowedScopes =
-                    {
-                         // IdentityResource
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "Tenant",
-
-                        // API Resources
-                        "testnt.main.api"
-                    },
-
-                    AllowOfflineAccess = true
-                },
-                // JavaScript Client
-                new Client
-                {
-                    ClientId = "testnt.main.web.client",
                     ClientName = "Testnt Web Client",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    RequireClientSecret = false,
+                    ClientId = "testnt.main.spa.client",
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    AccessTokenType = AccessTokenType.Reference,
                     RequireConsent = false,
+                    //IdentityTokenLifetime = ...
+                    //AuthorizationCodeLifetime = ...
+                    AccessTokenLifetime = 120,
+                    AllowOfflineAccess = true,
+                    //AbsoluteRefreshTokenLifetime = ...
+                    UpdateAccessTokenClaimsOnRefresh = true,
+                    RedirectUris = new List<string>()
+                    {
+                        "https://localhost:7001/signin-oidc",
+                        "http://localhost:7000/signin-oidc"
+                    },
+                    PostLogoutRedirectUris = new List<string>()
+                    {
+                        "https://localhost:7001/signout-callback-oidc",
+                        "http://localhost:7000/signout-callback-oidc",
+                    },
                     AllowedScopes =
                     {
                         // IdentityResource
@@ -127,7 +83,12 @@ namespace IdentityServer.Data.Seed
                         "Tenant",
 
                         // API Resources
-                        "testnt.main.api"   
+                        "testnt.main.api"
+
+                    },
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
                     }
                 }
             };
@@ -156,7 +117,7 @@ namespace IdentityServer.Data.Seed
                 Console.WriteLine("Adding Identity resource operation");
                 foreach (var resource in GetIdentityResources())
                 {
-                    Console.WriteLine($"Adding {resource.ToEntity().Name}");
+                    Console.WriteLine($"Adding {resource.ToEntity().DisplayName}");
                     context.IdentityResources.Add(resource.ToEntity());
                 }
                 context.SaveChanges();
@@ -167,7 +128,7 @@ namespace IdentityServer.Data.Seed
                 Console.WriteLine("Adding API resource operation");
                 foreach (var resource in Config.GetApis())
                 {
-                    Console.WriteLine($"Adding {resource.ToEntity().Name}");
+                    Console.WriteLine($"Adding {resource.ToEntity().DisplayName}");
                     context.ApiResources.Add(resource.ToEntity());
                 }
                 context.SaveChanges();

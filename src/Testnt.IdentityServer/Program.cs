@@ -41,16 +41,10 @@ namespace Testnt.IdentityServer
                 Log.Information("Starting host...");
                 var host = CreateHostBuilder(args).Build();
 
-                var config = host.Services.GetRequiredService<IConfiguration>();
-                bool seed = config.GetSection("Data").GetValue<bool>("Seed");
-                if (seed)
+                using (var serviceScope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
                 {
-                    using (var serviceScope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
-                    {
-                        Users.EnsureSeedData(serviceScope);
-                        Config.EnsureSeedData(serviceScope);
-                    }
-                    return 0;
+                    Users.EnsureSeedData(serviceScope);
+                    Config.EnsureSeedData(serviceScope);
                 }
 
                 host.Run();

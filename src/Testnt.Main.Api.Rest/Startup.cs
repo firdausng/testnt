@@ -53,7 +53,7 @@ namespace Testnt.Main.Api.Rest
             services.AddMediatR(assembly);
 
             services.AddControllersWithViews()
-                //.AddFeatureFolders()
+                .AddFeatureFolders()
                 .AddNewtonsoftJson();
 
             services.AddAuthentication(options =>

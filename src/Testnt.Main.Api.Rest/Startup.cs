@@ -59,7 +59,9 @@ namespace Testnt.Main.Api.Rest
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+
             })
                 .AddCookie()
             //.AddJwtBearer("Bearer", options =>
@@ -69,17 +71,17 @@ namespace Testnt.Main.Api.Rest
 
             //    options.Audience = "testnt.main.api";
             //})
-            //.AddIdentityServerAuthentication(options => 
-            //{
-            //    options.Authority = "http://localhost:5000";
-            //    options.RequireHttpsMetadata = false;
+            .AddIdentityServerAuthentication(options =>
+            {
+                options.Authority = "http://localhost:5000";
+                options.RequireHttpsMetadata = false;
 
-            //    options.ApiName = "testnt.main.api";
-            //    options.ApiSecret = "secret";
+                options.ApiName = "testnt.main.api";
+                options.ApiSecret = "secret";
 
-            //    options.EnableCaching = true;
-            //    options.CacheDuration = TimeSpan.FromMinutes(10); // that's the default
-            //})
+                options.EnableCaching = true;
+                options.CacheDuration = TimeSpan.FromMinutes(10); // that's the default
+            })
             .AddOpenIdConnect(options =>
             {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -107,6 +109,7 @@ namespace Testnt.Main.Api.Rest
                     //RoleClaimType = JwtClaimTypes.Role,
                 };
 
+                options.UsePkce = true;
             });
             services.AddAuthorization();
             services.AddCors(options =>

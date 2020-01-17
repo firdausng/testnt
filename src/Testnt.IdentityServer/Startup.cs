@@ -45,6 +45,7 @@ namespace Testnt.IdentityServer
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
+            services.AddTransient<IUserStore<ApplicationUser>, TestntUserStore>();
             services.AddDbContext<TestntIdentityDbContext>(cfg =>
             {
                 cfg.UseNpgsql(connectionString,
@@ -61,7 +62,7 @@ namespace Testnt.IdentityServer
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
                 {
-                    options.SignIn.RequireConfirmedEmail = true;
+                    options.SignIn.RequireConfirmedEmail = false;
                 })
                 .AddEntityFrameworkStores<TestntIdentityDbContext>()
                 .AddDefaultTokenProviders();
@@ -80,6 +81,7 @@ namespace Testnt.IdentityServer
                         CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
                         CookieSlidingExpiration = true
                     };
+
                 })
                 .AddConfigurationStore(options =>
                 {

@@ -10,7 +10,7 @@ namespace Testnt.IdentityServer.Data
     public class ApplicationUser : IdentityUser<Guid>
     {
         public bool IsEnabled { get; set; }
-        public Tenant Tenant { get; set; }
+        public Guid TenantId { get; set; }
     }
 
 }

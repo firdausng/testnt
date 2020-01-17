@@ -5,6 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200116163536_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200116163536_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200117170040_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200117170040_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200116163528_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200116163528_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200117170031_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200117170031_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200117170024_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200117170024_InitialTestntDbMigration.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="3.1.0" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.1.0" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="3.1.0" />

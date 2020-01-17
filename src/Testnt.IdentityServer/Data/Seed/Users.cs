@@ -25,7 +25,8 @@ namespace IdentityServer.Data.Seed
             {
                 mainTenant = new Testnt.IdentityServer.Data.Entity.Tenant
                 {
-                    Name = "Testnt"
+                    Name = "Testnt",
+                   
                 };
                 context.Tenants.Add(mainTenant);
                 context.SaveChanges();
@@ -41,7 +42,7 @@ namespace IdentityServer.Data.Seed
                     UserName = "alice",
                     Email = "AliceSmith@email.com",
                     EmailConfirmed = true,
-                    Tenant = mainTenant,
+                    TenantId = mainTenant.Id,
                     IsEnabled = true
                 };
                 var result = userMgr.CreateAsync(alice, "Password@01").Result;
@@ -51,7 +52,7 @@ namespace IdentityServer.Data.Seed
                 }
 
                 result = userMgr.AddClaimsAsync(alice, new Claim[]{
-                        new Claim("tenant_id", alice.Tenant.Id.ToString()),
+                        new Claim("tenant_id", alice.TenantId.ToString()),
                         new Claim(JwtClaimTypes.ClientId, "testnt.main.web.client"),
                         new Claim(JwtClaimTypes.Name, "Alice Smith"),
                         new Claim(JwtClaimTypes.GivenName, "Alice"),
@@ -80,7 +81,7 @@ namespace IdentityServer.Data.Seed
                     UserName = "bob",
                     Email = "BobSmith@email.com",
                     EmailConfirmed = true,
-                    Tenant = mainTenant,
+                    TenantId = mainTenant.Id,
                     IsEnabled = true
                 };
                 var result = userMgr.CreateAsync(bob, "Password@01").Result;
@@ -90,7 +91,7 @@ namespace IdentityServer.Data.Seed
                 }
 
                 result = userMgr.AddClaimsAsync(bob, new Claim[]{
-                        new Claim("tenant_id", bob.Tenant.Id.ToString()),
+                        new Claim("tenant_id", bob.TenantId.ToString()),
                         new Claim(JwtClaimTypes.Name, "Bob Smith"),
                         new Claim(JwtClaimTypes.GivenName, "Bob"),
                         new Claim(JwtClaimTypes.FamilyName, "Smith"),

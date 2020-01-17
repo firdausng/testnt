@@ -61,7 +61,7 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    UserName = table.Column<string>(maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
@@ -76,7 +76,7 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     IsEnabled = table.Column<bool>(nullable: false),
-                    TenantId = table.Column<Guid>(nullable: true)
+                    TenantId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,7 +86,7 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                         column: x => x.TenantId,
                         principalTable: "Tenants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

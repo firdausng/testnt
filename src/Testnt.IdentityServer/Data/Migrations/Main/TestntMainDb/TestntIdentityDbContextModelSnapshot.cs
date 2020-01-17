@@ -199,13 +199,14 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("TenantId")
+                    b.Property<Guid>("TenantId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
@@ -290,9 +291,11 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
 
             modelBuilder.Entity("Testnt.IdentityServer.Data.ApplicationUser", b =>
                 {
-                    b.HasOne("Testnt.IdentityServer.Data.Entity.Tenant", "Tenant")
-                        .WithMany()
-                        .HasForeignKey("TenantId");
+                    b.HasOne("Testnt.IdentityServer.Data.Entity.Tenant", null)
+                        .WithMany("Users")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

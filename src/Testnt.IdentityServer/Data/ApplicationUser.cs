@@ -11,6 +11,7 @@ namespace Testnt.IdentityServer.Data
     {
         public bool IsEnabled { get; set; }
         public Guid TenantId { get; set; }
+        public DateTimeOffset LastLogin { get; set; }
     }
 
 }

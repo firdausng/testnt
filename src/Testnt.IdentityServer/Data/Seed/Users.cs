@@ -32,8 +32,38 @@ namespace IdentityServer.Data.Seed
                 context.SaveChanges();
             }
 
-
             var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+
+            var testerRole = roleMgr.FindByNameAsync(ApplicationRole.TestEngineer).Result;
+            if (testerRole == null)
+            {
+                testerRole = new ApplicationRole(ApplicationRole.TestEngineer);
+            }
+
+            var testManagerRole = roleMgr.FindByNameAsync(ApplicationRole.TestManager).Result;
+            if (testManagerRole == null)
+            {
+                testManagerRole = new ApplicationRole(ApplicationRole.TestManager);
+            }
+            var adminRole = roleMgr.FindByNameAsync(ApplicationRole.Admin).Result;
+            if (adminRole == null)
+            {
+                adminRole = new ApplicationRole(ApplicationRole.Admin);
+            }
+
+            var leadRole = roleMgr.FindByNameAsync(ApplicationRole.TestLead).Result;
+            if (leadRole == null)
+            {
+                leadRole = new ApplicationRole(ApplicationRole.TestLead);
+            }
+
+            var otherRole = roleMgr.FindByNameAsync(ApplicationRole.Other).Result;
+            if (otherRole == null)
+            {
+                otherRole = new ApplicationRole(ApplicationRole.Other);
+            }
+
             var alice = userMgr.FindByNameAsync("alice").Result;
             if (alice == null)
             {
@@ -50,7 +80,11 @@ namespace IdentityServer.Data.Seed
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
-
+                var roleResult = userMgr.AddToRoleAsync(alice, adminRole.Name).Result;
+                if (!roleResult.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
                 result = userMgr.AddClaimsAsync(alice, new Claim[]{
                         new Claim("tenant_id", alice.TenantId.ToString()),
                         new Claim(JwtClaimTypes.ClientId, "testnt.main.web.client"),
@@ -89,7 +123,11 @@ namespace IdentityServer.Data.Seed
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
-
+                var roleResult = userMgr.AddToRoleAsync(bob, testManagerRole.Name).Result;
+                if (!roleResult.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
                 result = userMgr.AddClaimsAsync(bob, new Claim[]{
                         new Claim("tenant_id", bob.TenantId.ToString()),
                         new Claim(JwtClaimTypes.Name, "Bob Smith"),

@@ -9,12 +9,28 @@
     <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200116163536_InitialConfigurationDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200117170040_InitialConfigurationDbMigration.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200117170040_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200117170809_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200117170809_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200118020812_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200118020812_InitialConfigurationDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200116163528_InitialPersistedGrantDbMigration.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200116163528_InitialPersistedGrantDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200117170031_InitialPersistedGrantDbMigration.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200117170031_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200117170759_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200117170759_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200118020800_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200118020800_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200118021302_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200118021302_InitialPersistedGrantDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200117170024_InitialTestntDbMigration.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200117170024_InitialTestntDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200117170749_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200117170749_InitialTestntDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200118020750_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200118020750_InitialTestntDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200118021251_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200118021251_InitialTestntDbMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,5 +64,9 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Entities\Enum\" />
   </ItemGroup>
 </Project>

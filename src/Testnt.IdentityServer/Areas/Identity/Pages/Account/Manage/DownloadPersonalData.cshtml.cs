@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Testnt.IdentityServer.Data;
+using Testnt.IdentityServer.Entities;
 
 namespace Testnt.IdentityServer.Areas.Identity.Pages.Account.Manage
 {

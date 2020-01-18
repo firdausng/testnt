@@ -173,6 +173,9 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTimeOffset>("LastLogin")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
 
@@ -234,6 +237,9 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Tenants");
                 });

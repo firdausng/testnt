@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Testnt.IdentityServer.Entities;
+using Testnt.IdentityServer.Data.Entity;
 
 namespace Testnt.IdentityServer.Data
 {

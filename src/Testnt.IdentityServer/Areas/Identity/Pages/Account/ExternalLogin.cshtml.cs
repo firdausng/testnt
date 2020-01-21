@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Testnt.IdentityServer.Data;
-using Testnt.IdentityServer.Entities;
 
 namespace Testnt.IdentityServer.Areas.Identity.Pages.Account
 {

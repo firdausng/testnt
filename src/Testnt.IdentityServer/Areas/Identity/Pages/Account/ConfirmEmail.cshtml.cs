@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Testnt.IdentityServer.Entities;
+using Testnt.IdentityServer.Data;
 
 namespace Testnt.IdentityServer.Areas.Identity.Pages.Account
 {

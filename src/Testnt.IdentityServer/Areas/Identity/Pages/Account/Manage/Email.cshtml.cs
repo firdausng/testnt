@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Testnt.IdentityServer.Data;
-using Testnt.IdentityServer.Entities;
 
 namespace Testnt.IdentityServer.Areas.Identity.Pages.Account.Manage
 {

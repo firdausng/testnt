@@ -22,7 +22,6 @@ using Testnt.IdentityServer.Data;
 using Testnt.IdentityServer.Infrastructure.Services.Email;
 using IdentityServer4.EntityFramework.Stores;
 using System.Security.Cryptography.X509Certificates;
-using Testnt.IdentityServer.Entities;
 
 namespace Testnt.IdentityServer
 {

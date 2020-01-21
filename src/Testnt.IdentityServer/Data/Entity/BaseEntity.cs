@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Testnt.IdentityServer.Entities
+namespace Testnt.IdentityServer.Data.Entity
 {
     public class BaseEntity
     {

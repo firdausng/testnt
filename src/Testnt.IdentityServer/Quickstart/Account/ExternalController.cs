@@ -15,6 +15,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Testnt.IdentityServer.Data;
+using Testnt.IdentityServer.Entities;
 
 namespace Testnt.IdentityServer
 {

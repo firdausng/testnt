@@ -76,7 +76,8 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     IsEnabled = table.Column<bool>(nullable: false),
-                    TenantId = table.Column<Guid>(nullable: false)
+                    TenantId = table.Column<Guid>(nullable: false),
+                    LastLogin = table.Column<DateTimeOffset>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -215,6 +216,12 @@ namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
                 name: "IX_AspNetUsers_TenantId",
                 table: "AspNetUsers",
                 column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tenants_Name",
+                table: "Tenants",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

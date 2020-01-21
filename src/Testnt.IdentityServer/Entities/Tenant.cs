@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Testnt.IdentityServer.Data.Entity
+namespace Testnt.IdentityServer.Entities
 {
     public class Tenant: BaseEntity
     {

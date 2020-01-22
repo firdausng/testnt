@@ -8,7 +8,6 @@ namespace Testnt.Main.Domain.Entity
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public Guid TestProjectId { get; set; }
         public TestProject TestProject { get; set; }
         public TestOutlineStatus Status { get; set; }
         public TestExecutionResult TestExecutionResult { get; set; }

@@ -36,7 +36,7 @@ namespace Testnt.Main.Application.TestCases.Item.Command.CreateTestCaseItem
             public async Task<CreateTestCaseItemDto> Handle(CreateTestCaseItemCommand request, CancellationToken cancellationToken)
             {
                 var testScenario = await context.TestScenarios
-                    .Where(p => p.TestProjectId.Equals(request.ProjectId))
+                    .Where(p => p.TestProject.Id.Equals(request.ProjectId))
                     .Where(p => p.Id.Equals(request.TestScenarioId))
                     .FirstOrDefaultAsync();
 
@@ -50,7 +50,6 @@ namespace Testnt.Main.Application.TestCases.Item.Command.CreateTestCaseItem
                     Name = request.Name,
                     Status = TestOutlineStatus.Active,
                     TestProject = testScenario.TestProject,
-                    TestProjectId = testScenario.TestProjectId
                 };
 
                 if (request.Tags.Count > 0)

@@ -16,6 +16,7 @@ namespace Testnt.Main.Infrastructure.Data
         public DbSet<TestOutline> TestOutlines { get; set; }
         public DbSet<TestCase> TestCases { get; set; }
         public DbSet<TestScenario> TestScenarios { get; set; }
+        public DbSet<TestFeature> TestFeatures { get; set; }
         public DbSet<Tag> TestTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

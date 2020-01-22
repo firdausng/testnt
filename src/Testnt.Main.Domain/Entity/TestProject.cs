@@ -11,6 +11,7 @@ namespace Testnt.Main.Domain.Entity
         public ICollection<TestCase> TestCases { get; set; } = new List<TestCase>();
         public ICollection<TestScenario> TestScenarios { get; set; } = new List<TestScenario>();
         public ICollection<TestSession> TestSessions { get; set; } = new List<TestSession>();
+        public ICollection<TestFeature> TestFeatures { get; set; } = new List<TestFeature>();
         public ICollection<Tag> TestTags { get; set; } = new List<Tag>();
     }
 }

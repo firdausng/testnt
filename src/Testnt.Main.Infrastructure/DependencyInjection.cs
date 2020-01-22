@@ -12,12 +12,14 @@ namespace Testnt.Main.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            var migrationsAssembly = typeof(DependencyInjection).Assembly.GetName().Name;
             services.AddDbContext<TestntDbContext>(cfg =>
             {
                 cfg.UseNpgsql(configuration.GetConnectionString("PostgresTestntMainConnectionString"),
                     options =>
                     {
                         options.EnableRetryOnFailure(3);
+                        options.MigrationsAssembly(migrationsAssembly);
                     });
             });
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Testnt.Main.Domain.Entity;
+using Testnt.Main.Domain.Entity.TestSessionEntity;
 
 namespace Testnt.Main.Infrastructure.Data
 {
@@ -17,6 +18,7 @@ namespace Testnt.Main.Infrastructure.Data
         public DbSet<TestCase> TestCases { get; set; }
         public DbSet<TestScenario> TestScenarios { get; set; }
         public DbSet<TestFeature> TestFeatures { get; set; }
+        public DbSet<TestSession> TestSessions { get; set; }
         public DbSet<Tag> TestTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

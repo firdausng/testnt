@@ -96,7 +96,8 @@ namespace Testnt.IdentityServer
                 //.AddClientStore<ClientStore>()
                 //.AddResourceStore<ResourceStore>()
                 .AddAspNetIdentity<ApplicationUser>()
-                .AddSigningCredential(new X509Certificate2(Configuration.GetValue<string>("Certificate:Path"), "password"));
+                //.AddSigningCredential(new X509Certificate2(Configuration.GetValue<string>("Certificate:Path"), "password"))
+                ;
 
 
             // not recommended for production - you need to store your key material somewhere secure

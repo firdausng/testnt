@@ -56,61 +56,15 @@ namespace Testnt.Main.Api.Rest
                 .AddFeatureFolders()
                 .AddNewtonsoftJson();
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-
-            })
-                .AddCookie()
-            //.AddJwtBearer("Bearer", options =>
-            //{
-            //    options.Authority = "http://localhost:5000";
-            //    options.RequireHttpsMetadata = false;
-
-            //    options.Audience = "testnt.main.api";
-            //})
-            .AddIdentityServerAuthentication(options =>
-            {
-                options.Authority = "http://localhost:5000";
-                options.RequireHttpsMetadata = false;
-
-                options.ApiName = "testnt.main.api";
-                options.ApiSecret = "secret";
-
-                options.EnableCaching = true;
-                options.CacheDuration = TimeSpan.FromMinutes(10); // that's the default
-            })
-            .AddOpenIdConnect(options =>
-            {
-                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                
-                options.RequireHttpsMetadata = false;
-                options.Authority = "http://localhost:5000";
-                options.ClientId = "testnt.main.spa.client";
-                options.ResponseType = "code id_token";
-                options.Scope.Add("openid");
-                options.Scope.Add("profile");
-                options.Scope.Add("Tenant");
-                options.Scope.Add("offline_access");
-                options.SaveTokens = true;
-                options.ClientSecret = "secret";
-                options.GetClaimsFromUserInfoEndpoint = true;
-                options.ClaimActions.Remove("amr");
-                options.ClaimActions.DeleteClaim("sid");
-                options.ClaimActions.DeleteClaim("idp");
-
-                //options.CallbackPath = "";
-
-                options.TokenValidationParameters = new TokenValidationParameters
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
                 {
-                    NameClaimType = JwtClaimTypes.GivenName,
-                    //RoleClaimType = JwtClaimTypes.Role,
-                };
+                    options.Authority = "http://localhost:5000";
+                    options.RequireHttpsMetadata = false;
 
-                options.UsePkce = true;
-            });
+                    options.Audience = "testnt.main.api";
+                });
+            
             services.AddAuthorization();
             services.AddCors(options =>
             {

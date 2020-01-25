@@ -5,6 +5,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200124131447_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200124131447_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200125184028_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200125184028_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200125190742_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200125190742_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200124131440_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200124131440_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200125184020_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200125184020_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200125190734_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200125190734_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200124131434_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200124131434_InitialTestntDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200125184011_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200125184011_InitialTestntDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200125190726_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200125190726_InitialTestntDbMigration.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="3.1.0" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.1.0" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="3.1.0" />

@@ -51,20 +51,54 @@ namespace IdentityServer.Data.Seed
         {
             return new List<Client>
             {
-                new Client
+            
+            // resource owner password grant client
+            // for test api only, disable in prod
+            new Client
+            {
+                ClientName = "Testnt test client",
+                ClientId = "testnt.main.test.client",
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+
+                ClientSecrets =
+                {
+                    new Secret("secret".Sha256())
+                },
+                AllowedScopes = 
+                { 
+                    // API Resources
+                    "testnt.main.api"
+                }
+            },
+            // machine to machine client
+            new Client
+            {
+                ClientId = "client",
+                ClientSecrets = { new Secret("secret".Sha256()) },
+
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                // scopes that client has access to
+                AllowedScopes =
+                { 
+                    // IdentityResource
+                    "Tenant",
+
+                    // API Resources
+                    "testnt.main.api"
+                }
+            },
+             // JavaScript Client
+            new Client
                 {
 
                     ClientName = "Testnt Web Client",
                     ClientId = "testnt.main.spa.client",
-                    AllowedGrantTypes = GrantTypes.Hybrid,
-                    AccessTokenType = AccessTokenType.Reference,
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequireClientSecret = false,
                     RequireConsent = false,
-                    //IdentityTokenLifetime = ...
-                    //AuthorizationCodeLifetime = ...
-                    AccessTokenLifetime = 120,
                     AllowOfflineAccess = true,
-                    //AbsoluteRefreshTokenLifetime = ...
                     UpdateAccessTokenClaimsOnRefresh = true,
+
                     RedirectUris = new List<string>()
                     {
                         "https://localhost:7001/signin-oidc",
@@ -86,10 +120,7 @@ namespace IdentityServer.Data.Seed
                         "testnt.main.api"
 
                     },
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    }
+
                 }
             };
         }
@@ -100,7 +131,7 @@ namespace IdentityServer.Data.Seed
 
             var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
             context.Database.Migrate();
-            
+
             if (!context.Clients.Any())
             {
                 Console.WriteLine("Adding Client operation");

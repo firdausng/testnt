@@ -3,7 +3,7 @@
     "redirect_url": "http://localhost:7000",
     "client_id": "testnt.main.spa.client",
     "response_type": "code",
-    "scope": "testnt.main.api openid profile",
+    "scope": "testnt.main.api openid profile Tenant",
     "post_logout_redirect_uri": "http://localhost:7000",
     "start_checksession": true,
     "silent_renew": true,

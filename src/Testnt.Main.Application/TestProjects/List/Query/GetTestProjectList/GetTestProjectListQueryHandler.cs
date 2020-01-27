@@ -32,7 +32,7 @@ namespace Testnt.Main.Application.TestProjects.List.Query.GetTestProjectList
 
             var vm = new GetTestProjectListVm
             {
-                Projects = projects,
+                Data = projects,
                 Count = projects.Count
             };
 

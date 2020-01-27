@@ -75,7 +75,7 @@ namespace Testnt.IdentityServer
                     {
                         builder
                             //.AllowCredentials()
-                            .WithOrigins("http://localhost:7000", "https://localhost:7001")
+                            .WithOrigins("http://localhost:7000", "https://localhost:7001", "http://localhost:4200")
                             //.SetIsOriginAllowedToAllowWildcardSubdomains()
                             //.SetIsOriginAllowed(isOriginAllowed: _ => true)
                             //.AllowAnyOrigin()
@@ -108,6 +108,7 @@ namespace Testnt.IdentityServer
                     options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
                     options.EnableTokenCleanup = true;
                 })
+                //.AddCorsPolicyService()
                 //.AddClientStore<ClientStore>()
                 //.AddResourceStore<ResourceStore>()
                 .AddAspNetIdentity<ApplicationUser>()

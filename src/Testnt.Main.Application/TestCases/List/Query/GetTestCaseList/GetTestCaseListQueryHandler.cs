@@ -28,7 +28,7 @@ namespace Testnt.Main.Application.TestCases.List.Query.GetTestCaseList
 
             var vm = new GetTestCaseListVm
             {
-                TestCases = testCases,
+                Data = testCases,
                 Count = testCases.Count
             };
 

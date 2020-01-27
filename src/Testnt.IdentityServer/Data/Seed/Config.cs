@@ -103,13 +103,13 @@ namespace IdentityServer.Data.Seed
 
                     RedirectUris = new List<string>()
                     {
-                        "https://localhost:7001/signin-oidc",
-                        "http://localhost:7000/signin-oidc"
+                        "https://localhost:7001",
+                        "http://localhost:7000"
                     },
                     PostLogoutRedirectUris = new List<string>()
                     {
-                        "https://localhost:7001/signout-callback-oidc",
-                        "http://localhost:7000/signout-callback-oidc",
+                        "https://localhost:7001",
+                        "http://localhost:7000",
                     },
 
                     AllowedCorsOrigins =

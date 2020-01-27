@@ -11,18 +11,24 @@
     <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200125184028_InitialConfigurationDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200125190742_InitialConfigurationDbMigration.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200125190742_InitialConfigurationDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200125190959_InitialConfigurationDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\ConfigurationDb\20200125190959_InitialConfigurationDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200124131440_InitialPersistedGrantDbMigration.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200124131440_InitialPersistedGrantDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200125184020_InitialPersistedGrantDbMigration.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200125184020_InitialPersistedGrantDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200125190734_InitialPersistedGrantDbMigration.cs" />
     <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200125190734_InitialPersistedGrantDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200125190951_InitialPersistedGrantDbMigration.cs" />
+    <Compile Remove="Data\Migrations\IdentityServer\PersistedGrantDb\20200125190951_InitialPersistedGrantDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200124131434_InitialTestntDbMigration.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200124131434_InitialTestntDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200125184011_InitialTestntDbMigration.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200125184011_InitialTestntDbMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200125190726_InitialTestntDbMigration.cs" />
     <Compile Remove="Data\Migrations\Main\TestntMainDb\20200125190726_InitialTestntDbMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200125190943_InitialTestntDbMigration.cs" />
+    <Compile Remove="Data\Migrations\Main\TestntMainDb\20200125190943_InitialTestntDbMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

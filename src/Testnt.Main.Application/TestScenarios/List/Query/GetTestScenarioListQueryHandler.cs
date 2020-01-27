@@ -31,7 +31,7 @@ namespace Testnt.Main.Application.TestScenarios.List.Query
 
             var vm = new GetTestScenarioListVm
             {
-                TestScenarios = testScenariosFromDb,
+                Data = testScenariosFromDb,
                 Count = testScenariosFromDb.Count
             };
 

@@ -31,7 +31,7 @@ namespace Testnt.Main.Application.TestSessions.List.Query.GetTestSessionList
 
             var vm = new GetTestSessionListVm
             {
-                TestSessions = sessions,
+                Data = sessions,
                 Count = sessions.Count
             };
 

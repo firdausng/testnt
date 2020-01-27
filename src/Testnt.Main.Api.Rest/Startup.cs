@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,25 +58,34 @@ namespace Testnt.Main.Api.Rest
                 .AddFeatureFolders()
                 .AddNewtonsoftJson();
 
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
             services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
+                .AddCookie()
+                .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = "http://localhost:5000";
                     options.RequireHttpsMetadata = false;
+                    options.ApiName = "testnt.main.api";
+                    options.ApiSecret = "secret";
 
-                    options.Audience = "testnt.main.api";
-                });
+                    options.EnableCaching = true;
+                    options.CacheDuration = TimeSpan.FromMinutes(10); // that's the default	
+                })
+                //.AddJwtBearer("Bearer", options =>
+                //{
+                //    options.Authority = "http://localhost:5000";
+                //    options.RequireHttpsMetadata = false;
+
+                //    options.Audience = "testnt.main.api";
+                //})
+                ;
             
             services.AddAuthorization();
-            services.AddCors(options =>
+
+            services.AddSpaStaticFiles(configuration =>
             {
-                // this defines a CORS policy called "default"
-                options.AddPolicy("default", policy =>
-                {
-                    policy.WithOrigins("http://localhost:8000")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
+                configuration.RootPath = "ClientApp/dist";
             });
         }
 
@@ -91,15 +102,19 @@ namespace Testnt.Main.Api.Rest
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
+            if (!env.IsDevelopment())
+            {
+                app.UseSpaStaticFiles();
+            }
 
             app.UseCustomExceptionHandler();
             app.UseHealthChecks("/health");
+            
 
             app.UseRouting();
-            //app.UseCors("default");
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -111,7 +126,22 @@ namespace Testnt.Main.Api.Rest
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}"
                     )
-                .RequireAuthorization();
+                .RequireAuthorization()
+                .RequireCors("AllowAllOrigins");
+            });
+
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+                //spa.Options.
+                //spa.Options.DefaultPageStaticFileOptions.co
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
             });
         }
     }

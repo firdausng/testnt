@@ -68,6 +68,21 @@ namespace Testnt.IdentityServer
                 .AddEntityFrameworkStores<TestntIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder
+                            //.AllowCredentials()
+                            .WithOrigins("http://localhost:7000", "https://localhost:7001")
+                            //.SetIsOriginAllowedToAllowWildcardSubdomains()
+                            //.SetIsOriginAllowed(isOriginAllowed: _ => true)
+                            //.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
 
             var builder = services.AddIdentityServer(options =>
                 {
@@ -114,6 +129,9 @@ namespace Testnt.IdentityServer
             // uncomment if you want to add MVC
             app.UseStaticFiles();
             app.UseRouting();
+
+            // With endpoint routing, the CORS middleware must be configured to execute between the calls to UseRouting and UseEndpoints. Incorrect configuration will cause the middleware to stop functioning correctly.
+            app.UseCors("AllowAllOrigins");
 
             app.UseIdentityServer();
 

@@ -64,7 +64,7 @@ namespace IdentityServer.Data.Seed
                 {
                     new Secret("secret".Sha256())
                 },
-                AllowedScopes = 
+                AllowedScopes =
                 { 
                     // API Resources
                     "testnt.main.api"
@@ -90,12 +90,14 @@ namespace IdentityServer.Data.Seed
              // JavaScript Client
             new Client
                 {
-
                     ClientName = "Testnt Web Client",
                     ClientId = "testnt.main.spa.client",
+
                     AllowedGrantTypes = GrantTypes.Code,
                     RequireClientSecret = false,
                     RequireConsent = false,
+                    RequirePkce = true,
+
                     AllowOfflineAccess = true,
                     UpdateAccessTokenClaimsOnRefresh = true,
 
@@ -109,6 +111,13 @@ namespace IdentityServer.Data.Seed
                         "https://localhost:7001/signout-callback-oidc",
                         "http://localhost:7000/signout-callback-oidc",
                     },
+
+                    AllowedCorsOrigins =
+                    {
+                        "https://localhost:7001",
+                        "http://localhost:7000"
+                    },
+
                     AllowedScopes =
                     {
                         // IdentityResource
@@ -120,7 +129,6 @@ namespace IdentityServer.Data.Seed
                         "testnt.main.api"
 
                     },
-
                 }
             };
         }

@@ -50,6 +50,7 @@ export class NavComponent {
 
     this.oidcSecurityService.getUserData().subscribe(userData => {
       this.userData = userData;
+      console.log(`userdata = ${JSON.stringify(this.userData)}`)
     });
   }
 

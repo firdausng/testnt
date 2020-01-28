@@ -23,8 +23,13 @@
       </button>
       <span>Test n Tell</span>
       <span class="divider"></span>
-      <span mat-button *ngIf="!isAuthenticated" (click)="login()">Login</span>
-      <span mat-button *ngIf="isAuthenticated" (click)="logout()">Logout</span>
+      
+      <button mat-button *ngIf="!isAuthenticated" (click)="login()">Login</button>
+      <ng-container *ngIf="isAuthenticated">
+        <span>{{userData.name}}</span>
+        <button mat-button (click)="logout()">Logout</button>
+      </ng-container>
+      
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

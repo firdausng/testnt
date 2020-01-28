@@ -33,6 +33,8 @@ namespace IdentityServer.Data.Seed
                 context.SaveChanges();
             }
 
+            
+
             var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             //var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
@@ -52,11 +54,7 @@ namespace IdentityServer.Data.Seed
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
-                //var roleResult = userMgr.AddToRoleAsync(alice, adminRole.Name).Result;
-                //if (!roleResult.Succeeded)
-                //{
-                //    throw new Exception(result.Errors.First().Description);
-                //}
+
                 result = userMgr.AddClaimsAsync(alice, new Claim[]{
                         new Claim("tenant_id", alice.TenantId.ToString()),
                         new Claim(JwtClaimTypes.ClientId, "testnt.main.web.client"),
@@ -95,11 +93,7 @@ namespace IdentityServer.Data.Seed
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
-                //var roleResult = userMgr.AddToRoleAsync(bob, testManagerRole.Name).Result;
-                //if (!roleResult.Succeeded)
-                //{
-                //    throw new Exception(result.Errors.First().Description);
-                //}
+  
                 result = userMgr.AddClaimsAsync(bob, new Claim[]{
                         new Claim("tenant_id", bob.TenantId.ToString()),
                         new Claim(JwtClaimTypes.Name, "Bob Smith"),
@@ -120,6 +114,58 @@ namespace IdentityServer.Data.Seed
             else
             {
                 Console.WriteLine("bob already exists");
+            }
+
+
+            var demoTenant = context.Tenants.Where(t => t.Name.Equals("demoTenant")).FirstOrDefaultAsync().Result;
+            if (demoTenant == null)
+            {
+                demoTenant = new Tenant
+                {
+                    Name = "demoTenant",
+
+                };
+                context.Tenants.Add(demoTenant);
+                context.SaveChanges();
+            }
+
+            var kyle = userMgr.FindByNameAsync("kyle").Result;
+            if (kyle == null)
+            {
+                kyle = new ApplicationUser
+                {
+                    UserName = "kyle",
+                    Email = "kylejohn@email.com",
+                    EmailConfirmed = true,
+                    TenantId = demoTenant.Id,
+                    IsEnabled = true
+                };
+                var result = userMgr.CreateAsync(kyle, "Password@01").Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+
+                result = userMgr.AddClaimsAsync(kyle, new Claim[]{
+                        new Claim("tenant_id", kyle.TenantId.ToString()),
+                        new Claim(JwtClaimTypes.ClientId, "testnt.main.web.client"),
+                        new Claim(JwtClaimTypes.Name, "Kyle John"),
+                        new Claim(JwtClaimTypes.GivenName, "Kyle"),
+                        new Claim(JwtClaimTypes.FamilyName, "John"),
+                        new Claim(JwtClaimTypes.Email, "kylejohn@email.com"),
+                        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
+                        new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
+                        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
+                    }).Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+                Console.WriteLine("kyle created");
+            }
+            else
+            {
+                Console.WriteLine("kyle already exists");
             }
         }
     }

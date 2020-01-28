@@ -10,7 +10,7 @@ using Testnt.IdentityServer.Data;
 namespace Testnt.IdentityServer.Data.Migrations.Main.TestntMainDb
 {
     [DbContext(typeof(TestntIdentityDbContext))]
-    [Migration("20200127110638_InitialTestntDbMigration")]
+    [Migration("20200128145439_InitialTestntDbMigration")]
     partial class InitialTestntDbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

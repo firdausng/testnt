@@ -41,7 +41,8 @@ namespace IdentityServer.Data.Seed
                     UserClaims = new[]
                     {
                         "email",
-                        "tenant_id"
+                        "tenant_id",
+                        "name"
                     }
                 }
             };

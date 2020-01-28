@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestScenarios.List.Query
 {
-    public class GetTestScenarioListQueryHandler : IRequestHandler<GetTestScenarioListQuery, GetTestScenarioListVm>
+    public class GetTestScenarioListQueryHandler : IRequestHandler<GetTestScenarioListQuery, GetObjectListVm<GetTestScenarioListDto>>
     {
         private readonly TestntDbContext context;
         private readonly IMapper mapper;
@@ -22,14 +23,14 @@ namespace Testnt.Main.Application.TestScenarios.List.Query
             this.mapper = mapper;
         }
 
-        public async Task<GetTestScenarioListVm> Handle(GetTestScenarioListQuery request, CancellationToken cancellationToken)
+        public async Task<GetObjectListVm<GetTestScenarioListDto>> Handle(GetTestScenarioListQuery request, CancellationToken cancellationToken)
         {
             var testScenariosFromDb = await context.TestScenarios
                 .ProjectTo<GetTestScenarioListDto>(mapper.ConfigurationProvider)
                 //.OrderBy(t => t.)
                 .ToListAsync(cancellationToken);
 
-            var vm = new GetTestScenarioListVm
+            var vm = new GetObjectListVm<GetTestScenarioListDto>
             {
                 Data = testScenariosFromDb,
                 Count = testScenariosFromDb.Count

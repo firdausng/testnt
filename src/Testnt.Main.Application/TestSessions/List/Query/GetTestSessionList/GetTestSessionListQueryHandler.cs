@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestSessions.List.Query.GetTestSessionList
 {
-    public class GetTestSessionListQueryHandler : IRequestHandler<GetTestSessionListQuery, GetTestSessionListVm>
+    public class GetTestSessionListQueryHandler : IRequestHandler<GetTestSessionListQuery, GetObjectListVm<GetTestSessionListDto>>
     {
         private readonly TestntDbContext context;
         private readonly IMapper mapper;
@@ -22,14 +23,14 @@ namespace Testnt.Main.Application.TestSessions.List.Query.GetTestSessionList
             this.mapper = mapper;
         }
 
-        public async Task<GetTestSessionListVm> Handle(GetTestSessionListQuery request, CancellationToken cancellationToken)
+        public async Task<GetObjectListVm<GetTestSessionListDto>> Handle(GetTestSessionListQuery request, CancellationToken cancellationToken)
         {
             var sessions = await context.TestSessions
                 .ProjectTo<GetTestSessionListDto>(mapper.ConfigurationProvider)
                 //.OrderBy(t => t.)
                 .ToListAsync(cancellationToken);
 
-            var vm = new GetTestSessionListVm
+            var vm = new GetObjectListVm<GetTestSessionListDto>
             {
                 Data = sessions,
                 Count = sessions.Count

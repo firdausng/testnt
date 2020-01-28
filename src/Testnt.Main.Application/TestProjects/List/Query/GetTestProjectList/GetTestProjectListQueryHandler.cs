@@ -8,11 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestProjects.List.Query.GetTestProjectList
 {
-    public class GetTestProjectListQueryHandler : IRequestHandler<GetTestProjectListQuery, GetTestProjectListVm>
+    public class GetTestProjectListQueryHandler : IRequestHandler<GetTestProjectListQuery, GetObjectListVm<GetTestProjectListDto>>
     {
         private readonly TestntDbContext context;
         private readonly IMapper mapper;
@@ -23,18 +24,23 @@ namespace Testnt.Main.Application.TestProjects.List.Query.GetTestProjectList
             this.mapper = mapper;
         }
 
-        public async Task<GetTestProjectListVm> Handle(GetTestProjectListQuery request, CancellationToken cancellationToken)
+        public async Task<GetObjectListVm<GetTestProjectListDto>> Handle(GetTestProjectListQuery request, CancellationToken cancellationToken)
         {
             var projects = await context.Projects
                 .ProjectTo<GetTestProjectListDto>(mapper.ConfigurationProvider)
                 //.OrderBy(t => t.)
                 .ToListAsync(cancellationToken);
 
-            var vm = new GetTestProjectListVm
+            var vm = new GetObjectListVm<GetTestProjectListDto>
             {
                 Data = projects,
                 Count = projects.Count
             };
+            //var vm = new GetTestProjectListVm
+            //{
+            //    Data = projects,
+            //    Count = projects.Count
+            //};
 
             return vm;
         }

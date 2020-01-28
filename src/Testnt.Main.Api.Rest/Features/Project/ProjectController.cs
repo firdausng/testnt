@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Application.TestProjects.Item.Command.CreateTestProjectItem;
 using Testnt.Main.Application.TestProjects.Item.Command.DeleteTestProjectItem;
 using Testnt.Main.Application.TestProjects.Item.Query.GetTestProjectItem;
@@ -25,7 +26,7 @@ namespace Testnt.Main.Api.Rest.Features.Project
         }
 
         [HttpGet(Name = "GetProjects")]
-        public async Task<ActionResult<GetTestProjectListVm>> GetProjects()
+        public async Task<ActionResult<GetObjectListVm<GetTestProjectListDto>>> GetProjects()
         {
             var vm = await mediator.Send(new GetTestProjectListQuery());
             return Ok(vm);

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Application.TestCases.Item.Command.CreateTestCaseItem;
 using Testnt.Main.Application.TestCases.Item.Query.GetTestCaseItem;
 using Testnt.Main.Application.TestCases.List.Query.GetTestCaseList;
@@ -24,7 +25,7 @@ namespace Testnt.Main.Api.Rest.Features.TestCase
         }
 
         [HttpGet(Name = "GetTestCases")]
-        public async Task<ActionResult<GetTestCaseListVm>> GetTestCases()
+        public async Task<ActionResult<GetObjectListVm<GetTestCaseListDto>>> GetTestCases()
         {
             var vm = await mediator.Send(new GetTestCaseListQuery());
             return Ok(vm);

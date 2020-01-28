@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Application.TestScenarios.Item.Command;
 using Testnt.Main.Application.TestScenarios.Item.Query;
 using Testnt.Main.Application.TestScenarios.List.Query;
@@ -24,7 +25,7 @@ namespace Testnt.Main.Api.Rest.Features.TestScenario
         }
 
         [HttpGet(Name = "GetTestScenarios")]
-        public async Task<ActionResult<GetTestScenarioListVm>> GetTestScenarios()
+        public async Task<ActionResult<GetObjectListVm<GetTestScenarioListDto>>> GetTestScenarios()
         {
             var vm = await mediator.Send(new GetTestScenarioListQuery());
             return Ok(vm);

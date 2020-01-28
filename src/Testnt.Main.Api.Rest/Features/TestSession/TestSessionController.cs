@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Application.TestSessions.Item.Command.CreateTestSessionItem;
 using Testnt.Main.Application.TestSessions.Item.Query;
 using Testnt.Main.Application.TestSessions.List.Query.GetTestSessionList;
@@ -24,7 +25,7 @@ namespace Testnt.Main.Api.Rest.Features.TestSession
         }
 
         [HttpGet(Name = "GetTestSessions")]
-        public async Task<ActionResult<GetTestSessionListVm>> GetSessions()
+        public async Task<ActionResult<GetObjectListVm<GetTestSessionListDto>>> GetSessions()
         {
             var vm = await mediator.Send(new GetTestSessionListQuery());
             return Ok(vm);

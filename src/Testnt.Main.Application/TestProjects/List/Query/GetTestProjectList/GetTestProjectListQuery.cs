@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestProjects.List.Query.GetTestProjectList
 {
-    public class GetTestProjectListQuery: IRequest<GetTestProjectListVm>
+    public class GetTestProjectListQuery: IRequest<GetObjectListVm<GetTestProjectListDto>>
     {
     }
 }

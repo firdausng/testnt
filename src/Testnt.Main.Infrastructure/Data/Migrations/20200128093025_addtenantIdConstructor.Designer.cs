@@ -10,8 +10,8 @@ using Testnt.Main.Infrastructure.Data;
 namespace Testnt.Main.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(TestntDbContext))]
-    [Migration("20200123195721_InitialTestntDbMigration")]
-    partial class InitialTestntDbMigration
+    [Migration("20200128093025_addtenantIdConstructor")]
+    partial class addtenantIdConstructor
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TenantId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("TestProjectId")
@@ -54,6 +57,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("TestProjectId")
                         .HasColumnType("uuid");
@@ -84,6 +90,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("TestExecutionResult")
                         .HasColumnType("integer");
 
@@ -103,6 +112,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
@@ -115,6 +127,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TenantId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("TestCaseId")
@@ -137,6 +152,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TenantId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("TestExecutionResult")
@@ -173,6 +191,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.Property<DateTimeOffset>("Started")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("TestProjectId")
                         .HasColumnType("uuid");
 
@@ -191,6 +212,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("TestCaseSnapshotId")
                         .HasColumnType("uuid");
@@ -341,6 +365,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                             b1.Property<string>("Status")
                                 .HasColumnType("text");
+
+                            b1.Property<Guid>("TenantId")
+                                .HasColumnType("uuid");
 
                             b1.HasKey("TestCaseId", "Id");
 

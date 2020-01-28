@@ -27,6 +27,7 @@ namespace Testnt.Main.Application.TestProjects.List.Query.GetTestProjectList
         public async Task<GetObjectListVm<GetTestProjectListDto>> Handle(GetTestProjectListQuery request, CancellationToken cancellationToken)
         {
             var projects = await context.Projects
+                .Where(t => t.TenantId.Equals(request.TenantId))
                 .ProjectTo<GetTestProjectListDto>(mapper.ConfigurationProvider)
                 //.OrderBy(t => t.)
                 .ToListAsync(cancellationToken);

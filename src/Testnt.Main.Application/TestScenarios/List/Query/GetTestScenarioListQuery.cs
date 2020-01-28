@@ -6,7 +6,11 @@ using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestScenarios.List.Query
 {
-    public class GetTestScenarioListQuery : IRequest<GetObjectListVm<GetTestScenarioListDto>>
+    public class GetTestScenarioListQuery : BaseRequest, IRequest<GetObjectListVm<GetTestScenarioListDto>>
     {
+        public GetTestScenarioListQuery(Guid tenantId)
+        {
+            TenantId = tenantId;
+        }
     }
 }

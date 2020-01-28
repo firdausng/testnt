@@ -9,11 +9,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Main.Infrastructure.Data;
+using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestProjects.Item.Query.GetTestProjectItem
 {
-    public class GetTestProjectItemQuery : IRequest<GetTestProjectItemDto>
+    public class GetTestProjectItemQuery :BaseRequest, IRequest<GetTestProjectItemDto>
     {
+        public GetTestProjectItemQuery(Guid tenantId)
+        {
+            this.TenantId = tenantId;
+        }
+
         public Guid Id { get; set; }
 
         public class GetProjectItemQueryHandler : IRequestHandler<GetTestProjectItemQuery, GetTestProjectItemDto>
@@ -30,7 +36,7 @@ namespace Testnt.Main.Application.TestProjects.Item.Query.GetTestProjectItem
             public async Task<GetTestProjectItemDto> Handle(GetTestProjectItemQuery request, CancellationToken cancellationToken)
             {
                 var project = await context.Projects
-                    .Where(t => t.Id == request.Id)
+                    .Where(t => t.TenantId.Equals(request.TenantId))
                     //.SingleAsync()
                     .ProjectTo<GetTestProjectItemDto>(mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken)

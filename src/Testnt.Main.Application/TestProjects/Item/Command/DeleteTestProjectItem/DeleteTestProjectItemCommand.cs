@@ -7,13 +7,19 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Common.Exceptions;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Domain.Entity;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestProjects.Item.Command.DeleteTestProjectItem
 {
-    public class DeleteTestProjectItemCommand : IRequest
+    public class DeleteTestProjectItemCommand : BaseRequest, IRequest
     {
+        public DeleteTestProjectItemCommand(Guid tenantId)
+        {
+            this.TenantId = tenantId;
+        }
+
         public Guid Id { get; set; }
         public class DeleteProjectItemCommandHandler : IRequestHandler<DeleteTestProjectItemCommand>
         {
@@ -26,6 +32,7 @@ namespace Testnt.Main.Application.TestProjects.Item.Command.DeleteTestProjectIte
             public async Task<Unit> Handle(DeleteTestProjectItemCommand request, CancellationToken cancellationToken)
             {
                 var project = await context.Projects
+                    .Where(t => t.TenantId.Equals(request.TenantId))
                     .Where(t => t.Id == request.Id)
                     .SingleOrDefaultAsync();
 

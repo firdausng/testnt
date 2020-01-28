@@ -9,10 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestCases.Item.Command.CreateTestCaseItem
 {
-    public class CreateTestCaseItemCommand : IRequest<CreateTestCaseItemDto>
+    public class CreateTestCaseItemCommand : BaseRequest, IRequest<CreateTestCaseItemDto>
     {
         public CreateTestCaseItemCommand()
         {
@@ -45,7 +46,7 @@ namespace Testnt.Main.Application.TestCases.Item.Command.CreateTestCaseItem
                     throw new EntityNotFoundException(nameof(TestScenario), request.TestScenarioId);
                 }
 
-                var entity = new TestCase
+                var entity = new TestCase()
                 {
                     Name = request.Name,
                     Status = TestOutlineStatus.Active,

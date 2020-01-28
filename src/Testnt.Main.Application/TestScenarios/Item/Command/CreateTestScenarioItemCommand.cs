@@ -9,10 +9,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Main.Infrastructure.Data;
 using Testnt.Main.Domain.Entity;
+using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestScenarios.Item.Command
 {
-    public class CreateTestScenarioItemCommand : IRequest<CreateTestScenarioItemDto>
+    public class CreateTestScenarioItemCommand : BaseRequest, IRequest<CreateTestScenarioItemDto>
     {
         public CreateTestScenarioItemCommand()
         {
@@ -43,7 +44,7 @@ namespace Testnt.Main.Application.TestScenarios.Item.Command
                     throw new EntityNotFoundException(nameof(TestProject), request.ProjectId);
                 }
 
-                var entity = new TestScenario
+                var entity = new TestScenario()
                 {
                     Name = request.Name,
                     Status = TestOutlineStatus.Active

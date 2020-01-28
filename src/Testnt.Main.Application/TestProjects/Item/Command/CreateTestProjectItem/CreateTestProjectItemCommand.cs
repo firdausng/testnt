@@ -7,10 +7,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Main.Infrastructure.Data;
+using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestProjects.Item.Command.CreateTestProjectItem
 {
-    public class CreateTestProjectItemCommand : IRequest<CreateTestProjectItemDto>
+    public class CreateTestProjectItemCommand :BaseRequest, IRequest<CreateTestProjectItemDto>
     {
         public string Name { get; set; }
         public class CreateProjectItemCommandHandler : IRequestHandler<CreateTestProjectItemCommand, CreateTestProjectItemDto>
@@ -23,7 +24,7 @@ namespace Testnt.Main.Application.TestProjects.Item.Command.CreateTestProjectIte
 
             public async Task<CreateTestProjectItemDto> Handle(CreateTestProjectItemCommand request, CancellationToken cancellationToken)
             {
-                var entity = new TestProject { Name = request.Name };
+                var entity = new TestProject() { Name = request.Name, TenantId= request.TenantId };
                 context.Projects.Add(entity);
                 await context.SaveChangesAsync(cancellationToken);
 

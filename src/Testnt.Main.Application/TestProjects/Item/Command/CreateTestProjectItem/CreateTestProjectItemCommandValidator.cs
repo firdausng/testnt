@@ -23,7 +23,11 @@ namespace Testnt.Main.Application.TestProjects.Item.Command.CreateTestProjectIte
                 .MustAsync((name, cancellation) => HaveUniqueName(name))
                 .WithMessage("Project name already exists.")
                 ;
-           
+
+            RuleFor(v => v.TenantId)
+                .NotEmpty()
+                .WithMessage("Tenant id is missing.");
+
         }
 
         private async Task<bool> HaveUniqueName(string projectName)

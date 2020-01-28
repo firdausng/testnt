@@ -6,7 +6,11 @@ using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestProjects.List.Query.GetTestProjectList
 {
-    public class GetTestProjectListQuery: IRequest<GetObjectListVm<GetTestProjectListDto>>
+    public class GetTestProjectListQuery : BaseRequest, IRequest<GetObjectListVm<GetTestProjectListDto>>
     {
+        public GetTestProjectListQuery(Guid tenantId)
+        {
+            TenantId = tenantId;
+        }
     }
 }

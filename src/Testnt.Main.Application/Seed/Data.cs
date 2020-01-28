@@ -31,28 +31,28 @@ namespace Testnt.Main.Application.Seed
             //    context.SaveChanges();
             //}
 
-            var mediator = scope.ServiceProvider.GetService<IMediator>();
-            var getTestProjectList = mediator.Send(new GetTestProjectListQuery()).Result;
-            if (getTestProjectList.Count == 0)
-            {
-                var CreateTestProjectItem = mediator.Send(new CreateTestProjectItemCommand
-                {
-                    Name = "Testnt"
-                }).Result;
+            //var mediator = scope.ServiceProvider.GetService<IMediator>();
+            //var getTestProjectList = mediator.Send(new GetTestProjectListQuery()).Result;
+            //if (getTestProjectList.Count == 0)
+            //{
+            //    var CreateTestProjectItem = mediator.Send(new CreateTestProjectItemCommand
+            //    {
+            //        Name = "Testnt"
+            //    }).Result;
 
-                if (CreateTestProjectItem.Id != null)
-                {
-                    Console.WriteLine($"{CreateTestProjectItem.Id} successfully created");
-                }
-                else
-                {
-                    Console.WriteLine($"{CreateTestProjectItem.Id} failed to be created");
-                }
-            }
-            else
-            {
-                Console.WriteLine($"Sample test project already created");
-            }
+            //    if (CreateTestProjectItem.Id != null)
+            //    {
+            //        Console.WriteLine($"{CreateTestProjectItem.Id} successfully created");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine($"{CreateTestProjectItem.Id} failed to be created");
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine($"Sample test project already created");
+            //}
         }
     }
 }

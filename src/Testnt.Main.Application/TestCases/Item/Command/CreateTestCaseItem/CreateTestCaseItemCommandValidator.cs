@@ -26,6 +26,13 @@ namespace Testnt.Main.Application.TestCases.Item.Command.CreateTestCaseItem
                 .WithMessage(c => $"Test case name '{c.Name}' is already existed in this project ({c.ProjectId})")
                 ;
 
+            RuleFor(v => v.TenantId)
+                .NotEmpty()
+                .WithName("Tenant Id")
+                .NotNull()
+                .WithName("Tenant Id")
+                ;
+
             RuleFor(v => v.ProjectId)
                 .NotEmpty()
                 .WithName("Project id")

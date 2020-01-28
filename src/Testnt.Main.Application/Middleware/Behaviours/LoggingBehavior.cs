@@ -23,13 +23,13 @@ namespace Testnt.Main.Application.Middleware.Behaviours
         {
             var name = typeof(TRequest).Name;
 
-            logger.LogInformation("Handling command {@Request} by {@UserId}",
-                name, currentUserService.UserId);
+            logger.LogInformation("Handling command {@Request} by {@UserName} from tenant {@TenantId}",
+                name, currentUserService.Name, currentUserService.TenantId);
 
             var response = await next();
 
-            logger.LogInformation("Done handling command: {@Request} by {@UserId}",
-                name, currentUserService.UserId);
+            logger.LogInformation("Done handling command: {@Request} by {@UserName}",
+                name, currentUserService.Name);
 
             return response;
         }

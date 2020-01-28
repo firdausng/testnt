@@ -8,9 +8,6 @@ namespace Testnt.Main.Application.TestProjects.List.Query.GetTestProjectList
 {
     public class GetTestProjectListQuery : BaseRequest, IRequest<GetObjectListVm<GetTestProjectListDto>>
     {
-        public GetTestProjectListQuery(Guid tenantId)
-        {
-            TenantId = tenantId;
-        }
+
     }
 }

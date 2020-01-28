@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Testnt.Main.Application
         {
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            services.AddTransient(typeof(IRequestPreProcessor<>), typeof(TenantIdInjectorPreProcessor<>));
 
             AddAutoMapper();
 

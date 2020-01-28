@@ -7,9 +7,5 @@ namespace Testnt.Main.Application.TestCases.List.Query.GetTestCaseList
 {
     public class GetTestCaseListQuery : BaseRequest, IRequest<GetObjectListVm<GetTestCaseListDto>>
     {
-        public GetTestCaseListQuery(Guid tenantId) 
-        {
-            this.TenantId = tenantId;
-        }
     }
 }

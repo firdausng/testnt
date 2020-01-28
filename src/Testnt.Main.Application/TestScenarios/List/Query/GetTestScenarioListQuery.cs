@@ -8,9 +8,5 @@ namespace Testnt.Main.Application.TestScenarios.List.Query
 {
     public class GetTestScenarioListQuery : BaseRequest, IRequest<GetObjectListVm<GetTestScenarioListDto>>
     {
-        public GetTestScenarioListQuery(Guid tenantId)
-        {
-            TenantId = tenantId;
-        }
     }
 }

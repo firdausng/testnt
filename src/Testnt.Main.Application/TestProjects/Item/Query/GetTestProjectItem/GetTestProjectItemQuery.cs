@@ -15,11 +15,6 @@ namespace Testnt.Main.Application.TestProjects.Item.Query.GetTestProjectItem
 {
     public class GetTestProjectItemQuery :BaseRequest, IRequest<GetTestProjectItemDto>
     {
-        public GetTestProjectItemQuery(Guid tenantId)
-        {
-            this.TenantId = tenantId;
-        }
-
         public Guid Id { get; set; }
 
         public class GetProjectItemQueryHandler : IRequestHandler<GetTestProjectItemQuery, GetTestProjectItemDto>

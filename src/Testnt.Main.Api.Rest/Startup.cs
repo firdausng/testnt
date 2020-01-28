@@ -23,7 +23,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Testnt.Common.Interface;
 using Testnt.Common.Mappings;
-using Testnt.Main.Api.Rest.Filters;
 using Testnt.Main.Api.Rest.Middleware;
 using Testnt.Main.Api.Rest.Services;
 using Testnt.Main.Application;
@@ -57,7 +56,7 @@ namespace Testnt.Main.Api.Rest
             services.AddMediatR(assembly);
 
             services.AddControllersWithViews(options => {
-                options.Filters.Add(typeof(TenantIdFilter));
+                
             })
                 .AddFeatureFolders()
                 .AddNewtonsoftJson();

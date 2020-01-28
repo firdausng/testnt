@@ -15,11 +15,6 @@ namespace Testnt.Main.Application.TestProjects.Item.Command.DeleteTestProjectIte
 {
     public class DeleteTestProjectItemCommand : BaseRequest, IRequest
     {
-        public DeleteTestProjectItemCommand(Guid tenantId)
-        {
-            this.TenantId = tenantId;
-        }
-
         public Guid Id { get; set; }
         public class DeleteProjectItemCommandHandler : IRequestHandler<DeleteTestProjectItemCommand>
         {

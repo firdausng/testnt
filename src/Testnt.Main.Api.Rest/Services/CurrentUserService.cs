@@ -12,12 +12,18 @@ namespace Testnt.Main.Api.Rest.Services
     {
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            UserId = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-            IsAuthenticated = UserId != null;
+            var identity = httpContextAccessor.HttpContext?.User?.Identity as ClaimsIdentity;
+            var userClaims = identity.Claims;
+            var tenantIdClaim = userClaims.FirstOrDefault(c => c.Type == "tenant_id");
+
+            TenantId = Guid.Parse(tenantIdClaim.Value);
+            Name = userClaims.FirstOrDefault(c => c.Type == "name").Value;
+            Email = userClaims.FirstOrDefault(c => c.Type == "email").Value;
         }
 
-        public string UserId { get; }
+        public Guid TenantId { get; set; }
+        public string Name { get; }
+        public string Email { get; }
 
-        public bool IsAuthenticated { get; }
     }
 }

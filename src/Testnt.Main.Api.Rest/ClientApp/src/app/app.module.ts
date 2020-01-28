@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import {MatNativeDateModule} from '@angular/material/core';
 
+import { FormsModule } from '@angular/forms';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -21,7 +23,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
-import { ProjectComponent } from './project/project.component';
+import { ProjectComponent, NewProjectDialog } from './project/project.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AuthorizationGuard } from './authorization.guard';
 import { AutoLoginComponent } from './auto-login/auto-login.component';
@@ -44,7 +46,8 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
     DashboardComponent,
     ProjectComponent,
     UnauthorizedComponent,
-    AutoLoginComponent
+    AutoLoginComponent,
+    NewProjectDialog
   ],
   imports: [
     BrowserModule,
@@ -52,6 +55,7 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
     AppRoutingModule,
     AuthModule.forRoot(),
     BrowserAnimationsModule,
+    FormsModule,
 
     MaterialModule,
     MatNativeDateModule,
@@ -64,6 +68,9 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
     MatGridListModule,
     MatCardModule,
     MatMenuModule
+  ],
+  entryComponents: [
+    NewProjectDialog
   ],
   providers: [
     OidcConfigService,

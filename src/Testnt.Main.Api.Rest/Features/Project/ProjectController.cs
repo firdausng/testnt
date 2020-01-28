@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Testnt.Main.Application.TestProjects.Item.Command.CreateTestProjectItem;
+using Testnt.Main.Application.TestProjects.Item.Command.DeleteTestProjectItem;
 using Testnt.Main.Application.TestProjects.Item.Query.GetTestProjectItem;
 using Testnt.Main.Application.TestProjects.List.Query.GetTestProjectList;
 
@@ -51,6 +52,14 @@ namespace Testnt.Main.Api.Rest.Features.Project
             {
                 return BadRequest(vm);
             }
+
+        }
+
+        [HttpDelete("{id}", Name = "DeleteProject")]
+        public async Task<ActionResult> DeleteProject(Guid id)
+        {
+            await mediator.Send(new DeleteTestProjectItemCommand { Id = id });
+            return NoContent();
 
         }
     }

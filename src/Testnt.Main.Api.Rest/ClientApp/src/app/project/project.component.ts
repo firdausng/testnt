@@ -35,12 +35,15 @@ export class ProjectComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.projectName = result;
-      this.projectService.createProject(this.projectName).subscribe(
-        data => {
-          this.getAllProject();
-        },
-        err => console.log(err)
-      );
+      if(this.projectName.length > 0){
+        this.projectService.createProject(this.projectName).subscribe(
+          data => {
+            this.getAllProject();
+          },
+          err => console.log(err)
+        );
+      }
+      
     });
   }
 

@@ -43,8 +43,4 @@ namespace Testnt.Main.Application.TestProjects.Item.Command.DeleteTestProjectIte
             }
         }
     }
-
-    public class DeleteTestProjectItemDto
-    {
-    }
 }

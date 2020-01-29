@@ -25,12 +25,13 @@ namespace Testnt.Main.Api.Rest
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
                 .MinimumLevel.Override("System", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 // uncomment to write to Azure diagnostics stream
                 //.WriteTo.File(
-                //    @"D:\home\LogFiles\Application\identityserver.txt",
+                //    @"D:\home\LogFiles\Application\tesntserver.txt",
                 //    fileSizeLimitBytes: 1_000_000,
                 //    rollOnFileSizeLimit: true,
                 //    shared: true,
@@ -67,6 +68,7 @@ namespace Testnt.Main.Api.Rest
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseSerilog();
                 });
     }
 }

@@ -17,12 +17,13 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
     {
         public CreateTestScenarioItemCommand()
         {
-            Tags = new List<Guid>();
+            TagIds = new List<Guid>();
         }
 
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Guid> Tags { get; set; }
+        public ICollection<Guid> TagIds { get; set; }
+        public ICollection<Guid> TestCaseIds { get; set; }
         public Guid ProjectId { get; set; }
 
         public class CreateTestScenarioItemCommandHandler : IRequestHandler<CreateTestScenarioItemCommand, CreateTestScenarioItemCommandDto>
@@ -50,11 +51,11 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
                     Status = TestOutlineStatus.Active
                 };
 
-                if (request.Tags.Count > 0)
+                if (request.TagIds.Count > 0)
                 {
                     var testTageFromDb = await context.TestTags
                         .Where(tt => tt.ProjectId == request.ProjectId)
-                        .Where(tt => request.Tags.Any(rt => rt == tt.Id))
+                        .Where(tt => request.TagIds.Any(rt => rt == tt.Id))
                         .ToListAsync();
 
                     //if (testTageFromDb.Count != request.Tags.Count)

@@ -33,6 +33,7 @@ namespace Testnt.Main.Infrastructure.Data
                 .IsUnique();
 
 
+            // many to many mapping for test projects and tags
             modelBuilder.Entity<TestTag>()
                 .HasKey(bc => new { bc.TestOutlineId, bc.TagId });
             modelBuilder.Entity<TestTag>()
@@ -43,6 +44,20 @@ namespace Testnt.Main.Infrastructure.Data
                 .HasOne(bc => bc.Tag)
                 .WithMany(c => c.TestTags)
                 .HasForeignKey(bc => bc.TestOutlineId);
+
+
+            // many to many mapping for test project and user
+            modelBuilder.Entity<ProjectUser>()
+                .HasKey(bc => new { bc.ProjectId, bc.UserProfileId });
+            modelBuilder.Entity<ProjectUser>()
+                .HasOne(bc => bc.UserProfile)
+                .WithMany(b => b.Projects)
+                .HasForeignKey(bc => bc.ProjectId);
+            modelBuilder.Entity<ProjectUser>()
+                .HasOne(bc => bc.TestProject)
+                .WithMany(c => c.Members)
+                .HasForeignKey(bc => bc.UserProfileId);
+
 
             modelBuilder.Entity<TestCase>()
                 .OwnsMany(p => p.TestSteps);

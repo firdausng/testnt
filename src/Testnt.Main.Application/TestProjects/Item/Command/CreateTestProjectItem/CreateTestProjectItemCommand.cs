@@ -14,6 +14,7 @@ namespace Testnt.Main.Application.TestProjects.Item.Command.CreateTestProjectIte
     public class CreateTestProjectItemCommand :BaseRequest, IRequest<CreateTestProjectItemDto>
     {
         public string Name { get; set; }
+        public bool IsEnabled { get; set; }
         public class CreateProjectItemCommandHandler : IRequestHandler<CreateTestProjectItemCommand, CreateTestProjectItemDto>
         {
             private readonly TestntDbContext context;

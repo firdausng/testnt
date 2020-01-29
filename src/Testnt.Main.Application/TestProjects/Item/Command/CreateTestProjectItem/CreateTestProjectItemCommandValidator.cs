@@ -24,6 +24,13 @@ namespace Testnt.Main.Application.TestProjects.Item.Command.CreateTestProjectIte
                 .WithMessage("Project name already exists.")
                 ;
 
+            RuleFor(v => v.IsEnabled)
+                .NotEmpty()
+                .WithName("IsEnabled")
+                .NotNull()
+                .WithName("IsEnabled")
+                ;
+
             RuleFor(v => v.TenantId)
                 .NotEmpty()
                 .WithMessage("Tenant id is missing.");

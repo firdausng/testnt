@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Testnt.Main.Application.Common;
-using Testnt.Main.Application.TestProjects.Item.Command.CreateTestProjectItem;
-using Testnt.Main.Application.TestProjects.Item.Command.DeleteTestProjectItem;
-using Testnt.Main.Application.TestProjects.Item.Query.GetTestProjectItem;
-using Testnt.Main.Application.TestProjects.List.Query.GetTestProjectList;
+using Testnt.Main.Application.TestProjects.Command.Create;
+using Testnt.Main.Application.TestProjects.Command.Delete;
+using Testnt.Main.Application.TestProjects.Query.Item;
+using Testnt.Main.Application.TestProjects.Query.List;
 
 namespace Testnt.Main.Api.Rest.Features.Project
 {

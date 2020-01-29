@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Testnt.Main.Application.Common;
-using Testnt.Main.Application.TestScenarios.Item.Command.CreateTestScenarioItem;
-using Testnt.Main.Application.TestScenarios.Item.Query.GetTestScenarioItem;
-using Testnt.Main.Application.TestScenarios.List.Query.GetTestScenarioList;
+using Testnt.Main.Application.TestScenarios.Command.Item;
+using Testnt.Main.Application.TestScenarios.Query.Item;
+using Testnt.Main.Application.TestScenarios.Query.List;
 
 namespace Testnt.Main.Api.Rest.Features.TestScenario
 {

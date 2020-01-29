@@ -6,9 +6,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Testnt.Main.Application.Common;
-using Testnt.Main.Application.TestSessions.Item.Command.CreateTestSessionItem;
-using Testnt.Main.Application.TestSessions.Item.Query;
-using Testnt.Main.Application.TestSessions.List.Query.GetTestSessionList;
+using Testnt.Main.Application.TestSessions.Command.Item;
+using Testnt.Main.Application.TestSessions.Query.Item;
+using Testnt.Main.Application.TestSessions.Query.List;
 
 namespace Testnt.Main.Api.Rest.Features.TestSession
 {

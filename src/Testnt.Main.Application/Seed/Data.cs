@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Testnt.Main.Application.TestProjects.Item.Command.CreateTestProjectItem;
-using Testnt.Main.Application.TestProjects.List.Query.GetTestProjectList;
 using Testnt.Main.Domain.Entity;
 using Testnt.Main.Infrastructure.Data;
 

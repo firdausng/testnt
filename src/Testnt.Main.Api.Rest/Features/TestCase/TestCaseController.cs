@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Testnt.Main.Application.Common;
-using Testnt.Main.Application.TestCases.Item.Command.CreateTestCaseItem;
-using Testnt.Main.Application.TestCases.Item.Query.GetTestCaseItem;
-using Testnt.Main.Application.TestCases.List.Query.GetTestCaseList;
+using Testnt.Main.Application.TestCases.Command.Item;
+using Testnt.Main.Application.TestCases.Query.Item;
+using Testnt.Main.Application.TestCases.Query.List;
 
 namespace Testnt.Main.Api.Rest.Features.TestCase
 {

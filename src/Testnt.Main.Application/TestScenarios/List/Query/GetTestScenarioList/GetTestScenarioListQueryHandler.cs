@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Testnt.Main.Application.Common;
 using Testnt.Main.Infrastructure.Data;
 
-namespace Testnt.Main.Application.TestScenarios.List.Query
+namespace Testnt.Main.Application.TestScenarios.List.Query.GetTestScenarioList
 {
     public class GetTestScenarioListQueryHandler : IRequestHandler<GetTestScenarioListQuery, GetObjectListVm<GetTestScenarioListDto>>
     {

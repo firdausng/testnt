@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace Testnt.Main.Application.TestScenarios.Item.Command
+namespace Testnt.Main.Application.TestScenarios.Item.Command.CreateTestScenarioItem
 {
     public class CreateTestScenarioItemDto : IMapFrom<TestScenario>
     {

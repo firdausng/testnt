@@ -11,7 +11,7 @@ using Testnt.Main.Infrastructure.Data;
 using Testnt.Main.Domain.Entity;
 using Testnt.Main.Application.Common;
 
-namespace Testnt.Main.Application.TestScenarios.Item.Command
+namespace Testnt.Main.Application.TestScenarios.Item.Command.CreateTestScenarioItem
 {
     public class CreateTestScenarioItemCommand : BaseRequest, IRequest<CreateTestScenarioItemDto>
     {

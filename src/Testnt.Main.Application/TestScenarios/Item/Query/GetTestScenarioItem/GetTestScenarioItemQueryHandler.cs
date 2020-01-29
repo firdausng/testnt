@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Main.Infrastructure.Data;
 
-namespace Testnt.Main.Application.TestScenarios.Item.Query
+namespace Testnt.Main.Application.TestScenarios.Item.Query.GetTestScenarioItem
 {
     public class GetTestScenarioItemQueryHandler : IRequestHandler<GetTestScenarioItemQuery, GetTestScenarioItemDto>
     {

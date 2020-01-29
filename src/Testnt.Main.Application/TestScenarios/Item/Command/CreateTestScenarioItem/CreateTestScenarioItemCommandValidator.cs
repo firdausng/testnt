@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Testnt.Main.Infrastructure.Data;
 
-namespace Testnt.Main.Application.TestScenarios.Item.Command
+namespace Testnt.Main.Application.TestScenarios.Item.Command.CreateTestScenarioItem
 {
     public class CreateTestScenarioItemCommandValidator : AbstractValidator<CreateTestScenarioItemCommand>
     {

@@ -3,7 +3,7 @@ using Testnt.Common.Mappings;
 using Testnt.Main.Domain.Entity;
 using System;
 
-namespace Testnt.Main.Application.TestScenarios.Item.Query
+namespace Testnt.Main.Application.TestScenarios.Item.Query.GetTestScenarioItem
 {
     public class GetTestScenarioItemDto : IMapFrom<TestScenario>
     {

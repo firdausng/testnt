@@ -13,12 +13,12 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestProjects.Item.Command.UpdateTestProjectItem
 {
-    public class UpdateTestProjectItemCommand : BaseRequest, IRequest<UpdateTestProjectItemDto>
+    public class UpdateTestProjectItemCommand : BaseRequest, IRequest
     {
         public Guid ProjectId { get; set; }
         public bool IsEnabled { get; set; }
 
-        public class UpdateTestProjectItemCommandHandler : IRequestHandler<UpdateTestProjectItemCommand, UpdateTestProjectItemDto>
+        public class UpdateTestProjectItemCommandHandler : IRequestHandler<UpdateTestProjectItemCommand>
         {
             private readonly TestntDbContext context;
             public UpdateTestProjectItemCommandHandler(TestntDbContext context)
@@ -26,7 +26,7 @@ namespace Testnt.Main.Application.TestProjects.Item.Command.UpdateTestProjectIte
                 this.context = context;
             }
 
-            public async Task<UpdateTestProjectItemDto> Handle(UpdateTestProjectItemCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateTestProjectItemCommand request, CancellationToken cancellationToken)
             {
                 var project = await context.Projects
                     .Where(t => t.TenantId.Equals(request.TenantId))
@@ -43,9 +43,7 @@ namespace Testnt.Main.Application.TestProjects.Item.Command.UpdateTestProjectIte
                 context.Projects.Update(project);
                 await context.SaveChangesAsync(cancellationToken);
 
-                return new UpdateTestProjectItemDto
-                {   
-                };
+                return Unit.Value;
             }
         }
     }

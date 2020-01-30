@@ -19,6 +19,21 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                 .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.ProjectUser", b =>
+                {
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserProfileId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ProjectId", "UserProfileId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("ProjectUser");
+                });
+
             modelBuilder.Entity("Testnt.Main.Domain.Entity.Tag", b =>
                 {
                     b.Property<Guid>("Id")
@@ -41,7 +56,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.HasIndex("TestProjectId");
 
-                    b.ToTable("TestTags");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.TestFeature", b =>
@@ -106,6 +121,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -239,6 +257,29 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("TestTag");
                 });
 
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.UserProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserProfiles");
+                });
+
             modelBuilder.Entity("Testnt.Main.Domain.Entity.TestCase", b =>
                 {
                     b.HasBaseType("Testnt.Main.Domain.Entity.TestOutline");
@@ -272,6 +313,21 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.HasIndex("TestProjectId");
 
                     b.HasDiscriminator().HasValue("TestScenario");
+                });
+
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.ProjectUser", b =>
+                {
+                    b.HasOne("Testnt.Main.Domain.Entity.UserProfile", "UserProfile")
+                        .WithMany("Projects")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Testnt.Main.Domain.Entity.TestProject", "TestProject")
+                        .WithMany("Members")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.Tag", b =>

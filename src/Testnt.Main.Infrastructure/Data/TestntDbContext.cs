@@ -19,6 +19,7 @@ namespace Testnt.Main.Infrastructure.Data
         public DbSet<TestScenario> TestScenarios { get; set; }
         public DbSet<TestFeature> TestFeatures { get; set; }
         public DbSet<TestSession> TestSessions { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Tag> TestTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,7 +34,7 @@ namespace Testnt.Main.Infrastructure.Data
                 .IsUnique();
 
 
-            // many to many mapping for test projects and tags
+            // many to many mapping for test outline and tags
             modelBuilder.Entity<TestTag>()
                 .HasKey(bc => new { bc.TestOutlineId, bc.TagId });
             modelBuilder.Entity<TestTag>()

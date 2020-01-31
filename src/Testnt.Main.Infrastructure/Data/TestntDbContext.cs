@@ -105,12 +105,23 @@ namespace Testnt.Main.Infrastructure.Data
 
         public override EntityEntry<TEntity> Add<TEntity>(TEntity entity)
         {
+            entity = InjectTenantId(entity);
             return base.Add(entity);
         }
 
         public override ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
         {
+            entity = InjectTenantId(entity);
             return base.AddAsync(entity, cancellationToken);
+        }
+
+
+
+        private TEntity InjectTenantId<TEntity>(TEntity entity)
+        {
+            var tenantIdProp = typeof(TEntity).GetProperty("TenantId");
+            tenantIdProp.SetValue(entity, currentUserService.TenantId);
+            return entity;
         }
     }
 

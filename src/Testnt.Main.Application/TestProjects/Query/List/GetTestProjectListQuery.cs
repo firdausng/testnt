@@ -6,7 +6,7 @@ using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestProjects.Query.List
 {
-    public class GetTestProjectListQuery : BaseRequest, IRequest<GetObjectListVm<GetTestProjectListDto>>
+    public class GetTestProjectListQuery : IRequest<GetObjectListVm<GetTestProjectListDto>>
     {
 
     }

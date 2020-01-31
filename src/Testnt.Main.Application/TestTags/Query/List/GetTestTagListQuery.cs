@@ -15,7 +15,7 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestTags.Query.List
 {
-    public class GetTestTagListQuery : BaseRequest, IRequest<GetObjectListVm<GetTestTagListDto>>
+    public class GetTestTagListQuery : IRequest<GetObjectListVm<GetTestTagListDto>>
     {
         public Guid ProjectId { get; set; }
     }

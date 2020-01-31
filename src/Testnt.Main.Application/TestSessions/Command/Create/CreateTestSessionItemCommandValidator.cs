@@ -10,7 +10,7 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestSessions.Command.Item
 {
-    public class CreateTestSessionItemCommandValidator : BaseTenantValidator<CreateTestSessionItemCommand>
+    public class CreateTestSessionItemCommandValidator : AbstractValidator<CreateTestSessionItemCommand>
     {
         private readonly TestntDbContext context;
 

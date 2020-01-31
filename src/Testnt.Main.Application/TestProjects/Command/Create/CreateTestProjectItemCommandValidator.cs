@@ -10,7 +10,7 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestProjects.Command.Create
 {
-    public class CreateTestProjectCommandValidator : BaseTenantValidator<CreateTestProjectItemCommand>
+    public class CreateTestProjectCommandValidator : AbstractValidator<CreateTestProjectItemCommand>
     {
         private readonly TestntDbContext context;
 

@@ -13,7 +13,7 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestTags.Command.Create
 {
-    public class CreateTestTagItemCommand : BaseRequest, IRequest<CreateTestTagItemDto>
+    public class CreateTestTagItemCommand : IRequest<CreateTestTagItemDto>
     {
         public string Name { get; set; }
         public Guid ProjectId { get; set; }
@@ -41,14 +41,12 @@ namespace Testnt.Main.Application.TestTags.Command.Create
                 var entity = new Tag() 
                 { 
                     Name = request.Name,
-                    ProjectId = request.ProjectId,
-                    TenantId = request.TenantId
+                    ProjectId = request.ProjectId
                 };
 
                 if (request.TestScenarioIds.Count > 0)
                 {
                     var listFromDb = await context.TestScenarios
-                        .Where(p => p.TenantId.Equals(request.TenantId))
                         .Where(p => p.TestProject.Id.Equals(request.ProjectId))
                         .Include(t => t.TestTags)
                         .Where(r => request.TestScenarioIds.Contains(r.Id))
@@ -65,7 +63,6 @@ namespace Testnt.Main.Application.TestTags.Command.Create
                 if (request.TestCaseIds.Count > 0)
                 {
                     var listFromDb = await context.TestCases
-                        .Where(p => p.TenantId.Equals(request.TenantId))
                         .Where(p => p.TestProject.Id.Equals(request.ProjectId))
                         .Include(t => t.TestTags)
                         .Where(r => request.TestCaseIds.Contains(r.Id))

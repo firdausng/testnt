@@ -13,7 +13,7 @@ using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestProjects.Query.Item
 {
-    public class GetTestProjectItemQuery :BaseRequest, IRequest<GetTestProjectItemDto>
+    public class GetTestProjectItemQuery :IRequest<GetTestProjectItemDto>
     {
         public Guid Id { get; set; }
 
@@ -31,18 +31,16 @@ namespace Testnt.Main.Application.TestProjects.Query.Item
             public async Task<GetTestProjectItemDto> Handle(GetTestProjectItemQuery request, CancellationToken cancellationToken)
             {
                 var project = await context.Projects
-                    .Where(t => t.TenantId.Equals(request.TenantId))
-                    //.SingleAsync()
                     .ProjectTo<GetTestProjectItemDto>(mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken)
+                    .SingleOrDefaultAsync(cancellationToken)
                     ;
 
-                if (project.Count == 0)
+                if (project == null)
                 {
                     throw new EntityNotFoundException(nameof(TestProject), request.Id);
                 }
 
-                return project.Single();
+                return project;
             }
         }
     }

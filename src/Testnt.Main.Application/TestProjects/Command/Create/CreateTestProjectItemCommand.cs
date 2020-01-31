@@ -11,7 +11,7 @@ using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestProjects.Command.Create
 {
-    public class CreateTestProjectItemCommand :BaseRequest, IRequest<CreateTestProjectItemDto>
+    public class CreateTestProjectItemCommand : IRequest<CreateTestProjectItemDto>
     {
         public string Name { get; set; }
         public bool IsEnabled { get; set; }
@@ -27,7 +27,6 @@ namespace Testnt.Main.Application.TestProjects.Command.Create
             {
                 var entity = new TestProject() { 
                     Name = request.Name, 
-                    TenantId= request.TenantId ,
                     IsEnabled = request.IsEnabled
                 };
                 context.Projects.Add(entity);

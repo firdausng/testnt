@@ -13,7 +13,7 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestProjects.Command.Delete
 {
-    public class DeleteTestProjectItemCommand : BaseRequest, IRequest
+    public class DeleteTestProjectItemCommand : IRequest
     {
         public Guid Id { get; set; }
         public class DeleteProjectItemCommandHandler : IRequestHandler<DeleteTestProjectItemCommand>

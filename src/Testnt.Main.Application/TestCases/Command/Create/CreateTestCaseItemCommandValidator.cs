@@ -9,7 +9,7 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestCases.Command.Item
 {
-    public class CreateTestCaseItemCommandValidator: BaseTenantValidator<CreateTestCaseItemCommand>
+    public class CreateTestCaseItemCommandValidator: AbstractValidator<CreateTestCaseItemCommand>
     {
         private readonly TestntDbContext context;
         private  List<Guid> notFoundTags;

@@ -6,7 +6,7 @@ using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestCases.Query.Item
 {
-    public class GetTestCaseItemQuery: BaseRequest, IRequest<GetTestCaseItemDto>
+    public class GetTestCaseItemQuery: IRequest<GetTestCaseItemDto>
     {
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }

@@ -16,7 +16,7 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestTags.Query.Item
 {
-    public class GetTestTagItemQuery : BaseRequest, IRequest<GetTestTagItemDto>
+    public class GetTestTagItemQuery : IRequest<GetTestTagItemDto>
     {
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }

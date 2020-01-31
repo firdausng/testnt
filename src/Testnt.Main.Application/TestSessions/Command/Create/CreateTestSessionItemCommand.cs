@@ -14,7 +14,7 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestSessions.Command.Item
 {
-    public class CreateTestSessionItemCommand : BaseRequest, IRequest<CreateTestSessionItemDto>
+    public class CreateTestSessionItemCommand : IRequest<CreateTestSessionItemDto>
     {
         public string Name { get; set; }
         public Guid ProjectId { get; set; }

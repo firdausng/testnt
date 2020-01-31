@@ -13,7 +13,7 @@ using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestScenarios.Command.Item
 {
-    public class CreateTestScenarioItemCommand : BaseRequest, IRequest<CreateTestScenarioItemCommandDto>
+    public class CreateTestScenarioItemCommand : IRequest<CreateTestScenarioItemCommandDto>
     {
         public CreateTestScenarioItemCommand()
         {
@@ -37,7 +37,6 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
             public async Task<CreateTestScenarioItemCommandDto> Handle(CreateTestScenarioItemCommand request, CancellationToken cancellationToken)
             {
                 var project = await context.Projects
-                    .Where(p => p.TenantId.Equals(request.TenantId))
                     .Where(p => p.Id.Equals(request.ProjectId))
                     .FirstOrDefaultAsync();
 
@@ -51,13 +50,11 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
                     Name = request.Name,
                     Description = request.Description,
                     Status = TestOutlineStatus.Draft,
-                    TenantId = request.TenantId
                 };
 
                 if (request.TestCaseIds.Count > 0)
                 {
                     var listOfTestCasesFromDb = await context.TestCases
-                        .Where(p => p.TenantId.Equals(request.TenantId))
                         .Where(p => p.TestProject.Id.Equals(request.ProjectId))
                         .Where(r => request.TestCaseIds.Contains(r.Id))
                         .ToListAsync()
@@ -68,7 +65,6 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
                 if (request.TagIds.Count > 0)
                 {
                     var listOfTagsFromDb = await context.TestTags
-                        .Where(p => p.TenantId.Equals(request.TenantId))
                         .Where(p => p.ProjectId.Equals(request.ProjectId))
                         .Include(t => t.TestTags)
                         .Where(r => request.TagIds.Contains(r.Id))

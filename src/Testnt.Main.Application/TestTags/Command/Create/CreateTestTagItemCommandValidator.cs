@@ -10,7 +10,7 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestTags.Command.Create
 {
-    public class CreateTestTagItemCommandValidator : BaseTenantValidator<CreateTestTagItemCommand>
+    public class CreateTestTagItemCommandValidator : AbstractValidator<CreateTestTagItemCommand>
     {
         private readonly TestntDbContext context;
 
@@ -24,10 +24,6 @@ namespace Testnt.Main.Application.TestTags.Command.Create
                 .MustAsync((command, _, cancellation) => HaveUniqueName(command))
                 .WithMessage("Project name already exists.")
                 ;
-
-            RuleFor(v => v.TenantId)
-                .NotEmpty()
-                .WithMessage("Tag id is missing.");
 
             RuleFor(v => v.ProjectId)
                 .NotEmpty()

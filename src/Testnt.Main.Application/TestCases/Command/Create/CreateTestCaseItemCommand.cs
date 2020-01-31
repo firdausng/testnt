@@ -13,7 +13,7 @@ using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestCases.Command.Item
 {
-    public class CreateTestCaseItemCommand : BaseRequest, IRequest<CreateTestCaseItemDto>
+    public class CreateTestCaseItemCommand : IRequest<CreateTestCaseItemDto>
     {
         public CreateTestCaseItemCommand()
         {
@@ -51,7 +51,6 @@ namespace Testnt.Main.Application.TestCases.Command.Item
                     Name = request.Name,
                     Status = TestOutlineStatus.Active,
                     TestProject = testScenario.TestProject,
-                    TenantId = request.TenantId
                 };
 
                 if (request.Tags.Count > 0)

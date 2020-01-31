@@ -6,7 +6,7 @@ using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestScenarios.Query.List
 {
-    public class GetTestScenarioListQuery : BaseRequest, IRequest<GetObjectListVm<GetTestScenarioListDto>>
+    public class GetTestScenarioListQuery : IRequest<GetObjectListVm<GetTestScenarioListDto>>
     {
         public Guid ProjectId { get; set; }
     }

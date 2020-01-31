@@ -5,7 +5,7 @@ using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestCases.Query.List
 {
-    public class GetTestCaseListQuery : BaseRequest, IRequest<GetObjectListVm<GetTestCaseListDto>>
+    public class GetTestCaseListQuery : IRequest<GetObjectListVm<GetTestCaseListDto>>
     {
         public Guid ProjectId { get; set; }
     }

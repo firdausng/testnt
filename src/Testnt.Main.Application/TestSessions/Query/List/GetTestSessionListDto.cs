@@ -7,7 +7,7 @@ using Testnt.Main.Domain.Entity.TestSessionEntity;
 
 namespace Testnt.Main.Application.TestSessions.Query.List
 {
-    public class GetTestSessionListDto : IMapFrom<TestSession>
+    public class GetTestSessionListDto : IMapFrom<Session>
     {
         public string Name { get; set; }
         public Guid Id { get; set; }
@@ -16,7 +16,7 @@ namespace Testnt.Main.Application.TestSessions.Query.List
         public DateTimeOffset Finished { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<TestSession, GetTestSessionListDto>();
+            profile.CreateMap<Session, GetTestSessionListDto>();
         }
     }
 }

@@ -5,14 +5,14 @@ using Testnt.Common.Mappings;
 
 namespace Testnt.Main.Application.TestProjects.Query.Item
 {
-    public class GetTestProjectItemDto : IMapFrom<TestProject>
+    public class GetTestProjectItemDto : IMapFrom<Project>
     {
         public string Name { get; set; }
         public Guid Id { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<TestProject, GetTestProjectItemDto>();
+            profile.CreateMap<Project, GetTestProjectItemDto>();
         }
     }
 

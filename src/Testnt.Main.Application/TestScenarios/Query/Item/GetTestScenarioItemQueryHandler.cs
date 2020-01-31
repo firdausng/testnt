@@ -22,10 +22,10 @@ namespace Testnt.Main.Application.TestScenarios.Query.Item
 
         public async Task<GetTestScenarioItemDto> Handle(GetTestScenarioItemQuery request, CancellationToken cancellationToken)
         {
-            var testCase = await context.TestScenarios
+            var testCase = await context.Scenarios
                 .Where(t => t.Id == request.Id)
-                .Include(t => t.TestCases)
-                .Include(t => t.TestTags)
+                .Include(t => t.Steps)
+                .Include(t => t.Tags)
                 //.SingleAsync()
                 .ProjectTo<GetTestScenarioItemDto>(mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken)

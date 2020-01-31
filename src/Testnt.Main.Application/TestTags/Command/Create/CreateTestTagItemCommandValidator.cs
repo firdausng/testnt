@@ -33,7 +33,7 @@ namespace Testnt.Main.Application.TestTags.Command.Create
 
         private async Task<bool> HaveUniqueName(CreateTestTagItemCommand command)
         {
-            var tagNameExistCheck = await context.TestTags
+            var tagNameExistCheck = await context.Tags
                 .Where(t => t.ProjectId.Equals(command.ProjectId))
                 .Where(p => p.Name.ToLower().Equals(command.Name.ToLower())).ToListAsync();
             return tagNameExistCheck.Count == 0;

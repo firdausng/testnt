@@ -5,7 +5,7 @@ using Testnt.Main.Domain.Entity.TestSessionEntity;
 
 namespace Testnt.Main.Application.TestSessions.Query.Item
 {
-    public class GetTestSessionItemDto : IMapFrom<TestSession>
+    public class GetTestSessionItemDto : IMapFrom<Session>
     {
         public GetTestSessionItemDto()
         {
@@ -18,7 +18,7 @@ namespace Testnt.Main.Application.TestSessions.Query.Item
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<TestSession, GetTestSessionItemDto>();
+            profile.CreateMap<Session, GetTestSessionItemDto>();
         }
     }
 }

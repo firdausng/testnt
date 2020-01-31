@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Testnt.Main.Application.TestScenarios.Command.Item
 {
-    public class CreateTestScenarioItemCommandDto : IMapFrom<TestScenario>
+    public class CreateTestScenarioItemCommandDto : IMapFrom<Scenario>
     {
         public Guid Id { get; set; }
     }

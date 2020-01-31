@@ -42,13 +42,6 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
                 .MustAsync((command, _, cancellation) => TagsExist(command))
                 ;
 
-            RuleFor(v => v.TestCaseIds)
-                .NotNull()
-                .WithMessage("'Test Case' cannot be set to null and is optional parameter")
-                .MustAsync((command, _, cancellation) => TestCaseExist(command))
-                ;
-
-
             RuleFor(v => v.Description)
                 .MaximumLength(300)
                 ;
@@ -58,9 +51,9 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
         private async Task<bool> HaveUniqueNameWithinOneProject(CreateTestScenarioItemCommand command)
         {
             var testcaseNameExistCheck = await context.Projects
-                .Include(p => p.TestScenarios)
+                .Include(p => p.Scenarios)
                 .Where(p => p.Id == command.ProjectId)
-                .SelectMany(p => p.TestScenarios)
+                .SelectMany(p => p.Scenarios)
                 .Select(tc => new
                 {
                     tc.Name
@@ -84,26 +77,12 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
             {
                 return true;
             }
-            var testTagsFromDb = await context.TestTags
+            var testTagsFromDb = await context.Tags
                         .Where(tt => tt.ProjectId == command.ProjectId)
                         .Where(tt => command.TagIds.Any(rt => rt == tt.Id))
                         .ToListAsync();
 
             return testTagsFromDb.Count == command.TagIds.Count;
-        }
-
-        private async Task<bool> TestCaseExist(CreateTestScenarioItemCommand command)
-        {
-            if (command.TestCaseIds == null || command.TestCaseIds.Count == 0)
-            {
-                return true;
-            }
-            var testCaseFromDb = await context.TestTags
-                        .Where(tt => tt.ProjectId == command.ProjectId)
-                        .Where(tt => command.TestCaseIds.Any(rt => rt == tt.Id))
-                        .ToListAsync();
-
-            return testCaseFromDb.Count == command.TestCaseIds.Count;
         }
     }
 }

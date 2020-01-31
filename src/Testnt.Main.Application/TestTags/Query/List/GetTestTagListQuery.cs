@@ -33,7 +33,7 @@ namespace Testnt.Main.Application.TestTags.Query.List
 
         public async Task<GetObjectListVm<GetTestTagListDto>> Handle(GetTestTagListQuery request, CancellationToken cancellationToken)
         {
-            var testTagsFromDb = await context.TestTags
+            var testTagsFromDb = await context.Tags
                 .Where(t => t.ProjectId.Equals(request.ProjectId))
                 .ProjectTo<GetTestTagListDto>(mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);

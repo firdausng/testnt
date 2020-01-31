@@ -35,12 +35,12 @@ namespace Testnt.Main.Application.TestSessions.Command.Item
 
                 if (project == null)
                 {
-                    throw new EntityNotFoundException(nameof(TestProject), request.ProjectId);
+                    throw new EntityNotFoundException(nameof(Project), request.ProjectId);
                 }
 
-                var entity = new TestSession() { Name = request.Name };
+                var entity = new Session() { Name = request.Name };
                 
-                project.TestSessions.Add(entity);
+                project.Sessions.Add(entity);
                 context.Projects.Update(project);
                 //context.TestCases.Add(entity);
                 await context.SaveChangesAsync(cancellationToken);

@@ -42,7 +42,7 @@ namespace Testnt.Main.Application.TestSessions.Command.Item
 
         private async Task<bool> HaveUniqueName(string sessionName)
         {
-            var testSessionNameExistCheck = await context.TestSessions.Where(p => p.Name.ToLower().Equals(sessionName.ToLower())).ToListAsync();
+            var testSessionNameExistCheck = await context.Sessions.Where(p => p.Name.ToLower().Equals(sessionName.ToLower())).ToListAsync();
             return testSessionNameExistCheck.Count == 0;
         }
 

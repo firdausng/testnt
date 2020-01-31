@@ -32,7 +32,7 @@ namespace Testnt.Main.Application.TestProjects.Command.Delete
 
                 if (project == null)
                 {
-                    throw new EntityNotFoundException(nameof(TestProject), request.Id);
+                    throw new EntityNotFoundException(nameof(Project), request.Id);
                 }
 
                 context.Projects.Remove(project);

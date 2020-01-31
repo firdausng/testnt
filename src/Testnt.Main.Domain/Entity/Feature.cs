@@ -4,11 +4,12 @@ using System.Text;
 
 namespace Testnt.Main.Domain.Entity
 {
-    public class ProjectUser
+    public class Feature: BaseEntity
     {
+        public string Name { get; set; }
+        public string Description { get; set; }
         public Guid ProjectId { get; set; }
         public Project Project { get; set; }
-        public Guid UserProfileId { get; set; }
-        public UserProfile UserProfile { get; set; }
+        public List<Scenario> Scenarios { get; set; } = new List<Scenario>();
     }
 }

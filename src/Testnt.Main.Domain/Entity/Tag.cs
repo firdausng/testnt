@@ -10,7 +10,7 @@ namespace Testnt.Main.Domain.Entity
         {
         }
         public string Name { get; set; }
-        public List<TestTag> TestTags { get; set; } = new List<TestTag>();
+        public List<TagLink> TagLinks { get; set; } = new List<TagLink>();
         public Guid ProjectId { get; set; }
     }
 }

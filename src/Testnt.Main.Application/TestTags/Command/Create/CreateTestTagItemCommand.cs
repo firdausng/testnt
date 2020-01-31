@@ -18,7 +18,6 @@ namespace Testnt.Main.Application.TestTags.Command.Create
         public string Name { get; set; }
         public Guid ProjectId { get; set; }
         public ICollection<Guid> TestScenarioIds { get; set; }
-        public ICollection<Guid> TestCaseIds { get; set; }
 
         public class CreateTestTagItemCommandHandler : IRequestHandler<CreateTestTagItemCommand, CreateTestTagItemDto>
         {
@@ -35,7 +34,7 @@ namespace Testnt.Main.Application.TestTags.Command.Create
 
                 if (project == null)
                 {
-                    throw new EntityNotFoundException(nameof(TestProject), request.ProjectId);
+                    throw new EntityNotFoundException(nameof(Project), request.ProjectId);
                 }
 
                 var entity = new Tag() 
@@ -46,37 +45,37 @@ namespace Testnt.Main.Application.TestTags.Command.Create
 
                 if (request.TestScenarioIds.Count > 0)
                 {
-                    var listFromDb = await context.TestScenarios
-                        .Where(p => p.TestProject.Id.Equals(request.ProjectId))
-                        .Include(t => t.TestTags)
+                    var listFromDb = await context.Scenarios
+                        .Where(p => p.Project.Id.Equals(request.ProjectId))
+                        .Include(t => t.Tags)
                         .Where(r => request.TestScenarioIds.Contains(r.Id))
                         .ToListAsync()
                         ;
-                    var list = listFromDb.Select(t => new TestTag
+                    var list = listFromDb.Select(t => new TagLink
                     {
                         Tag = entity,
-                        TestOutline = t
+                        Scenario = t
                     });
-                    entity.TestTags.AddRange(list);
+                    entity.TagLinks.AddRange(list);
                 }
 
-                if (request.TestCaseIds.Count > 0)
-                {
-                    var listFromDb = await context.TestCases
-                        .Where(p => p.TestProject.Id.Equals(request.ProjectId))
-                        .Include(t => t.TestTags)
-                        .Where(r => request.TestCaseIds.Contains(r.Id))
-                        .ToListAsync()
-                        ;
-                    var list = listFromDb.Select(t => new TestTag
-                    {
-                        Tag = entity,
-                        TestOutline = t
-                    });
-                    entity.TestTags.AddRange(list);
-                }
+                //if (request.TestCaseIds.Count > 0)
+                //{
+                //    var listFromDb = await context.TestCases
+                //        .Where(p => p.TestProject.Id.Equals(request.ProjectId))
+                //        .Include(t => t.TestTags)
+                //        .Where(r => request.TestCaseIds.Contains(r.Id))
+                //        .ToListAsync()
+                //        ;
+                //    var list = listFromDb.Select(t => new TagLink
+                //    {
+                //        Tag = entity,
+                //        Scenario = t
+                //    });
+                //    entity.TagLinks.AddRange(list);
+                //}
 
-                project.TestTags.Add(entity);
+                project.Tags.Add(entity);
                 context.Projects.Update(project);
                 //context.TestCases.Add(entity);
                 await context.SaveChangesAsync(cancellationToken);

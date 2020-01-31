@@ -5,7 +5,7 @@ using System;
 
 namespace Testnt.Main.Application.TestScenarios.Query.Item
 {
-    public class GetTestScenarioItemDto : IMapFrom<TestScenario>
+    public class GetTestScenarioItemDto : IMapFrom<Scenario>
     {
         public GetTestScenarioItemDto()
         {
@@ -17,7 +17,7 @@ namespace Testnt.Main.Application.TestScenarios.Query.Item
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<TestScenario, GetTestScenarioItemDto>();
+            profile.CreateMap<Scenario, GetTestScenarioItemDto>();
         }
     }
 }

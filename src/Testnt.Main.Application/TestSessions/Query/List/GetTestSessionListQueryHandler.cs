@@ -26,8 +26,8 @@ namespace Testnt.Main.Application.TestSessions.Query.List
 
         public async Task<GetObjectListVm<GetTestSessionListDto>> Handle(GetTestSessionListQuery request, CancellationToken cancellationToken)
         {
-            var sessions = await context.TestSessions
-                .Where(t => t.TestProjectId == request.ProjectId)
+            var sessions = await context.Sessions
+                .Where(t => t.ProjectId == request.ProjectId)
                 .ProjectTo<GetTestSessionListDto>(mapper.ConfigurationProvider)
                 //.OrderBy(t => t.)
                 .ToListAsync(cancellationToken);

@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Text;
 namespace Testnt.Main.Application.TestScenarios.Query.List
 {
-    public class GetTestScenarioListDto : IMapFrom<TestScenario>
+    public class GetTestScenarioListDto : IMapFrom<Scenario>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<TestScenario, GetTestScenarioListDto>();
+            profile.CreateMap<Scenario, GetTestScenarioListDto>();
         }
     }
 }

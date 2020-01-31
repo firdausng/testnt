@@ -4,14 +4,14 @@ using System.Text;
 
 namespace Testnt.Main.Domain.Entity.TestSessionEntity
 {
-    public class TestSession: BaseEntity
+    public class Session: BaseEntity
     {
         public string Name { get; set; }
         //public ICollection<TestCase> TestCases { get; set; } = new List<TestCase>();
-        public Guid TestProjectId { get; set; }
-        public TestProject TestProject { get; set; }
+        public Guid ProjectId { get; set; }
+        public Project Project { get; set; }
         public DateTimeOffset Started { get; set; }
         public DateTimeOffset Finished { get; set; }
-        public List<TestScenarioSnapshot> TestScenarioSnapshot { get; set; }
+        public List<ScenarioSnapshot> ScenarioSnapshot { get; set; }
     }
 }

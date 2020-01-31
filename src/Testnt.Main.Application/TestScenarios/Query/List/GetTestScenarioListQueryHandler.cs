@@ -26,9 +26,9 @@ namespace Testnt.Main.Application.TestScenarios.Query.List
 
         public async Task<GetObjectListVm<GetTestScenarioListDto>> Handle(GetTestScenarioListQuery request, CancellationToken cancellationToken)
         {
-            var testScenariosFromDb = await context.TestScenarios
+            var testScenariosFromDb = await context.Scenarios
                 //.Where(t => t.TenantId.Equals(request.TenantId))
-                .Where(t => t.TestProject.Id.Equals(request.ProjectId))
+                .Where(t => t.Project.Id.Equals(request.ProjectId))
                 .ProjectTo<GetTestScenarioListDto>(mapper.ConfigurationProvider)
                 //.OrderBy(t => t.)
                 .ToListAsync(cancellationToken);

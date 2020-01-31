@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Testnt.Main.Domain.Entity
 {
-    public class TestStep: BaseEntity
+    public class Step: BaseEntity
     {
         public string Description { get; set; }
         public string Status { get; set; }

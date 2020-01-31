@@ -34,7 +34,7 @@ namespace Testnt.Main.Application.TestProjects.Command.Update
 
                 if (project == null)
                 {
-                    throw new EntityNotFoundException(nameof(TestProject), request.ProjectId);
+                    throw new EntityNotFoundException(nameof(Project), request.ProjectId);
                 }
 
                 project.IsEnabled = request.IsEnabled;

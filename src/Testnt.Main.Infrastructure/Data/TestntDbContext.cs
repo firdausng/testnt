@@ -25,40 +25,33 @@ namespace Testnt.Main.Infrastructure.Data
             this.currentUserService = currentUserService;
         }
 
-        public DbSet<TestProject> Projects { get; set; }
-        public DbSet<TestOutline> TestOutlines { get; set; }
-        public DbSet<TestCase> TestCases { get; set; }
-        public DbSet<TestScenario> TestScenarios { get; set; }
-        public DbSet<TestFeature> TestFeatures { get; set; }
-        public DbSet<TestSession> TestSessions { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Scenario> Scenarios { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<Session> Sessions { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<Tag> TestTags { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-
-
-            modelBuilder.Entity<TestCase>().HasBaseType<TestOutline>();
-            modelBuilder.Entity<TestScenario>().HasBaseType<TestOutline>();
-
-            modelBuilder.Entity<TestProject>()
+            modelBuilder.Entity<Project>()
                 .HasIndex(u => u.Name)
                 .IsUnique();
 
 
             // many to many mapping for test outline and tags
-            modelBuilder.Entity<TestTag>()
-                .HasKey(bc => new { bc.TestOutlineId, bc.TagId });
-            modelBuilder.Entity<TestTag>()
-                .HasOne(bc => bc.TestOutline)
-                .WithMany(b => b.TestTags)
+            modelBuilder.Entity<TagLink>()
+                .HasKey(bc => new { bc.ScenarioId, bc.TagId });
+            modelBuilder.Entity<TagLink>()
+                .HasOne(bc => bc.Scenario)
+                .WithMany(b => b.Tags)
                 .HasForeignKey(bc => bc.TagId);
-            modelBuilder.Entity<TestTag>()
+            modelBuilder.Entity<TagLink>()
                 .HasOne(bc => bc.Tag)
-                .WithMany(c => c.TestTags)
-                .HasForeignKey(bc => bc.TestOutlineId);
+                .WithMany(c => c.TagLinks)
+                .HasForeignKey(bc => bc.ScenarioId);
 
 
             // many to many mapping for test project and user
@@ -69,13 +62,13 @@ namespace Testnt.Main.Infrastructure.Data
                 .WithMany(b => b.Projects)
                 .HasForeignKey(bc => bc.ProjectId);
             modelBuilder.Entity<ProjectUser>()
-                .HasOne(bc => bc.TestProject)
+                .HasOne(bc => bc.Project)
                 .WithMany(c => c.Members)
                 .HasForeignKey(bc => bc.UserProfileId);
 
 
-            modelBuilder.Entity<TestCase>()
-                .OwnsMany(p => p.TestSteps);
+            modelBuilder.Entity<Scenario>()
+                .OwnsMany(p => p.Steps);
 
             // reference https://haacked.com/archive/2019/07/29/query-filter-by-interface/
             // Note the .Where(t => t.BaseType == null) clause here. 

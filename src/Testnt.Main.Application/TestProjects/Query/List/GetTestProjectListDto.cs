@@ -6,13 +6,13 @@ using System;
 
 namespace Testnt.Main.Application.TestProjects.Query.List 
 { 
-    public class GetTestProjectListDto : IMapFrom<TestProject>
+    public class GetTestProjectListDto : IMapFrom<Project>
     {
         public string Name { get; set; }
         public Guid Id { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<TestProject, GetTestProjectListDto>();
+            profile.CreateMap<Project, GetTestProjectListDto>();
         }
     }
 }

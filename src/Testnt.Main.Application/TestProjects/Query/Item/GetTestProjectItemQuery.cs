@@ -37,7 +37,7 @@ namespace Testnt.Main.Application.TestProjects.Query.Item
 
                 if (project == null)
                 {
-                    throw new EntityNotFoundException(nameof(TestProject), request.Id);
+                    throw new EntityNotFoundException(nameof(Project), request.Id);
                 }
 
                 return project;

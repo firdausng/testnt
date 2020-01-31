@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestTags.Command.Create
 {
-    public class CreateTestTagItemCommandValidator : AbstractValidator<CreateTestTagItemCommand>
+    public class CreateTestTagItemCommandValidator : BaseTenantValidator<CreateTestTagItemCommand>
     {
         private readonly TestntDbContext context;
 
@@ -37,7 +38,6 @@ namespace Testnt.Main.Application.TestTags.Command.Create
         private async Task<bool> HaveUniqueName(CreateTestTagItemCommand command)
         {
             var tagNameExistCheck = await context.TestTags
-                .Where(t => t.TenantId.Equals(command.TenantId))
                 .Where(t => t.ProjectId.Equals(command.ProjectId))
                 .Where(p => p.Name.ToLower().Equals(command.Name.ToLower())).ToListAsync();
             return tagNameExistCheck.Count == 0;

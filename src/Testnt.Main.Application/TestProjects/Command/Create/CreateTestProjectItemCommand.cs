@@ -25,7 +25,11 @@ namespace Testnt.Main.Application.TestProjects.Command.Create
 
             public async Task<CreateTestProjectItemDto> Handle(CreateTestProjectItemCommand request, CancellationToken cancellationToken)
             {
-                var entity = new TestProject() { Name = request.Name, TenantId= request.TenantId };
+                var entity = new TestProject() { 
+                    Name = request.Name, 
+                    TenantId= request.TenantId ,
+                    IsEnabled = request.IsEnabled
+                };
                 context.Projects.Add(entity);
                 await context.SaveChangesAsync(cancellationToken);
 

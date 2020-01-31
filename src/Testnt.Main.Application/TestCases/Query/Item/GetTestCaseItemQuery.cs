@@ -9,5 +9,6 @@ namespace Testnt.Main.Application.TestCases.Query.Item
     public class GetTestCaseItemQuery: BaseRequest, IRequest<GetTestCaseItemDto>
     {
         public Guid Id { get; set; }
+        public Guid ProjectId { get; set; }
     }
 }

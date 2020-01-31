@@ -4,11 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestCases.Command.Item
 {
-    public class CreateTestCaseItemCommandValidator: AbstractValidator<CreateTestCaseItemCommand>
+    public class CreateTestCaseItemCommandValidator: BaseTenantValidator<CreateTestCaseItemCommand>
     {
         private readonly TestntDbContext context;
         private  List<Guid> notFoundTags;
@@ -26,12 +27,12 @@ namespace Testnt.Main.Application.TestCases.Command.Item
                 .WithMessage(c => $"Test case name '{c.Name}' is already existed in this project ({c.ProjectId})")
                 ;
 
-            RuleFor(v => v.TenantId)
-                .NotEmpty()
-                .WithName("Tenant Id")
-                .NotNull()
-                .WithName("Tenant Id")
-                ;
+            //RuleFor(v => v.TenantId)
+            //    .NotEmpty()
+            //    .WithName("Tenant Id")
+            //    .NotNull()
+            //    .WithName("Tenant Id")
+            //    ;
 
             RuleFor(v => v.ProjectId)
                 .NotEmpty()

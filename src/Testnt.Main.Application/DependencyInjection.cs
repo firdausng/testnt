@@ -23,7 +23,7 @@ namespace Testnt.Main.Application
             void AddAutoMapper()
             {
                 var allAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-                var applicationAssemblies = allAssemblies.Where(a => a.GetName().Name.StartsWith("testnt.Main.Application")).ToArray();
+                var applicationAssemblies = allAssemblies.Where(a => a.GetName().Name.StartsWith("Testnt.Main.Application")).ToArray();
 
                 var mappingConfig = new MapperConfiguration(mc =>
                 {
@@ -36,6 +36,7 @@ namespace Testnt.Main.Application
                 // manually register fluent validation
                 services.AddValidatorsFromAssemblies(applicationAssemblies);
             }
+
 
             return services;
         }

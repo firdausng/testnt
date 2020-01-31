@@ -5,11 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestProjects.Command.Create
 {
-    public class CreateTestProjectCommandValidator : AbstractValidator<CreateTestProjectItemCommand>
+    public class CreateTestProjectCommandValidator : BaseTenantValidator<CreateTestProjectItemCommand>
     {
         private readonly TestntDbContext context;
 
@@ -31,15 +32,17 @@ namespace Testnt.Main.Application.TestProjects.Command.Create
                 .WithName("IsEnabled")
                 ;
 
-            RuleFor(v => v.TenantId)
-                .NotEmpty()
-                .WithMessage("Tenant id is missing.");
+            //RuleFor(v => v.TenantId)
+            //    .NotEmpty()
+            //    .WithMessage("Tenant id is missing.");
 
         }
 
         private async Task<bool> HaveUniqueName(string projectName)
         {
-            var projectNameExistCheck = await context.Projects.Where(p => p.Name.ToLower().Equals(projectName.ToLower())).ToListAsync();
+            var projectNameExistCheck = await context.Projects
+                .Where(p => p.Name.ToLower().Equals(projectName.ToLower()))
+                .ToListAsync();
             return projectNameExistCheck.Count == 0;
         }
     }

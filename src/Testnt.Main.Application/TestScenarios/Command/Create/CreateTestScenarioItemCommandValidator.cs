@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestScenarios.Command.Item
 {
-    public class CreateTestScenarioItemCommandValidator : AbstractValidator<CreateTestScenarioItemCommand>
+    public class CreateTestScenarioItemCommandValidator : BaseTenantValidator<CreateTestScenarioItemCommand>
     {
         private readonly TestntDbContext context;
-        private List<Guid> notFoundTags;
 
         public CreateTestScenarioItemCommandValidator(TestntDbContext context)
         {
@@ -40,14 +40,12 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
                 .NotNull()
                 .WithMessage("'Tags' cannot be set to null and is optional parameter")
                 .MustAsync((command, _, cancellation) => TagsExist(command))
-                .WithMessage(c => $"Test case tags ({string.Join(", ", notFoundTags.Select(t => t.ToString()))}) are not existed in this project ({c.ProjectId})")
                 ;
 
             RuleFor(v => v.TestCaseIds)
                 .NotNull()
                 .WithMessage("'Test Case' cannot be set to null and is optional parameter")
                 .MustAsync((command, _, cancellation) => TestCaseExist(command))
-                .WithMessage(c => $"Test case ({string.Join(", ", notFoundTags.Select(t => t.ToString()))}) are not existed in this project ({c.ProjectId})")
                 ;
 
 
@@ -60,7 +58,6 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
         private async Task<bool> HaveUniqueNameWithinOneProject(CreateTestScenarioItemCommand command)
         {
             var testcaseNameExistCheck = await context.Projects
-                .Where(p => p.TenantId.Equals(command.TenantId))
                 .Include(p => p.TestScenarios)
                 .Where(p => p.Id == command.ProjectId)
                 .SelectMany(p => p.TestScenarios)
@@ -76,7 +73,6 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
         private async Task<bool> ProjectExist(CreateTestScenarioItemCommand command)
         {
             var project = await context.Projects
-                    .Where(p => p.TenantId.Equals(command.TenantId))
                     .Where(p => p.Id.Equals(command.ProjectId))
                     .FirstOrDefaultAsync();
             return project != null;
@@ -89,7 +85,6 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
                 return true;
             }
             var testTagsFromDb = await context.TestTags
-                        .Where(p => p.TenantId.Equals(command.TenantId))
                         .Where(tt => tt.ProjectId == command.ProjectId)
                         .Where(tt => command.TagIds.Any(rt => rt == tt.Id))
                         .ToListAsync();
@@ -104,7 +99,6 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
                 return true;
             }
             var testCaseFromDb = await context.TestTags
-                        .Where(p => p.TenantId.Equals(command.TenantId))
                         .Where(tt => tt.ProjectId == command.ProjectId)
                         .Where(tt => command.TestCaseIds.Any(rt => rt == tt.Id))
                         .ToListAsync();

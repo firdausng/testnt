@@ -37,6 +37,7 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
             public async Task<CreateTestScenarioItemCommandDto> Handle(CreateTestScenarioItemCommand request, CancellationToken cancellationToken)
             {
                 var project = await context.Projects
+                    .Where(p => p.TenantId.Equals(request.TenantId))
                     .Where(p => p.Id.Equals(request.ProjectId))
                     .FirstOrDefaultAsync();
 
@@ -48,26 +49,39 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
                 var entity = new TestScenario()
                 {
                     Name = request.Name,
-                    Status = TestOutlineStatus.Active
+                    Description = request.Description,
+                    Status = TestOutlineStatus.Draft,
+                    TenantId = request.TenantId
                 };
+
+                if (request.TestCaseIds.Count > 0)
+                {
+                    var listOfTestCasesFromDb = await context.TestCases
+                        .Where(p => p.TenantId.Equals(request.TenantId))
+                        .Where(p => p.TestProject.Id.Equals(request.ProjectId))
+                        .Where(r => request.TestCaseIds.Contains(r.Id))
+                        .ToListAsync()
+                        ;
+                    entity.TestCases.AddRange(listOfTestCasesFromDb);
+                }
 
                 if (request.TagIds.Count > 0)
                 {
-                    var testTageFromDb = await context.TestTags
-                        .Where(tt => tt.ProjectId == request.ProjectId)
-                        .Where(tt => request.TagIds.Any(rt => rt == tt.Id))
-                        .ToListAsync();
-
-                    //if (testTageFromDb.Count != request.Tags.Count)
-                    //{
-                    //    var notFoundTestTags = request.Tags
-                    //        .Where(rt => !(testTageFromDb.Any(tt => rt == tt.Id)))
-                    //        .ToList();
-                    //    throw new EntityNotFoundException(nameof(TestTag), notFoundTestTags);
-                    //}
-
-                    //entity.Tags = tagEntity;
+                    var listOfTagsFromDb = await context.TestTags
+                        .Where(p => p.TenantId.Equals(request.TenantId))
+                        .Where(p => p.ProjectId.Equals(request.ProjectId))
+                        .Include(t => t.TestTags)
+                        .Where(r => request.TagIds.Contains(r.Id))
+                        .ToListAsync()
+                        ;
+                    var list = listOfTagsFromDb.Select(t => new TestTag 
+                    { 
+                        Tag = t,
+                        TestOutline = entity
+                    });
+                    entity.TestTags.AddRange(list);
                 }
+
 
                 project.TestScenarios.Add(entity);
                 context.Projects.Update(project);

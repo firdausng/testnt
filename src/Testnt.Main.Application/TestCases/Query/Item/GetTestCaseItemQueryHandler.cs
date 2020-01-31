@@ -23,6 +23,7 @@ namespace Testnt.Main.Application.TestCases.Query.Item
         public async Task<GetTestCaseItemDto> Handle(GetTestCaseItemQuery request, CancellationToken cancellationToken)
         {
             var testCase = await context.TestCases
+                .Where(t => t.TestProject.Id == request.ProjectId)
                 .Where(t => t.Id == request.Id)
                 .Include(t => t.TestSteps)
                 .Include(t => t.TestTags)

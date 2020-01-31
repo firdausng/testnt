@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Main.Application.Common;
@@ -23,6 +24,7 @@ namespace Testnt.Main.Application.TestCases.Query.List
         public async Task<GetObjectListVm<GetTestCaseListDto>> Handle(GetTestCaseListQuery request, CancellationToken cancellationToken)
         {
             var testCases = await context.TestCases
+                .Where(t => t.TestProject.Id == request.ProjectId)
                 .ProjectTo<GetTestCaseListDto>(mapper.ConfigurationProvider)
                 //.OrderBy(t => t.)
                 .ToListAsync(cancellationToken);

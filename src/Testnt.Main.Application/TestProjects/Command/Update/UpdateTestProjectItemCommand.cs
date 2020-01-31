@@ -13,7 +13,7 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestProjects.Command.Update
 {
-    public class UpdateTestProjectItemCommand : BaseRequest, IRequest
+    public class UpdateTestProjectItemCommand : IRequest
     {
         public Guid ProjectId { get; set; }
         public bool IsEnabled { get; set; }
@@ -29,7 +29,6 @@ namespace Testnt.Main.Application.TestProjects.Command.Update
             public async Task<Unit> Handle(UpdateTestProjectItemCommand request, CancellationToken cancellationToken)
             {
                 var project = await context.Projects
-                    .Where(t => t.TenantId.Equals(request.TenantId))
                     .Where(t => t.Id.Equals(request.ProjectId))
                     .SingleOrDefaultAsync(cancellationToken);
 

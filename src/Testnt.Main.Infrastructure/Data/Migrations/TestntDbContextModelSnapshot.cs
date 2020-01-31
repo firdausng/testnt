@@ -56,7 +56,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.HasIndex("TestProjectId");
 
-                    b.ToTable("Tags");
+                    b.ToTable("TestTags");
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.TestFeature", b =>

@@ -37,27 +37,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tags",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    TenantId = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    ProjectId = table.Column<Guid>(nullable: false),
-                    TestProjectId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tags_Projects_TestProjectId",
-                        column: x => x.TestProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TestFeatures",
                 columns: table => new
                 {
@@ -98,6 +77,27 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TestTags",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    TenantId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    ProjectId = table.Column<Guid>(nullable: false),
+                    TestProjectId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TestTags", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TestTags_Projects_TestProjectId",
+                        column: x => x.TestProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,9 +229,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TestTag_Tags_TestOutlineId",
+                        name: "FK_TestTag_TestTags_TestOutlineId",
                         column: x => x.TestOutlineId,
-                        principalTable: "Tags",
+                        principalTable: "TestTags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -289,11 +289,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                 column: "UserProfileId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tags_TestProjectId",
-                table: "Tags",
-                column: "TestProjectId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TestCaseSnapshot_TestScenarioSnapshotId",
                 table: "TestCaseSnapshot",
                 column: "TestScenarioSnapshotId");
@@ -342,6 +337,11 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                 name: "IX_TestTag_TagId",
                 table: "TestTag",
                 column: "TagId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TestTags_TestProjectId",
+                table: "TestTags",
+                column: "TestProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -368,7 +368,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                 name: "TestOutlines");
 
             migrationBuilder.DropTable(
-                name: "Tags");
+                name: "TestTags");
 
             migrationBuilder.DropTable(
                 name: "TestScenarioSnapshot");

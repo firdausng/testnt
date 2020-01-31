@@ -51,6 +51,7 @@ namespace Testnt.Main.Application.TestCases.Command.Item
                     Name = request.Name,
                     Status = TestOutlineStatus.Active,
                     TestProject = testScenario.TestProject,
+                    TenantId = request.TenantId
                 };
 
                 if (request.Tags.Count > 0)
@@ -60,15 +61,6 @@ namespace Testnt.Main.Application.TestCases.Command.Item
                         .Where(tt => request.Tags.Any(rt => rt == tt.Id))
                         .ToListAsync();
 
-                    //if (testTageFromDb.Count != request.Tags.Count)
-                    //{
-                    //    var notFoundTestTags = request.Tags
-                    //        .Where(rt => !(testTageFromDb.Any(tt => rt == tt.Id)))
-                    //        .ToList();
-                    //    throw new EntityNotFoundException(nameof(TestTag), notFoundTestTags);
-                    //}
-
-                    //entity.Tags = tagEntity;
                 }
 
                 testScenario.TestCases.Add(entity);

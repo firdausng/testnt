@@ -9,5 +9,6 @@ namespace Testnt.Main.Application.TestSessions.Query.Item
     public class GetTestSessionItemQuery : BaseRequest, IRequest<GetTestSessionItemDto>
     {
         public Guid Id { get; set; }
+        public Guid ProjectId { get; set; }
     }
 }

@@ -8,5 +8,6 @@ namespace Testnt.Main.Application.TestScenarios.Query.List
 {
     public class GetTestScenarioListQuery : BaseRequest, IRequest<GetObjectListVm<GetTestScenarioListDto>>
     {
+        public Guid ProjectId { get; set; }
     }
 }

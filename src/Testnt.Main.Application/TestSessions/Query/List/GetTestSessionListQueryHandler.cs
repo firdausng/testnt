@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace Testnt.Main.Application.TestSessions.Query.List
         public async Task<GetObjectListVm<GetTestSessionListDto>> Handle(GetTestSessionListQuery request, CancellationToken cancellationToken)
         {
             var sessions = await context.TestSessions
+                .Where(t => t.TestProjectId == request.ProjectId)
                 .ProjectTo<GetTestSessionListDto>(mapper.ConfigurationProvider)
                 //.OrderBy(t => t.)
                 .ToListAsync(cancellationToken);

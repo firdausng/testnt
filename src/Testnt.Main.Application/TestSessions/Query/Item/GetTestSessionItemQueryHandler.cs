@@ -23,6 +23,7 @@ namespace Testnt.Main.Application.TestSessions.Query.Item
         public async Task<GetTestSessionItemDto> Handle(GetTestSessionItemQuery request, CancellationToken cancellationToken)
         {
             var testCase = await context.TestSessions
+                .Where(t => t.TestProjectId == request.ProjectId)
                 .Where(t => t.Id == request.Id)
                 //.Include(t => t.Project)
                 .ProjectTo<GetTestSessionItemDto>(mapper.ConfigurationProvider)

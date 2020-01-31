@@ -34,10 +34,8 @@ namespace Testnt.Main.Application.TestTags.Query.List
         public async Task<GetObjectListVm<GetTestTagListDto>> Handle(GetTestTagListQuery request, CancellationToken cancellationToken)
         {
             var testTagsFromDb = await context.TestTags
-                //.Where(t => t.TenantId.Equals(request.TenantId))
                 .Where(t => t.ProjectId.Equals(request.ProjectId))
                 .ProjectTo<GetTestTagListDto>(mapper.ConfigurationProvider)
-                //.OrderBy(t => t.)
                 .ToListAsync(cancellationToken);
 
             var vm = new GetObjectListVm<GetTestTagListDto>

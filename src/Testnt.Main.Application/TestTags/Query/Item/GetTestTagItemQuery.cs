@@ -35,7 +35,6 @@ namespace Testnt.Main.Application.TestTags.Query.Item
             public async Task<GetTestTagItemDto> Handle(GetTestTagItemQuery request, CancellationToken cancellationToken)
             {
                 var tag = await context.TestTags
-                    //.Where(t => t.TenantId.Equals(request.TenantId))
                     .Where(t => t.ProjectId.Equals(request.ProjectId))
                     .ProjectTo<GetTestTagItemDto>(mapper.ConfigurationProvider)
                     .SingleOrDefaultAsync(cancellationToken)

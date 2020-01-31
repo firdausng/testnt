@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Testnt.Main.Application.Common;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestSessions.Command.Item
 {
-    public class CreateTestSessionItemCommandValidator : AbstractValidator<CreateTestSessionItemCommand>
+    public class CreateTestSessionItemCommandValidator : BaseTenantValidator<CreateTestSessionItemCommand>
     {
         private readonly TestntDbContext context;
 

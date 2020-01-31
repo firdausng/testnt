@@ -7,5 +7,6 @@ namespace Testnt.Main.Application.TestSessions.Query.List
 {
     public class GetTestSessionListQuery : BaseRequest, IRequest<GetObjectListVm<GetTestSessionListDto>>
     {
+        public Guid ProjectId { get; set; }
     }
 }

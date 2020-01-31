@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,6 +27,8 @@ namespace Testnt.Main.Application.TestScenarios.Query.List
         public async Task<GetObjectListVm<GetTestScenarioListDto>> Handle(GetTestScenarioListQuery request, CancellationToken cancellationToken)
         {
             var testScenariosFromDb = await context.TestScenarios
+                //.Where(t => t.TenantId.Equals(request.TenantId))
+                .Where(t => t.TestProject.Id.Equals(request.ProjectId))
                 .ProjectTo<GetTestScenarioListDto>(mapper.ConfigurationProvider)
                 //.OrderBy(t => t.)
                 .ToListAsync(cancellationToken);

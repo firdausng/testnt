@@ -10,7 +10,7 @@ using Testnt.Main.Infrastructure.Data;
 namespace Testnt.Main.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(TestntDbContext))]
-    [Migration("20200130063604_initialmigration")]
+    [Migration("20200131025337_initialmigration")]
     partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,7 +58,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.HasIndex("TestProjectId");
 
-                    b.ToTable("Tags");
+                    b.ToTable("TestTags");
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.TestFeature", b =>

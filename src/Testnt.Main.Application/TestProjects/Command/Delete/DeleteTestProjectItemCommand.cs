@@ -27,7 +27,6 @@ namespace Testnt.Main.Application.TestProjects.Command.Delete
             public async Task<Unit> Handle(DeleteTestProjectItemCommand request, CancellationToken cancellationToken)
             {
                 var project = await context.Projects
-                    .Where(t => t.TenantId.Equals(request.TenantId))
                     .Where(t => t.Id == request.Id)
                     .SingleOrDefaultAsync();
 

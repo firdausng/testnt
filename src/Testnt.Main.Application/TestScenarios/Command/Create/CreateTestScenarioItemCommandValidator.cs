@@ -10,11 +10,11 @@ using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.TestScenarios.Command.Item
 {
-    public class CreateTestScenarioItemCommandValidator : AbstractValidator<CreateTestScenarioItemCommand>
+    public class CreateTestScenarioItemCommandValidator : ProjectPropertyValidator<CreateTestScenarioItemCommand>
     {
         private readonly TestntDbContext context;
 
-        public CreateTestScenarioItemCommandValidator(TestntDbContext context)
+        public CreateTestScenarioItemCommandValidator(TestntDbContext context):base(context)
         {
             this.context = context;
             RuleFor(v => v.Name)
@@ -24,35 +24,22 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
                 .NotNull()
                 .WithName("Test scenario name")
                 .MustAsync((command, _, cancellation) => HaveUniqueNameWithinOneProject(command))
-                .WithMessage(c => $"Test case name '{c.Name}' is already existed in this project ({c.ProjectId})")
-                ;
-
-            RuleFor(v => v.ProjectId)
-                .NotEmpty()
-                .WithName("Project id")
-                .NotNull()
-                .WithName("Project id")
-                .MustAsync((command, _, cancellation) => ProjectExist(command))
-                .WithMessage("'Project id' is not exist")
-                ;
+                .WithMessage(c => $"Test case name '{c.Name}' is already existed in this project ({c.ProjectId})");
 
             RuleFor(v => v.TagIds)
                 .NotNull()
                 .WithMessage("'Tags' cannot be set to null and is optional parameter")
-                .MustAsync((command, _, cancellation) => TagsExist(command))
-                ;
+                .MustAsync((command, _, cancellation) => TagsExist(command));
 
             RuleFor(v => v.Description)
-                .MaximumLength(300)
-                ;
-
+                .MaximumLength(300);
         }
-
         private async Task<bool> HaveUniqueNameWithinOneProject(CreateTestScenarioItemCommand command)
         {
             var testcaseNameExistCheck = await context.Projects
+                .Where(p => p.Id.Equals(command.ProjectId))
                 .Include(p => p.Scenarios)
-                .Where(p => p.Id == command.ProjectId)
+                .Where(p => p.Id.Equals(command.ProjectId))
                 .SelectMany(p => p.Scenarios)
                 .Select(tc => new
                 {
@@ -63,14 +50,6 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
             return testcaseNameExistCheck.Count == 0;
         }
 
-        private async Task<bool> ProjectExist(CreateTestScenarioItemCommand command)
-        {
-            var project = await context.Projects
-                    .Where(p => p.Id.Equals(command.ProjectId))
-                    .FirstOrDefaultAsync();
-            return project != null;
-        }
-
         private async Task<bool> TagsExist(CreateTestScenarioItemCommand command)
         {
             if (command.TagIds == null || command.TagIds.Count == 0)
@@ -78,8 +57,8 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
                 return true;
             }
             var testTagsFromDb = await context.Tags
-                        .Where(tt => tt.ProjectId == command.ProjectId)
-                        .Where(tt => command.TagIds.Any(rt => rt == tt.Id))
+                        .Where(tt => tt.ProjectId.Equals(command.ProjectId))
+                        .Where(tt => command.TagIds.Any(rt => rt.Equals(tt.Id)))
                         .ToListAsync();
 
             return testTagsFromDb.Count == command.TagIds.Count;

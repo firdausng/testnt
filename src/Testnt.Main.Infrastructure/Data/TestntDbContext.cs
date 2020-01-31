@@ -96,6 +96,30 @@ namespace Testnt.Main.Infrastructure.Data
             base.OnConfiguring(optionsBuilder);
         }
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        if (entry.Entity.TenantId != currentUserService.TenantId)
+                        {
+                            entry.Entity.TenantId = currentUserService.TenantId;
+                        }
+                        break;
+                    case EntityState.Modified:
+                        if (entry.Entity.TenantId != currentUserService.TenantId)
+                        {
+                            entry.Entity.TenantId = currentUserService.TenantId;
+                        }
+                        break;
+                }
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
         public override EntityEntry<TEntity> Add<TEntity>(TEntity entity)
         {
             entity = InjectTenantId(entity);

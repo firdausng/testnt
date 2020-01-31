@@ -13,7 +13,7 @@ using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.TestScenarios.Command.Item
 {
-    public class CreateTestScenarioItemCommand : IRequest<CreateTestScenarioItemCommandDto>
+    public class CreateTestScenarioItemCommand : ProjectPropertyRequest, IRequest<CreateTestScenarioItemCommandDto>
     {
         public CreateTestScenarioItemCommand()
         {
@@ -23,7 +23,6 @@ namespace Testnt.Main.Application.TestScenarios.Command.Item
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<Guid> TagIds { get; set; }
-        public Guid ProjectId { get; set; }
 
         public class CreateTestScenarioItemCommandHandler : IRequestHandler<CreateTestScenarioItemCommand, CreateTestScenarioItemCommandDto>
         {

@@ -8,10 +8,9 @@ namespace Testnt.Main.Domain.Entity
     {
         public Tag()
         {
-            TestTags = new List<TestTag>();
         }
         public string Name { get; set; }
-        public ICollection<TestTag> TestTags { get; set; }
+        public List<TestTag> TestTags { get; set; } = new List<TestTag>();
         public Guid ProjectId { get; set; }
     }
 }

@@ -26,4 +26,19 @@ namespace Testnt.Main.Api.Rest.Services
         public string Email { get; }
 
     }
+
+    public class MockCurrentUserService : ICurrentUserService
+    {
+        public MockCurrentUserService()
+        {
+            TenantId = Guid.NewGuid();
+            Name = "mock";
+            Email = "mock@email.com";
+        }
+
+        public Guid TenantId { get; set; }
+        public string Name { get; }
+        public string Email { get; }
+
+    }
 }

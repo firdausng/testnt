@@ -16,7 +16,6 @@ namespace Testnt.Main.Application
         {
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-            services.AddTransient(typeof(IRequestPreProcessor<>), typeof(TenantIdInjectorPreProcessor<>));
 
             AddAutoMapper();
 

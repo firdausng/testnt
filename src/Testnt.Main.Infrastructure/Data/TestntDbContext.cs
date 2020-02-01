@@ -37,9 +37,7 @@ namespace Testnt.Main.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Project>()
-                .HasIndex(u => u.Name)
-                .IsUnique();
-
+                .HasIndex(u => u.Name);
 
             // many to many mapping for test outline and tags
             modelBuilder.Entity<TagLink>()
@@ -76,19 +74,16 @@ namespace Testnt.Main.Infrastructure.Data
             // This clause ensures we don’t try to apply a filter on a non-root type.
             var entityTypes = modelBuilder.Model.GetEntityTypes()
                 .Where(t => t.BaseType == null)
-                .Where(t => t.IsOwned() == false)
-                ;
+                .Where(t => t.IsOwned() == false);
 
-            // add tenant id filter in all queries
+            // add tenant id and index in all queries
             foreach (var entityType in entityTypes)
             {
                 if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
                 {
-                    modelBuilder.SetTenantIdFilter(entityType.ClrType, currentUserService);
+                    modelBuilder.SetTenantIdFilterAndIndex(entityType.ClrType, currentUserService);
                 }
             }
-
-   
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -132,8 +127,6 @@ namespace Testnt.Main.Infrastructure.Data
             return base.AddAsync(entity, cancellationToken);
         }
 
-
-
         private TEntity InjectTenantId<TEntity>(TEntity entity)
         {
             var tenantIdProp = typeof(TEntity).GetProperty("TenantId");
@@ -142,26 +135,27 @@ namespace Testnt.Main.Infrastructure.Data
         }
     }
 
-
     /// <summary>
     /// reference https://stackoverflow.com/questions/45096799/filter-all-queries-trying-to-achieve-soft-delete/45097532#45097532
     /// </summary>
     public static class EFFilterExtensions
     {
-        public static void SetTenantIdFilter(this ModelBuilder modelBuilder, Type entityType, ICurrentUserService currentUserService)
+        public static void SetTenantIdFilterAndIndex(this ModelBuilder modelBuilder, Type entityType, ICurrentUserService currentUserService)
         {
-            SetTenantIdFilterMethod.MakeGenericMethod(entityType)
+            SetTenantIdFilterAndIndexMethod.MakeGenericMethod(entityType)
                 .Invoke(null, new object[] { modelBuilder, currentUserService });
         }
 
-        static readonly MethodInfo SetTenantIdFilterMethod = typeof(EFFilterExtensions)
+        static readonly MethodInfo SetTenantIdFilterAndIndexMethod = typeof(EFFilterExtensions)
                    .GetMethods(BindingFlags.Public | BindingFlags.Static)
                    .Single(t => t.IsGenericMethod && t.Name == "SetTenantIdFilter");
 
-        public static void SetTenantIdFilter<TEntity>(this ModelBuilder modelBuilder, ICurrentUserService currentUserService)
+        public static void SetTenantIdFilterAndIndex<TEntity>(this ModelBuilder modelBuilder, ICurrentUserService currentUserService)
             where TEntity : BaseEntity
         {
             modelBuilder.Entity<TEntity>().HasQueryFilter(x => x.TenantId.Equals(currentUserService.TenantId));
+            modelBuilder.Entity<TEntity>().HasIndex(b => b.TenantId);
+            //modelBuilder.Entity<TEntity>().;
         }
     }
 }

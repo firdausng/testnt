@@ -6,9 +6,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Testnt.Main.Application.Common;
-using Testnt.Main.Application.TestTags.Command.Create;
-using Testnt.Main.Application.TestTags.Query.Item;
-using Testnt.Main.Application.TestTags.Query.List;
+using Testnt.Main.Application.Components.ProjectComponents.Tags.Command.Create;
+using Testnt.Main.Application.Components.ProjectComponents.Tags.Query.Item;
+using Testnt.Main.Application.Components.ProjectComponents.Tags.Query.List;
 
 namespace Testnt.Main.Api.Rest.Features.Tag
 {
@@ -27,21 +27,21 @@ namespace Testnt.Main.Api.Rest.Features.Tag
         [HttpGet(Name = "GetTags")]
         public async Task<ActionResult<GetObjectListVm<GetTestTagListDto>>> GetTags()
         {
-            var vm = await mediator.Send(new GetTestTagListQuery());
+            var vm = await mediator.Send(new GetProjectTagListQuery());
             return Ok(vm);
         }
 
         [HttpGet("{tagId}", Name = "GetTag")]
         public async Task<ActionResult<GetTestTagItemDto>> GetTag(Guid tagId)
         {
-            var vm = await mediator.Send(new GetTestTagItemQuery() { Id = tagId });
+            var vm = await mediator.Send(new GetProjectTagItemQuery() { Id = tagId });
 
             return Ok(vm);
         }
 
 
         [HttpPost(Name = "NewTag")]
-        public async Task<ActionResult<Guid>> NewProject(CreateTestTagItemCommand createTestTagItemCommand)
+        public async Task<ActionResult<Guid>> NewProject(CreateTagItemCommand createTestTagItemCommand)
         {
             var vm = await mediator.Send(createTestTagItemCommand);
             if (vm.Id != null)

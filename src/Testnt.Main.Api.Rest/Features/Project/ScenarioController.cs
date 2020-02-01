@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Testnt.Main.Application.Common;
-using Testnt.Main.Application.TestScenarios.Command.Item;
-using Testnt.Main.Application.TestScenarios.Query.Item;
-using Testnt.Main.Application.TestScenarios.Query.List;
+using Testnt.Main.Application.Components.ProjectComponents.Scenarios.Command.Item;
+using Testnt.Main.Application.Components.ProjectComponents.Scenarios.Query.Item;
+using Testnt.Main.Application.Components.ProjectComponents.Scenarios.Query.List;
 
 namespace Testnt.Main.Api.Rest.Features.Project.Scenario
 {
@@ -25,22 +25,22 @@ namespace Testnt.Main.Api.Rest.Features.Project.Scenario
         }
 
         [HttpGet(Name = "GetProjectScenarios")]
-        public async Task<ActionResult<GetObjectListVm<GetTestScenarioListDto>>> GetProjectScenarios(Guid projectId)
+        public async Task<ActionResult<GetObjectListVm<GetProjectScenarioListDto>>> GetProjectScenarios(Guid projectId)
         {
-            var vm = await mediator.Send(new GetTestScenarioListQuery() { ProjectId= projectId });
+            var vm = await mediator.Send(new GetProjectScenarioListQuery() { ProjectId= projectId });
             return Ok(vm);
         }
 
         [HttpGet("{projectScenarioId}", Name = "GetProjectScenario")]
-        public async Task<ActionResult<GetTestScenarioListDto>> GetProjectScenario(Guid projectScenarioId, Guid projectId)
+        public async Task<ActionResult<GetProjectScenarioListDto>> GetProjectScenario(Guid projectScenarioId, Guid projectId)
         {
-            var vm = await mediator.Send(new GetTestScenarioItemQuery() { Id = projectScenarioId });
+            var vm = await mediator.Send(new GetProjectScenarioItemQuery() { Id = projectScenarioId });
 
             return Ok(vm);
         }
 
         [HttpPost(Name = "NewProjectScenario")]
-        public async Task<ActionResult<Guid>> NewProjectScenario(CreateTestScenarioItemCommand createTestScenarioItemCommand, Guid projectId)
+        public async Task<ActionResult<Guid>> NewProjectScenario(CreateScenarioItemCommand createTestScenarioItemCommand, Guid projectId)
         {
             createTestScenarioItemCommand.ProjectId = projectId;
             var vm = await mediator.Send(createTestScenarioItemCommand);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -76,19 +77,28 @@ namespace Testnt.Main.Infrastructure.Data
                 .Where(t => t.BaseType == null)
                 .Where(t => t.IsOwned() == false);
 
-            // add tenant id and index in all queries
+            // add tenant id filter and index in all queries
+            // ref https://stackoverflow.com/questions/45812459/ef-core-2-apply-hasqueryfilter-for-all-entity
+            // ref https://stackoverflow.com/questions/38178439/expression-to-compare-guid-properties-versus-string-values-and-then-translate-to
             foreach (var entityType in entityTypes)
             {
-                if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+                var tenantIdProperty = entityType.FindProperty("TenantId");
+                
+                if (tenantIdProperty != null && tenantIdProperty.ClrType == typeof(Guid))
                 {
-                    modelBuilder.SetTenantIdFilterAndIndex(entityType.ClrType, currentUserService);
+                    var parameter = Expression.Parameter(entityType.ClrType, "entity");
+                    var propertyAccessExpr = Expression.MakeMemberAccess(parameter, tenantIdProperty.PropertyInfo);
+                    var guidExpr = Expression.Constant(currentUserService.TenantId);
+                    var body = Expression.Equal(propertyAccessExpr, guidExpr);
+
+                    var lambda = Expression.Lambda(body, parameter);
+
+                    entityType.SetQueryFilter(lambda);
+
+                    entityType.AddIndex(tenantIdProperty);
+                    entityType.AddForeignKey(tenantIdProperty, entityType.FindPrimaryKey(), entityType);
                 }
             }
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -113,49 +123,6 @@ namespace Testnt.Main.Infrastructure.Data
             }
 
             return base.SaveChangesAsync(cancellationToken);
-        }
-
-        public override EntityEntry<TEntity> Add<TEntity>(TEntity entity)
-        {
-            entity = InjectTenantId(entity);
-            return base.Add(entity);
-        }
-
-        public override ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
-        {
-            entity = InjectTenantId(entity);
-            return base.AddAsync(entity, cancellationToken);
-        }
-
-        private TEntity InjectTenantId<TEntity>(TEntity entity)
-        {
-            var tenantIdProp = typeof(TEntity).GetProperty("TenantId");
-            tenantIdProp.SetValue(entity, currentUserService.TenantId);
-            return entity;
-        }
-    }
-
-    /// <summary>
-    /// reference https://stackoverflow.com/questions/45096799/filter-all-queries-trying-to-achieve-soft-delete/45097532#45097532
-    /// </summary>
-    public static class EFFilterExtensions
-    {
-        public static void SetTenantIdFilterAndIndex(this ModelBuilder modelBuilder, Type entityType, ICurrentUserService currentUserService)
-        {
-            SetTenantIdFilterAndIndexMethod.MakeGenericMethod(entityType)
-                .Invoke(null, new object[] { modelBuilder, currentUserService });
-        }
-
-        static readonly MethodInfo SetTenantIdFilterAndIndexMethod = typeof(EFFilterExtensions)
-                   .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                   .Single(t => t.IsGenericMethod && t.Name == "SetTenantIdFilter");
-
-        public static void SetTenantIdFilterAndIndex<TEntity>(this ModelBuilder modelBuilder, ICurrentUserService currentUserService)
-            where TEntity : BaseEntity
-        {
-            modelBuilder.Entity<TEntity>().HasQueryFilter(x => x.TenantId.Equals(currentUserService.TenantId));
-            modelBuilder.Entity<TEntity>().HasIndex(b => b.TenantId);
-            //modelBuilder.Entity<TEntity>().;
         }
     }
 }

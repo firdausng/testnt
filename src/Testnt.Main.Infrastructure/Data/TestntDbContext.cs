@@ -1,13 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Common.Interface;
@@ -19,11 +15,13 @@ namespace Testnt.Main.Infrastructure.Data
     public class TestntDbContext : DbContext
     {
         private readonly ICurrentUserService currentUserService;
+        private readonly IDateTimeService dateTimeService;
 
-        public TestntDbContext(DbContextOptions<TestntDbContext> options, ICurrentUserService currentUserService)
+        public TestntDbContext(DbContextOptions<TestntDbContext> options, ICurrentUserService currentUserService, IDateTimeService dateTimeService)
            : base(options)
         {
             this.currentUserService = currentUserService;
+            this.dateTimeService = dateTimeService;
         }
 
         public DbSet<Project> Projects { get; set; }
@@ -112,12 +110,16 @@ namespace Testnt.Main.Infrastructure.Data
                         {
                             entry.Entity.TenantId = currentUserService.TenantId;
                         }
+                        entry.Entity.CreatedBy = currentUserService.Name;
+                        entry.Entity.Created = dateTimeService.Now;
                         break;
                     case EntityState.Modified:
                         if (entry.Entity.TenantId != currentUserService.TenantId)
                         {
                             entry.Entity.TenantId = currentUserService.TenantId;
                         }
+                        entry.Entity.CreatedBy = currentUserService.Name;
+                        entry.Entity.Created = dateTimeService.Now;
                         break;
                 }
             }

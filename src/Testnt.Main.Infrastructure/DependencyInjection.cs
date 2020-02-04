@@ -4,7 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Testnt.Common.Interface;
 using Testnt.Main.Infrastructure.Data;
+using Testnt.Main.Infrastructure.Services;
 
 namespace Testnt.Main.Infrastructure
 {
@@ -22,6 +24,8 @@ namespace Testnt.Main.Infrastructure
                         options.MigrationsAssembly(migrationsAssembly);
                     });
             });
+
+            services.AddScoped<IDateTimeService, DateTimeService>();
 
             return services;
         }

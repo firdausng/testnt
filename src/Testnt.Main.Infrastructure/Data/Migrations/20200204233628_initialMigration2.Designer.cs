@@ -10,8 +10,8 @@ using Testnt.Main.Infrastructure.Data;
 namespace Testnt.Main.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(TestntDbContext))]
-    [Migration("20200131143126_initialmigration")]
-    partial class initialmigration
+    [Migration("20200204233628_initialMigration2")]
+    partial class initialMigration2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,19 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
                     b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -43,6 +55,8 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.HasIndex("ProjectId");
 
+                    b.HasIndex("TenantId");
+
                     b.ToTable("Features");
                 });
 
@@ -52,8 +66,20 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -63,8 +89,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("Name");
+
+                    b.HasIndex("TenantId");
 
                     b.ToTable("Projects");
                 });
@@ -90,11 +117,23 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("FeatureId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -117,6 +156,8 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.HasIndex("ProjectId");
 
+                    b.HasIndex("TenantId");
+
                     b.ToTable("Scenarios");
                 });
 
@@ -125,6 +166,18 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -138,6 +191,8 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("TenantId");
 
                     b.ToTable("Tags");
                 });
@@ -163,8 +218,20 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
                     b.Property<int>("ExecutionResult")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("ScenarioId")
                         .HasColumnType("uuid");
@@ -182,6 +249,8 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.HasIndex("SessionId");
 
+                    b.HasIndex("TenantId");
+
                     b.ToTable("ScenarioSnapshot");
                 });
 
@@ -191,8 +260,20 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset>("Finished")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -210,6 +291,8 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.HasIndex("ProjectId");
 
+                    b.HasIndex("TenantId");
+
                     b.ToTable("Sessions");
                 });
 
@@ -219,7 +302,19 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
                     b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("ScenarioSnapshotId")
@@ -232,6 +327,8 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.HasIndex("ScenarioSnapshotId");
 
+                    b.HasIndex("TenantId");
+
                     b.ToTable("StepSnapshot");
                 });
 
@@ -241,11 +338,23 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -255,6 +364,8 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TenantId");
+
                     b.ToTable("UserProfiles");
                 });
 
@@ -263,6 +374,21 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.HasOne("Testnt.Main.Domain.Entity.Project", "Project")
                         .WithMany("Features")
                         .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Testnt.Main.Domain.Entity.Feature", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Project", b =>
+                {
+                    b.HasOne("Testnt.Main.Domain.Entity.Project", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -292,6 +418,12 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .WithMany("Scenarios")
                         .HasForeignKey("ProjectId");
 
+                    b.HasOne("Testnt.Main.Domain.Entity.Scenario", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsMany("Testnt.Main.Domain.Entity.Step", "Steps", b1 =>
                         {
                             b1.Property<Guid>("ScenarioId")
@@ -301,7 +433,19 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("uuid");
 
+                            b1.Property<DateTime>("Created")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.Property<string>("CreatedBy")
+                                .HasColumnType("text");
+
                             b1.Property<string>("Description")
+                                .HasColumnType("text");
+
+                            b1.Property<DateTime?>("LastModified")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.Property<string>("LastModifiedBy")
                                 .HasColumnType("text");
 
                             b1.Property<string>("Status")
@@ -326,6 +470,12 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Testnt.Main.Domain.Entity.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.TagLink", b =>
@@ -348,6 +498,12 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.Session", null)
                         .WithMany("ScenarioSnapshot")
                         .HasForeignKey("SessionId");
+
+                    b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.ScenarioSnapshot", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.Session", b =>
@@ -357,6 +513,12 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.Session", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.StepSnapshot", b =>
@@ -364,6 +526,21 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.ScenarioSnapshot", null)
                         .WithMany("StepSnapshot")
                         .HasForeignKey("ScenarioSnapshotId");
+
+                    b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.StepSnapshot", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.UserProfile", b =>
+                {
+                    b.HasOne("Testnt.Main.Domain.Entity.UserProfile", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

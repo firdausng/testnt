@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Testnt.Main.Infrastructure\Testnt.Main.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\ProjectComponents\Features\Query\" />
-  </ItemGroup>
-
 </Project>

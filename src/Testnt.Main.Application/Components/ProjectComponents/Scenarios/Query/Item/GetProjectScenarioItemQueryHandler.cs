@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Testnt.Common.Exceptions;
+using Testnt.Main.Domain.Entity;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.Components.ProjectComponents.Scenarios.Query.Item
@@ -27,12 +29,16 @@ namespace Testnt.Main.Application.Components.ProjectComponents.Scenarios.Query.I
                 .Where(t => t.Id == request.Id)
                 .Include(t => t.Steps)
                 .Include(t => t.Tags)
-                //.SingleAsync()
                 .ProjectTo<GetProjectScenarioItemDto>(mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken)
+                .SingleAsync(cancellationToken)
                 ;
 
-            return testCase.Single();
+            if (testCase == null)
+            {
+                throw new EntityNotFoundException(nameof(Scenario), request.Id);
+            }
+
+            return testCase;
         }
     }
 }

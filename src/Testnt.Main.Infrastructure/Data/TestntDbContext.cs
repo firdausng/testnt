@@ -101,6 +101,25 @@ namespace Testnt.Main.Infrastructure.Data
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
+            InjectBaseActivity();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        public override int SaveChanges()
+        {
+            InjectBaseActivity();
+            return base.SaveChanges();
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            InjectBaseActivity();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+
+        private void InjectBaseActivity()
+        {
             foreach (var entry in ChangeTracker.Entries<BaseEntity>())
             {
                 switch (entry.State)
@@ -123,8 +142,6 @@ namespace Testnt.Main.Infrastructure.Data
                         break;
                 }
             }
-
-            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

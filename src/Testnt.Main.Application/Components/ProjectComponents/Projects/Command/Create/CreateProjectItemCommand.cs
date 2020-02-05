@@ -1,13 +1,8 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Testnt.Main.Domain.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Main.Infrastructure.Data;
-using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.Components.ProjectComponents.Projects.Command.Create
 {

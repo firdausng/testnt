@@ -2,15 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Testnt.Main.Application.Common;
 using Testnt.Main.Application.Components.ProjectComponents.Scenarios.Command.Item;
 using Testnt.Main.Application.Components.ProjectComponents.Scenarios.Query.Item;
 using Testnt.Main.Application.Components.ProjectComponents.Scenarios.Query.List;
 
-namespace Testnt.Main.Api.Rest.Features.Project.Scenario
+namespace Testnt.Main.Api.Rest.Features.Project
 {
     [Route("api/project/{projectId}/scenario")]
     [Authorize]
@@ -46,7 +44,7 @@ namespace Testnt.Main.Api.Rest.Features.Project.Scenario
             var vm = await mediator.Send(createTestScenarioItemCommand);
             if (vm.Id != null)
             {
-                var link = Url.Link("GetProjectScenario", new { projectScenarioId = vm.Id, projectId= projectId });
+                var link = Url.Link("GetProjectScenario", new { projectScenarioId = vm.Id, projectId });
                 return Created(link, vm);
             }
             else

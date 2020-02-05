@@ -1,13 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Common.Exceptions;
-using Testnt.Main.Application.Common;
 using Testnt.Main.Domain.Entity;
 using Testnt.Main.Infrastructure.Data;
 

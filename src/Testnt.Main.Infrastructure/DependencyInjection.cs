@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Testnt.Common.Interface;
 using Testnt.Main.Infrastructure.Data;
 using Testnt.Main.Infrastructure.Services;

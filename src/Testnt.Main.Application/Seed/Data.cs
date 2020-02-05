@@ -16,6 +16,7 @@ namespace Testnt.Main.Application.Seed
         {
             //var context = scope.ServiceProvider.GetService<TestntDbContext>();
             //context.Database.Migrate();
+            //context.Database.upda;
 
             //var sampleProject = context.Projects.Where(t => t.Name.Equals("Testnt")).FirstOrDefaultAsync().Result;
             //if (sampleProject == null)

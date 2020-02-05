@@ -1,11 +1,8 @@
 ﻿
 using FluentValidation;
-using FluentValidation.Validators;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Testnt.Main.Application.Common;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.Components.ProjectComponents.Projects.Command.Create

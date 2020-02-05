@@ -1,11 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Testnt.Main.Application.Common;
 using Testnt.Main.Application.Components.ProjectComponents.Common;
 using Testnt.Main.Infrastructure.Data;
 

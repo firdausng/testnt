@@ -5,11 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Testnt.Common.Exceptions;
 using Testnt.Main.Domain.Entity;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Main.Infrastructure.Data;
-using Testnt.Main.Application.Common;
 
 namespace Testnt.Main.Application.Components.ProjectComponents.Projects.Query.Item
 {

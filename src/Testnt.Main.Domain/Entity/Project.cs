@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Testnt.Main.Domain.Entity
 {
-    public class Project: BaseEntity
+    public class Project: AuditableEntity
     {
         public string Name { get; set; }
         public bool IsEnabled { get; set; }

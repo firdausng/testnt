@@ -2,7 +2,7 @@
 
 namespace Testnt.Main.Domain.Entity
 {
-    public class UserProfile: BaseEntity
+    public class UserProfile: AuditableEntity
     {
         public string Name { get; set; }
         public string Email { get; set; }

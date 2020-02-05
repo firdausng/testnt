@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Testnt.Main.Domain.Entity
 {
-    public class Tag: BaseEntity
+    public class Tag: AuditableEntity
     {
         public Tag()
         {

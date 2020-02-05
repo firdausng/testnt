@@ -119,7 +119,7 @@ namespace Testnt.Main.Infrastructure.Data
 
         private void InjectBaseActivity()
         {
-            foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
             {
                 switch (entry.State)
                 {
@@ -130,6 +130,7 @@ namespace Testnt.Main.Infrastructure.Data
                         }
                         entry.Entity.CreatedBy = currentUserService.Name;
                         entry.Entity.Created = dateTimeService.Now;
+
                         break;
                     case EntityState.Modified:
                         if (entry.Entity.TenantId != currentUserService.TenantId)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Testnt.Main.Domain.Entity
 {
-    public class Feature: BaseEntity
+    public class Feature: AuditableEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }

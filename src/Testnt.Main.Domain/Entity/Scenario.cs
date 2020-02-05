@@ -2,7 +2,7 @@
 
 namespace Testnt.Main.Domain.Entity
 {
-    public class Scenario : AuditableEntity
+    public class Scenario : ProjectComponentEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }

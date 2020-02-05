@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Testnt.Main.Domain.Entity.TestSessionEntity
 {
-    public class ScenarioSnapshot : BaseEntity
+    public class ScenarioSnapshot : ProjectComponentEntity
     {
         public Guid ScenarioId { get; set; }
         public string ScenarioName { get; set; }

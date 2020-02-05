@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Testnt.Main.Domain.Entity.TestSessionEntity
 {
-    public class Session: AuditableEntity
+    public class Session: ProjectComponentEntity
     {
         public string Name { get; set; }
         //public ICollection<TestCase> TestCases { get; set; } = new List<TestCase>();

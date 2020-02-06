@@ -33,31 +33,13 @@ namespace Testnt.Main.Application.Components.ProjectComponents.Scenarios.Command
 
             public async Task<CreateScenarioItemCommandDto> Handle(CreateScenarioItemCommand request, CancellationToken cancellationToken)
             {
-                var project = await context.Projects
-                    .Where(p => p.Id.Equals(request.ProjectId))
-                    .FirstOrDefaultAsync();
-
-                if (project == null)
-                {
-                    throw new EntityNotFoundException(nameof(Project), request.ProjectId);
-                }
-
                 var entity = new Scenario()
                 {
                     Name = request.Name,
                     Description = request.Description,
                     Status = TestOutlineStatus.Draft,
+                    ProjectId = request.ProjectId
                 };
-
-                //if (request.TestCaseIds.Count > 0)
-                //{
-                //    var listOfTestCasesFromDb = await context.TestCases
-                //        .Where(p => p.TestProject.Id.Equals(request.ProjectId))
-                //        .Where(r => request.TestCaseIds.Contains(r.Id))
-                //        .ToListAsync()
-                //        ;
-                //    entity.TestCases.AddRange(listOfTestCasesFromDb);
-                //}
 
                 if (request.TagIds.Count > 0)
                 {
@@ -76,9 +58,7 @@ namespace Testnt.Main.Application.Components.ProjectComponents.Scenarios.Command
                 }
 
 
-                project.Scenarios.Add(entity);
-                context.Projects.Update(project);
-                //context.TestCases.Add(entity);
+                context.Scenarios.Update(entity);
                 await context.SaveChangesAsync(cancellationToken);
 
                 return new CreateScenarioItemCommandDto

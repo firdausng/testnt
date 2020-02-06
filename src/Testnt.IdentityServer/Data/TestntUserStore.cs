@@ -18,7 +18,7 @@ namespace Testnt.IdentityServer.Data
         }
 
         public override async Task<IdentityResult> CreateAsync(ApplicationUser user,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
             if (user == null) throw new ArgumentNullException(nameof(user));

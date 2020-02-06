@@ -27,11 +27,10 @@ namespace Testnt.Main.Application.Components.ProjectComponents.Scenarios.Query.I
             var testCase = await context.Scenarios
                 .Where(t => t.Project.Id == request.ProjectId)
                 .Where(t => t.Id == request.Id)
-                .Include(t => t.Steps)
+                .Include(t => t.ScenarioSteps)
                 .Include(t => t.Tags)
                 .ProjectTo<GetProjectScenarioItemDto>(mapper.ConfigurationProvider)
-                .SingleAsync(cancellationToken)
-                ;
+                .SingleAsync(cancellationToken);
 
             if (testCase == null)
             {

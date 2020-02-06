@@ -9,11 +9,9 @@ namespace Testnt.Main.Application.Components.ProjectComponents.Scenarios.Command
 {
     public class CreateScenarioItemCommandValidator : ProjectComponentRequestValidator<CreateScenarioItemCommand>
     {
-        private readonly TestntDbContext context;
 
         public CreateScenarioItemCommandValidator(TestntDbContext context):base(context)
         {
-            this.context = context;
             RuleFor(v => v.Name)
                 .MaximumLength(150)
                 .NotEmpty()
@@ -33,18 +31,11 @@ namespace Testnt.Main.Application.Components.ProjectComponents.Scenarios.Command
         }
         private async Task<bool> HaveUniqueNameWithinOneProject(CreateScenarioItemCommand command)
         {
-            var testcaseNameExistCheck = await context.Projects
+            var scenarioNameExistCheck = await context.Scenarios
                 .Where(p => p.Id.Equals(command.ProjectId))
-                .Include(p => p.Scenarios)
-                .Where(p => p.Id.Equals(command.ProjectId))
-                .SelectMany(p => p.Scenarios)
-                .Select(tc => new
-                {
-                    tc.Name
-                })
                 .Where(n => n.Name.ToLower().Trim().Equals(command.Name.ToLower().Trim()))
-                .ToListAsync();
-            return testcaseNameExistCheck.Count == 0;
+                .SingleOrDefaultAsync();
+            return scenarioNameExistCheck != null;
         }
 
         private async Task<bool> TagsExist(CreateScenarioItemCommand command)

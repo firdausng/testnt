@@ -7,7 +7,6 @@ namespace Testnt.Main.Domain.Entity.TestSessionEntity
     {
         public string Name { get; set; }
         //public ICollection<TestCase> TestCases { get; set; } = new List<TestCase>();
-        public Guid ProjectId { get; set; }
         public Project Project { get; set; }
         public DateTimeOffset Started { get; set; }
         public DateTimeOffset Finished { get; set; }

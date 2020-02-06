@@ -9,11 +9,8 @@ namespace Testnt.Main.Application.Components.ProjectComponents.Tags.Command.Crea
 {
     public class CreateTagItemCommandValidator : ProjectComponentRequestValidator<CreateTagItemCommand>
     {
-        private readonly TestntDbContext context;
-
         public CreateTagItemCommandValidator(TestntDbContext context) : base(context)
         {
-            this.context = context;
             RuleFor(v => v.Name)
                 .MaximumLength(50)
                 .NotEmpty()

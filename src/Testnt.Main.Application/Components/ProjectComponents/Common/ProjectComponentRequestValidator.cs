@@ -8,7 +8,7 @@ namespace Testnt.Main.Application.Components.ProjectComponents.Common
 {
     public abstract class ProjectComponentRequestValidator<T> : AbstractValidator<T> where T : ProjectComponentRequest
     {
-        private readonly TestntDbContext context;
+        protected readonly TestntDbContext context;
 
         public ProjectComponentRequestValidator(TestntDbContext context)
         {

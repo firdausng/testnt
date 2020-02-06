@@ -34,7 +34,7 @@ namespace Testnt.Main.Api.Rest.Features.Project
         [HttpGet("{featureId}", Name = "GetProjectFeature")]
         public async Task<ActionResult<GetProjectFeatureListDto>> GetProjectFeature(Guid featureId, Guid projectId)
         {
-            var vm = await mediator.Send(new GetProjectFeatureItemQuery() { Id = featureId });
+            var vm = await mediator.Send(new GetProjectFeatureItemQuery() { Id = featureId, ProjectId= projectId });
 
             return Ok(vm);
         }

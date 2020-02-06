@@ -10,7 +10,7 @@ namespace Testnt.Main.Domain.Entity
         public TestOutlineStatus Status { get; set; }
         public TestExecutionResult TestExecutionResult { get; set; }
         public List<TagLink> Tags { get; set; } = new List<TagLink>();
-        public List<Step> Steps { get; set; } = new List<Step>();
+        public List<ScenarioStep> ScenarioSteps { get; set; } = new List<ScenarioStep>();
     }
 
     public enum TestOutlineStatus

@@ -32,7 +32,7 @@ namespace Testnt.Main.Api.Rest.Features.Project
         [HttpGet("{projectScenarioId}", Name = "GetProjectScenario")]
         public async Task<ActionResult<GetProjectScenarioListDto>> GetProjectScenario(Guid projectScenarioId, Guid projectId)
         {
-            var vm = await mediator.Send(new GetProjectScenarioItemQuery() { Id = projectScenarioId });
+            var vm = await mediator.Send(new GetProjectScenarioItemQuery() { Id = projectScenarioId, ProjectId= projectId });
 
             return Ok(vm);
         }

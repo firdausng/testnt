@@ -26,6 +26,7 @@ namespace Testnt.Main.Infrastructure.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<Scenario> Scenarios { get; set; }
         public DbSet<Feature> Features { get; set; }
+        public DbSet<Step> Steps { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Tag> Tags { get; set; }
@@ -62,9 +63,17 @@ namespace Testnt.Main.Infrastructure.Data
                 .WithMany(c => c.Members)
                 .HasForeignKey(bc => bc.UserProfileId);
 
-
-            modelBuilder.Entity<Scenario>()
-                .OwnsMany(p => p.Steps);
+            // many to many mapping for test steps and scenario
+            modelBuilder.Entity<ScenarioStep>()
+                .HasKey(bc => new { bc.ScenarioId, bc.StepId });
+            modelBuilder.Entity<ScenarioStep>()
+                .HasOne(bc => bc.Scenario)
+                .WithMany(b => b.ScenarioSteps)
+                .HasForeignKey(bc => bc.ScenarioId);
+            modelBuilder.Entity<ScenarioStep>()
+                .HasOne(bc => bc.Step)
+                .WithMany(c => c.ScenarioSteps)
+                .HasForeignKey(bc => bc.StepId);
 
             // reference https://haacked.com/archive/2019/07/29/query-filter-by-interface/
             // Note the .Where(t => t.BaseType == null) clause here. 

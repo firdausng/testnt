@@ -10,6 +10,5 @@ namespace Testnt.Main.Domain.Entity
         }
         public string Name { get; set; }
         public List<TagLink> TagLinks { get; set; } = new List<TagLink>();
-        public Guid ProjectId { get; set; }
     }
 }

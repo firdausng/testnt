@@ -136,7 +136,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ProjectId")
+                    b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Status")
@@ -157,6 +157,61 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("Scenarios");
+                });
+
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.ScenarioStep", b =>
+                {
+                    b.Property<Guid>("ScenarioId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("StepId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ScenarioId", "StepId");
+
+                    b.HasIndex("StepId");
+
+                    b.ToTable("ScenarioStep");
+                });
+
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Step", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Steps");
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.Tag", b =>
@@ -230,6 +285,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("ScenarioId")
                         .HasColumnType("uuid");
@@ -314,6 +372,9 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("ScenarioSnapshotId")
                         .HasColumnType("uuid");
@@ -414,51 +475,39 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 
                     b.HasOne("Testnt.Main.Domain.Entity.Project", "Project")
                         .WithMany("Scenarios")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Testnt.Main.Domain.Entity.Scenario", null)
                         .WithMany()
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.OwnsMany("Testnt.Main.Domain.Entity.Step", "Steps", b1 =>
-                        {
-                            b1.Property<Guid>("ScenarioId")
-                                .HasColumnType("uuid");
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.ScenarioStep", b =>
+                {
+                    b.HasOne("Testnt.Main.Domain.Entity.Scenario", "Scenario")
+                        .WithMany("ScenarioSteps")
+                        .HasForeignKey("ScenarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                            b1.Property<Guid>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("uuid");
+                    b.HasOne("Testnt.Main.Domain.Entity.Step", "Step")
+                        .WithMany("ScenarioSteps")
+                        .HasForeignKey("StepId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                            b1.Property<DateTime>("Created")
-                                .HasColumnType("timestamp without time zone");
-
-                            b1.Property<string>("CreatedBy")
-                                .HasColumnType("text");
-
-                            b1.Property<string>("Description")
-                                .HasColumnType("text");
-
-                            b1.Property<DateTime?>("LastModified")
-                                .HasColumnType("timestamp without time zone");
-
-                            b1.Property<string>("LastModifiedBy")
-                                .HasColumnType("text");
-
-                            b1.Property<string>("Status")
-                                .HasColumnType("text");
-
-                            b1.Property<Guid>("TenantId")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("ScenarioId", "Id");
-
-                            b1.ToTable("Step");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ScenarioId");
-                        });
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Step", b =>
+                {
+                    b.HasOne("Testnt.Main.Domain.Entity.Step", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.Tag", b =>

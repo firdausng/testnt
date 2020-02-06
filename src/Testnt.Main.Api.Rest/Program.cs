@@ -42,7 +42,7 @@ namespace Testnt.Main.Api.Rest
 
                 using (var serviceScope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
                 {
-                    Data.EnsureSeedData(serviceScope);
+                    //Data.EnsureSeedData(serviceScope);
                 }
 
                 host.Run();

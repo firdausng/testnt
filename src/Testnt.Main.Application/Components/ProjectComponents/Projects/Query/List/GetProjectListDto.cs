@@ -10,6 +10,7 @@ namespace Testnt.Main.Application.Components.ProjectComponents.Projects.Query.Li
     {
         public string Name { get; set; }
         public Guid Id { get; set; }
+        public bool IsEnabled { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Project, GetProjectListDto>();

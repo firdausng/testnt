@@ -23,15 +23,11 @@ namespace Testnt.Main.Application.Components.ProjectComponents.Projects.Command.
                 ;
 
             RuleFor(v => v.IsEnabled)
-                .NotEmpty()
+                .Must(v => v == false || v == true)
                 .WithName("IsEnabled")
                 .NotNull()
                 .WithName("IsEnabled")
                 ;
-
-            //RuleFor(v => v.TenantId)
-            //    .NotEmpty()
-            //    .WithMessage("Tenant id is missing.");
 
         }
 

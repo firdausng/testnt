@@ -1,11 +1,11 @@
-
 <div mat-dialog-content>
   <p>Project Name</p>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.projectName">
+    <input matInput [(ngModel)]="data.name">
   </mat-form-field>
+  <mat-checkbox [(ngModel)]="data.isEnabled">Is Enabled</mat-checkbox>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.projectName" cdkFocusInitial>Ok</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
 </div>

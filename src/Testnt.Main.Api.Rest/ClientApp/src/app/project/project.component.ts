@@ -15,10 +15,10 @@ export interface DialogData {
 })
 export class ProjectComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'action'];
+  displayedColumns: string[] = ['id', 'name', 'enabled', 'action'];
   data: ListObject<Project>;
   dataSource: [Project]
-  projectName: string;
+  project: Project = new Project();
 
   constructor(public projectService: ProjectService, public dialog: MatDialog) { }
 
@@ -29,14 +29,14 @@ export class ProjectComponent implements OnInit {
   openCreateNewProjectDialog(): void {
     const dialogRef = this.dialog.open(NewProjectDialog, {
       width: '250px',
-      data: { projectName: this.projectName }
+      data: this.project
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.projectName = result;
-      if(this.projectName.length > 0){
-        this.projectService.createProject(this.projectName).subscribe(
+      this.project = result;
+      if(this.project.name.length > 0){
+        this.projectService.createProject(this.project).subscribe(
           data => {
             this.getAllProject();
           },

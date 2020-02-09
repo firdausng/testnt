@@ -14,8 +14,8 @@ export class ProjectService {
     return this.http.get<ListObject<Project>>('http://localhost:7000/api/project')
   }
 
-  createProject(name: string) {
-    return this.http.post('http://localhost:7000/api/project', { name });
+  createProject(project: Project) {
+    return this.http.post('http://localhost:7000/api/project', project);
   }
 
   deleteProject(id:string){
@@ -26,4 +26,5 @@ export class ProjectService {
 export class Project {
   name: string
   id: string
+  isEnabled: boolean = false;
 }

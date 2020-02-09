@@ -47,20 +47,7 @@ namespace Testnt.Main.Api.Rest
 
             services.AddApplication();
             services.AddInfrastructure(Configuration);
-            services.AddScoped<CurrentUserService>();
-            services.AddScoped<MockCurrentUserService>();
-            services.AddScoped<ICurrentUserService>(sp => 
-            {
-                var dbContextMock = sp.GetRequiredService<IConfiguration>().GetValue<bool>("Mock:DbContext");
-                if (dbContextMock)
-                {
-                    return sp.GetRequiredService<MockCurrentUserService>();
-                }
-                else
-                {
-                    return sp.GetRequiredService<CurrentUserService>();
-                }
-            });
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddHttpContextAccessor();
             //services.AddScoped<TenantIdFilter>();

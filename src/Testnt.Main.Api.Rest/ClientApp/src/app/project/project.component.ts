@@ -4,9 +4,7 @@ import { ListObject } from '../common/model/ListObject';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
-export interface DialogData {
-  name: string;
-}
+
 
 @Component({
   selector: 'tnt-project',
@@ -78,7 +76,7 @@ export class NewProjectDialog {
 
   constructor(
     public dialogRef: MatDialogRef<NewProjectDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public project: Project) { }
 
   onNoClick(): void {
     this.dialogRef.close();

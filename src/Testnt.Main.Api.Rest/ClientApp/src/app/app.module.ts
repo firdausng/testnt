@@ -44,10 +44,10 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
     AppComponent,
     NavComponent,
     DashboardComponent,
-    ProjectComponent,
+    
     UnauthorizedComponent,
     AutoLoginComponent,
-    NewProjectDialog
+    
   ],
   imports: [
     BrowserModule,
@@ -70,7 +70,7 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
     MatMenuModule
   ],
   entryComponents: [
-    NewProjectDialog
+    
   ],
   providers: [
     OidcConfigService,
@@ -82,7 +82,6 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
         },
         AuthorizationGuard,
         AuthService,
-        ProjectService,
         {
           provide: HTTP_INTERCEPTORS,
           useClass: TokenInterceptor,

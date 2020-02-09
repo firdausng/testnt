@@ -10,7 +10,7 @@ import { AutoLoginComponent } from './auto-login/auto-login.component';
 const routes: Routes = [
   { path: "", component: DashboardComponent, pathMatch: 'full'},
   { path: "dashboard", component: DashboardComponent},
-  { path: "project", component: ProjectComponent, canActivate: [AuthorizationGuard]},
+  { path: 'project', loadChildren: () => import('./project/project.module').then(m => m.ProjectModule)},
   { path: 'autologin', component: AutoLoginComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
 ];

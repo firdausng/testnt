@@ -435,21 +435,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Testnt.Main.Domain.Entity.Feature", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.Project", b =>
-                {
-                    b.HasOne("Testnt.Main.Domain.Entity.Project", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.ProjectUser", b =>
@@ -478,12 +463,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Testnt.Main.Domain.Entity.Scenario", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.ScenarioStep", b =>
@@ -501,26 +480,11 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.Step", b =>
-                {
-                    b.HasOne("Testnt.Main.Domain.Entity.Step", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Testnt.Main.Domain.Entity.Tag", b =>
                 {
                     b.HasOne("Testnt.Main.Domain.Entity.Project", null)
                         .WithMany("Tags")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Testnt.Main.Domain.Entity.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -545,12 +509,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.Session", null)
                         .WithMany("ScenarioSnapshot")
                         .HasForeignKey("SessionId");
-
-                    b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.ScenarioSnapshot", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.Session", b =>
@@ -560,12 +518,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.Session", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.StepSnapshot", b =>
@@ -573,21 +525,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.ScenarioSnapshot", null)
                         .WithMany("StepSnapshot")
                         .HasForeignKey("ScenarioSnapshotId");
-
-                    b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.StepSnapshot", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.UserProfile", b =>
-                {
-                    b.HasOne("Testnt.Main.Domain.Entity.UserProfile", null)
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

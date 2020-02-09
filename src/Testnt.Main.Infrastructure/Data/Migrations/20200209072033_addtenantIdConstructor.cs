@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Testnt.Main.Infrastructure.Data.Migrations
 {
-    public partial class initialMigration2 : Migration
+    public partial class addtenantIdConstructor : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,12 +23,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projects", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Projects_Projects_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -49,12 +43,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Steps", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Steps_Steps_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Steps",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,12 +62,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserProfiles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserProfiles_UserProfiles_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "UserProfiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,12 +85,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         name: "FK_Features_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Features_Features_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Features",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -137,12 +113,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Sessions_Sessions_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Sessions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -165,12 +135,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         name: "FK_Tags_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Tags_Tags_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -231,12 +195,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Scenarios_Scenarios_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "Scenarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -264,12 +222,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         principalTable: "Sessions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ScenarioSnapshot_ScenarioSnapshot_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "ScenarioSnapshot",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -343,12 +295,6 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                         principalTable: "ScenarioSnapshot",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_StepSnapshot_StepSnapshot_TenantId",
-                        column: x => x.TenantId,
-                        principalTable: "StepSnapshot",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

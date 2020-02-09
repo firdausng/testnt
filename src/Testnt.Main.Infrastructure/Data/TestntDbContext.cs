@@ -102,7 +102,7 @@ namespace Testnt.Main.Infrastructure.Data
                     entityType.SetQueryFilter(lambda);
 
                     entityType.AddIndex(tenantIdProperty);
-                    entityType.AddForeignKey(tenantIdProperty, entityType.FindPrimaryKey(), entityType);
+                    //entityType.AddForeignKey(tenantIdProperty, entityType.FindPrimaryKey(), entityType);
                 }
             }
         }

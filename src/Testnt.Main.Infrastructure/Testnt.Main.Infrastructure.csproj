@@ -7,6 +7,10 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20200204233628_initialMigration2.cs" />
     <Compile Remove="Data\Migrations\20200204233628_initialMigration2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200206173146_initialMigration2.cs" />
+    <Compile Remove="Data\Migrations\20200206173146_initialMigration2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200209062721_addtenantIdConstructor.cs" />
+    <Compile Remove="Data\Migrations\20200209062721_addtenantIdConstructor.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

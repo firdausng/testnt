@@ -5,9 +5,6 @@ import {MatNativeDateModule} from '@angular/material/core';
 
 import { FormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
 import { AuthModule, ConfigResult, OidcConfigService, OidcSecurityService, OpenIdConfiguration } from 'angular-auth-oidc-client';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -24,11 +21,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { AuthorizationGuard } from './authorization.guard';
 import { AutoLoginComponent } from './auto-login/auto-login.component';
-import { TokenInterceptor } from './token.interceptor';
-import { AuthService } from './auth.service';
-import { ProjectService } from './project.service';
+import { AuthorizationGuard } from './core/authorization.guard';
+import { AuthService } from './core/auth.service';
+import { TokenInterceptor } from './core/token.interceptor';
+import { AppComponent } from './core/app.component';
+import { AppRoutingModule } from './core/app-routing.module';
+
 
 const oidc_configuration = 'assets/auth.clientConfiguration.json';
 // if your config is on server side

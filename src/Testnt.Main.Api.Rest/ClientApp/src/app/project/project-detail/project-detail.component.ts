@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { ProjectService, Project } from 'src/app/project.service';
 import { Observable } from 'rxjs';
+import { Project, ProjectService } from 'src/app/core/project.service';
 
 @Component({
   selector: 'tnt-project-detail',

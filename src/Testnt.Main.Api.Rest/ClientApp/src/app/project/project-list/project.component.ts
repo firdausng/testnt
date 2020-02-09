@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ListObject } from 'src/app/common/model/ListObject';
-import { Project, ProjectService } from 'src/app/project.service';
+import { Project, ProjectService } from 'src/app/core/project.service';
 
 
 @Component({

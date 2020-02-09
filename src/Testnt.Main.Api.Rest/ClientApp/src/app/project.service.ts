@@ -14,6 +14,10 @@ export class ProjectService {
     return this.http.get<ListObject<Project>>('http://localhost:7000/api/project')
   }
 
+  getProject(id:string): Observable<Project> {
+    return this.http.get<Project>(`http://localhost:7000/api/project/${id}`)
+  }
+
   createProject(project: Project) {
     return this.http.post('http://localhost:7000/api/project', project);
   }

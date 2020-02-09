@@ -1,22 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProjectComponent, NewProjectDialog } from './project.component';
+
 import { ProjectService } from '../project.service';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthorizationGuard } from '../authorization.guard';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule } from '@angular/forms';
+import { ProjectDetailComponent } from './project-detail/project-detail.component';
+import { ProjectComponent, NewProjectDialog } from './project-list/project.component';
 
 
 const routes: Routes = [
-  { path: "", component: ProjectComponent, canActivate: [AuthorizationGuard]},
+  { path: '', component: ProjectComponent, canActivate: [AuthorizationGuard] },
+  { path: ':id', component: ProjectDetailComponent }
 ];
-
-
 
 let components = [
   ProjectComponent,
-  NewProjectDialog
+  NewProjectDialog,
+  ProjectDetailComponent
 ];
 
 @NgModule({

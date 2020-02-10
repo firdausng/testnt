@@ -1,0 +1,3 @@
+*
+!src/Testnt.Main.Api.Rest/bin/Debug/netcoreapp3.1/publish
+!src/Testnt.IdentityServer/bin/Debug/netcoreapp3.1/publish

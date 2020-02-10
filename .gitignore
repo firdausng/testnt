@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/tempkey.rsa
+/src/Testnt.Main.Api.Rest/.config/dotnet-tools.json

@@ -19,9 +19,9 @@ namespace Testnt.Main.Api.Rest
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
-                .MinimumLevel.Override("System", LogEventLevel.Information)
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Debug)
+                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Debug)
+                .MinimumLevel.Override("System", LogEventLevel.Debug)
                 .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Debug)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Debug)
                 .Enrich.FromLogContext()

@@ -43,8 +43,10 @@ namespace Testnt.IdentityServer
 
                 using (var serviceScope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
                 {
-                    Users.EnsureSeedData(serviceScope);
-                    Config.EnsureSeedData(serviceScope);
+                    serviceScope.ServiceProvider.GetService<Users>().EnsureSeedData();
+                    serviceScope.ServiceProvider.GetService<Config>().EnsureSeedData();
+                    //Users.EnsureSeedData(serviceScope);
+                    //Config.EnsureSeedData(serviceScope);
                 }
 
                 host.Run();

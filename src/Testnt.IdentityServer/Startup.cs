@@ -39,6 +39,10 @@ namespace Testnt.IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // seed class
+            services.AddTransient<Config>();
+            services.AddTransient<Users>();
+
             // setup dummy data
             services.AddTransient<IEmailSender, DummyEmailSender>();
             services.Configure<DummyAuthMessageSenderOptions>(Configuration);
@@ -70,12 +74,15 @@ namespace Testnt.IdentityServer
 
             services.AddCors(options =>
             {
+                var clientList = Configuration.GetSection("Client:Ip").GetChildren().Select(s => s.Value).ToList();
+                clientList.Add("http://localhost:4200");
+
                 options.AddPolicy("AllowAllOrigins",
                     builder =>
                     {
                         builder
                             //.AllowCredentials()
-                            .WithOrigins("http://localhost:7000", "https://localhost:7001", "http://localhost:4200")
+                            .WithOrigins(clientList.ToArray())
                             //.SetIsOriginAllowedToAllowWildcardSubdomains()
                             //.SetIsOriginAllowed(isOriginAllowed: _ => true)
                             //.AllowAnyOrigin()

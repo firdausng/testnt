@@ -7,16 +7,28 @@ using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace IdentityServer.Data.Seed
 {
-    public static class Config
+    public class Config
     {
-        public static IEnumerable<IdentityResource> GetIdentityResources()
+        private readonly ConfigurationDbContext configurationDbContext;
+        private readonly PersistedGrantDbContext persistedGrantDbContext;
+        private readonly IConfiguration configuration;
+        private readonly ILogger<Config> logger;
+
+        public Config(ConfigurationDbContext configurationDbContext, PersistedGrantDbContext persistedGrantDbContext, IConfiguration configuration, ILogger<Config> logger)
+        {
+            this.configurationDbContext = configurationDbContext;
+            this.persistedGrantDbContext = persistedGrantDbContext;
+            this.configuration = configuration;
+            this.logger = logger;
+        }
+        public IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new List<IdentityResource>
             {
@@ -32,7 +44,7 @@ namespace IdentityServer.Data.Seed
             };
         }
 
-        public static IEnumerable<ApiResource> GetApis()
+        public IEnumerable<ApiResource> GetApis()
         {
             return new List<ApiResource>
             {
@@ -48,7 +60,7 @@ namespace IdentityServer.Data.Seed
             };
         }
 
-        public static IEnumerable<Client> GetClients()
+        public IEnumerable<Client> GetClients(List<string> clientList)
         {
             return new List<Client>
             {
@@ -102,22 +114,10 @@ namespace IdentityServer.Data.Seed
                     AllowOfflineAccess = true,
                     UpdateAccessTokenClaimsOnRefresh = true,
 
-                    RedirectUris = new List<string>()
-                    {
-                        "https://localhost:7001",
-                        "http://localhost:7000"
-                    },
-                    PostLogoutRedirectUris = new List<string>()
-                    {
-                        "https://localhost:7001",
-                        "http://localhost:7000",
-                    },
+                    RedirectUris = clientList,
+                    PostLogoutRedirectUris = clientList,
 
-                    AllowedCorsOrigins =
-                    {
-                        "https://localhost:7001",
-                        "http://localhost:7000"
-                    },
+                    AllowedCorsOrigins =clientList,
 
                     AllowedScopes =
                     {
@@ -134,44 +134,50 @@ namespace IdentityServer.Data.Seed
             };
         }
 
-        public static void EnsureSeedData(IServiceScope serviceScope)
+        public void EnsureSeedData()
         {
-            serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+            persistedGrantDbContext.Database.Migrate();
 
-            var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
-            context.Database.Migrate();
+            //var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+            //var configuration = serviceScope.ServiceProvider.GetRequiredService<IConfiguration>();
+            //var logger = serviceScope.ServiceProvider.GetRequiredService<ILogging>();
 
-            if (!context.Clients.Any())
+            var clientList = configuration.GetSection("Client:Ip").GetChildren().Select(s => s.Value).ToList();
+
+            configurationDbContext.Database.Migrate();
+
+            if (!configurationDbContext.Clients.Any())
             {
-                Console.WriteLine("Adding Client operation");
-                foreach (var client in GetClients())
+                logger.LogInformation("Adding Client operation");
+
+                foreach (var client in GetClients(clientList))
                 {
-                    Console.WriteLine($"Adding {client.ToEntity().ClientName}");
-                    context.Clients.Add(client.ToEntity());
+                    logger.LogInformation($"Adding {client.ToEntity().ClientName}");
+                    configurationDbContext.Clients.Add(client.ToEntity());
                 }
-                context.SaveChanges();
+                configurationDbContext.SaveChanges();
             }
 
-            if (!context.IdentityResources.Any())
+            if (!configurationDbContext.IdentityResources.Any())
             {
-                Console.WriteLine("Adding Identity resource operation");
+                logger.LogInformation("Adding Identity resource operation");
                 foreach (var resource in GetIdentityResources())
                 {
-                    Console.WriteLine($"Adding {resource.ToEntity().DisplayName}");
-                    context.IdentityResources.Add(resource.ToEntity());
+                    logger.LogInformation($"Adding {resource.ToEntity().DisplayName}");
+                    configurationDbContext.IdentityResources.Add(resource.ToEntity());
                 }
-                context.SaveChanges();
+                configurationDbContext.SaveChanges();
             }
 
-            if (!context.ApiResources.Any())
+            if (!configurationDbContext.ApiResources.Any())
             {
-                Console.WriteLine("Adding API resource operation");
-                foreach (var resource in Config.GetApis())
+                logger.LogInformation("Adding API resource operation");
+                foreach (var resource in GetApis())
                 {
-                    Console.WriteLine($"Adding {resource.ToEntity().DisplayName}");
-                    context.ApiResources.Add(resource.ToEntity());
+                    logger.LogInformation($"Adding {resource.ToEntity().DisplayName}");
+                    configurationDbContext.ApiResources.Add(resource.ToEntity());
                 }
-                context.SaveChanges();
+                configurationDbContext.SaveChanges();
             }
         }
     }

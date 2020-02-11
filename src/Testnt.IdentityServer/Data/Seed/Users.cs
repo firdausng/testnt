@@ -8,7 +8,7 @@ using System.Security.Claims;
 using IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Testnt.IdentityServer.Data;
 using Testnt.IdentityServer.Entities;
 
@@ -16,29 +16,40 @@ namespace IdentityServer.Data.Seed
 {
     public class Users
     {
-        public static void EnsureSeedData(IServiceScope scope)
-        {
-            var context = scope.ServiceProvider.GetService<TestntIdentityDbContext>();
-            context.Database.Migrate();
+        private readonly TestntIdentityDbContext testntIdentityDbContext;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<Users> logger;
 
-            var mainTenant = context.Tenants.Where(t => t.Name.Equals("Testnt")).FirstOrDefaultAsync().Result;
+        public Users(TestntIdentityDbContext testntIdentityDbContext, UserManager<ApplicationUser> userManager, ILogger<Users> logger)
+        {
+            this.testntIdentityDbContext = testntIdentityDbContext;
+            this.userManager = userManager;
+            this.logger = logger;
+        }
+
+        public void EnsureSeedData()
+        {
+            testntIdentityDbContext.Database.Migrate();
+
+            var mainTenant = testntIdentityDbContext.Tenants.Where(t => t.Name.Equals("Testnt")).FirstOrDefaultAsync().Result;
             if (mainTenant == null)
             {
+                logger.LogInformation("cannot find Testnt tenant");
                 mainTenant = new Tenant
                 {
                     Name = "Testnt",
                    
                 };
-                context.Tenants.Add(mainTenant);
-                context.SaveChanges();
+                testntIdentityDbContext.Tenants.Add(mainTenant);
+                testntIdentityDbContext.SaveChanges();
+                logger.LogInformation("Testnt tenant created");
+            }
+            else
+            {
+                logger.LogInformation("Testnt tenant created");
             }
 
-            
-
-            var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            //var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-
-            var alice = userMgr.FindByNameAsync("alice").Result;
+            var alice = userManager.FindByNameAsync("alice").Result;
             if (alice == null)
             {
                 alice = new ApplicationUser
@@ -49,13 +60,13 @@ namespace IdentityServer.Data.Seed
                     TenantId = mainTenant.Id,
                     IsEnabled = true
                 };
-                var result = userMgr.CreateAsync(alice, "Password@01").Result;
+                var result = userManager.CreateAsync(alice, "Password@01").Result;
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
 
-                result = userMgr.AddClaimsAsync(alice, new Claim[]{
+                result = userManager.AddClaimsAsync(alice, new Claim[]{
                         new Claim("tenant_id", alice.TenantId.ToString()),
                         new Claim(JwtClaimTypes.ClientId, "testnt.main.web.client"),
                         new Claim(JwtClaimTypes.Name, "Alice Smith"),
@@ -70,14 +81,14 @@ namespace IdentityServer.Data.Seed
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
-                Console.WriteLine("alice created");
+                logger.LogInformation("alice created");
             }
             else
             {
-                Console.WriteLine("alice already exists");
+                logger.LogInformation("alice already exists");
             }
 
-            var bob = userMgr.FindByNameAsync("bob").Result;
+            var bob = userManager.FindByNameAsync("bob").Result;
             if (bob == null)
             {
                 bob = new ApplicationUser
@@ -88,13 +99,13 @@ namespace IdentityServer.Data.Seed
                     TenantId = mainTenant.Id,
                     IsEnabled = true
                 };
-                var result = userMgr.CreateAsync(bob, "Password@01").Result;
+                var result = userManager.CreateAsync(bob, "Password@01").Result;
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
   
-                result = userMgr.AddClaimsAsync(bob, new Claim[]{
+                result = userManager.AddClaimsAsync(bob, new Claim[]{
                         new Claim("tenant_id", bob.TenantId.ToString()),
                         new Claim(JwtClaimTypes.Name, "Bob Smith"),
                         new Claim(JwtClaimTypes.GivenName, "Bob"),
@@ -109,15 +120,15 @@ namespace IdentityServer.Data.Seed
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
-                Console.WriteLine("bob created");
+                logger.LogInformation("bob created");
             }
             else
             {
-                Console.WriteLine("bob already exists");
+                logger.LogInformation("bob already exists");
             }
 
 
-            var demoTenant = context.Tenants.Where(t => t.Name.Equals("demoTenant")).FirstOrDefaultAsync().Result;
+            var demoTenant = testntIdentityDbContext.Tenants.Where(t => t.Name.Equals("demoTenant")).FirstOrDefaultAsync().Result;
             if (demoTenant == null)
             {
                 demoTenant = new Tenant
@@ -125,11 +136,11 @@ namespace IdentityServer.Data.Seed
                     Name = "demoTenant",
 
                 };
-                context.Tenants.Add(demoTenant);
-                context.SaveChanges();
+                testntIdentityDbContext.Tenants.Add(demoTenant);
+                testntIdentityDbContext.SaveChanges();
             }
 
-            var kyle = userMgr.FindByNameAsync("kyle").Result;
+            var kyle = userManager.FindByNameAsync("kyle").Result;
             if (kyle == null)
             {
                 kyle = new ApplicationUser
@@ -140,13 +151,13 @@ namespace IdentityServer.Data.Seed
                     TenantId = demoTenant.Id,
                     IsEnabled = true
                 };
-                var result = userMgr.CreateAsync(kyle, "Password@01").Result;
+                var result = userManager.CreateAsync(kyle, "Password@01").Result;
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
 
-                result = userMgr.AddClaimsAsync(kyle, new Claim[]{
+                result = userManager.AddClaimsAsync(kyle, new Claim[]{
                         new Claim("tenant_id", kyle.TenantId.ToString()),
                         new Claim(JwtClaimTypes.ClientId, "testnt.main.web.client"),
                         new Claim(JwtClaimTypes.Name, "Kyle John"),
@@ -161,11 +172,11 @@ namespace IdentityServer.Data.Seed
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
-                Console.WriteLine("kyle created");
+                logger.LogInformation("kyle created");
             }
             else
             {
-                Console.WriteLine("kyle already exists");
+                logger.LogInformation("kyle already exists");
             }
         }
     }

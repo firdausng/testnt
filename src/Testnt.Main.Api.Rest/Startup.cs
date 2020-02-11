@@ -68,7 +68,7 @@ namespace Testnt.Main.Api.Rest
                 .AddCookie()
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "http://localhost:5000";
+                    options.Authority = Configuration.GetValue<string>("IdentityServer:Url");
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "testnt.main.api";
                     options.ApiSecret = "secret";
@@ -78,13 +78,13 @@ namespace Testnt.Main.Api.Rest
                 })
                 //.AddJwtBearer("Bearer", options =>
                 //{
-                //    options.Authority = "http://localhost:5000";
+                //    options.Authority = Configuration.GetValue<string>("IdentityServer:Url");
                 //    options.RequireHttpsMetadata = false;
 
                 //    options.Audience = "testnt.main.api";
                 //})
                 ;
-            
+
             services.AddAuthorization();
 
             services.AddSpaStaticFiles(configuration =>

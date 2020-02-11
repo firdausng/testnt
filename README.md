@@ -61,3 +61,19 @@ Update-Database -Context TestntDbContext -Verbose
 
 
 ```
+
+## Docker Support
+1. build dockerfile from root directory(root solution folder)
+```sh
+docker build -f src/Testnt.Main.Api.Rest/Dockerfile -t testnt/rest-server .
+docker build -f src/Testnt.IdentityServer/Dockerfile -t testnt/identity-server .
+
+```
+2. Run container
+```sh
+docker network create testnt_network
+docker run --network=testnt_network --name postgres-server -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+docker run --network=testnt_network --name identity-server -e "Client:Ip:0=http://rest-server:7000" -e "ConnectionStrings:DefaultConnection=Host=postgres-server;Database=TestntIdentity;Username=postgres;Password=postgres" -p 5000:80 -d testnt/identity-server
+docker run --network=testnt_network --name rest-server -e "IdentityServer:Url:http://identity-server:5000" -e "ConnectionStrings:PostgresTestntMainConnectionString=Host=postgres-server;Database=Testnt;Username=postgres;Password=postgres" -p 7000:80 -d testnt/rest-server
+
+```

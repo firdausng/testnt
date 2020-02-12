@@ -11,6 +11,8 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
+using System.Threading.Tasks;
+using Testnt.IdentityServer.Data;
 
 namespace Testnt.IdentityServer
 {
@@ -41,12 +43,25 @@ namespace Testnt.IdentityServer
                 Log.Information("Starting host...");
                 var host = CreateHostBuilder(args).Build();
 
-                using (var serviceScope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
+                using (var scope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
                 {
-                    serviceScope.ServiceProvider.GetService<Users>().EnsureSeedData();
-                    serviceScope.ServiceProvider.GetService<Config>().EnsureSeedData();
-                    //Users.EnsureSeedData(serviceScope);
-                    //Config.EnsureSeedData(serviceScope);
+                    Task.Run(async () =>
+                    {
+                        var services = scope.ServiceProvider;
+                        var maxAttemps = 12;
+                        var delay = 5000;
+                        var testntIdentityDbContext = services.GetService<TestntIdentityDbContext>();
+                        for (int i = 0; i < maxAttemps; i++)
+                        {
+                            if (testntIdentityDbContext.Database.CanConnect())
+                            {
+                                scope.ServiceProvider.GetService<Users>().EnsureSeedData();
+                                scope.ServiceProvider.GetService<Config>().EnsureSeedData();
+                                return;
+                            }
+                            await Task.Delay(delay);
+                        }
+                    });
                 }
 
                 host.Run();

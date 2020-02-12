@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -6,6 +7,7 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using Testnt.Main.Application.Seed;
+using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Api.Rest
 {
@@ -40,8 +42,23 @@ namespace Testnt.Main.Api.Rest
                 Log.Information("Starting host...");
                 var host = CreateHostBuilder(args).Build();
 
-                using (var serviceScope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
+                using (var scope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
                 {
+                    Task.Run(async ()=> 
+                    {
+                        var services = scope.ServiceProvider;
+                        var maxAttemps = 12;
+                        var delay = 5000;
+                        var context = services.GetService<TestntDbContext>();
+                        for (int i = 0; i < maxAttemps; i++)
+                        {
+                            if (context.Database.CanConnect())
+                            {
+                                return;
+                            }
+                            await Task.Delay(delay);
+                        }
+                    });
                     //Data.EnsureSeedData(serviceScope);
                 }
 

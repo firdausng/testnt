@@ -1,28 +1,19 @@
-version: '3'
+version: '3.4'
+
 services:
-  api-rest:
-    image: testnt/rest-server
-    ports:
-    - "7000:80"
-    environment:
-    - "ConnectionStrings:DefaultConnection=Host=postgres-server;Database=TestntIdentity;Username=postgres;Password=postgres"
-    - "Client:Ip:0=http://rest-server:7000"
-    depends_on: 
-    - postgres
-    #command: ["./wait-for-it.sh", "db:5432", "--", "python", "app.py"]
-  IS:
-    image: testnt/identity-server
-    ports:
-    - "5000:80"
-    environment:
-    - "ConnectionStrings:PostgresTestntMainConnectionString=Host=postgres-server;Database=Testnt;Username=postgres;Password=postgres"
-    - "IdentityServer:Url:http://identity-server:5000"
-    depends_on: 
-    - postgres
-    #command: ["./wait-for-it.sh", "db:5432", "--", "python", "app.py"]
+  testnt.main.api.rest:
+    image: ${DOCKER_REGISTRY-}testntmainapirest
+    build:
+      context: .
+      dockerfile: src/Testnt.Main.Api.Rest/Dockerfile
+
+  testnt.identityserver:
+    image: ${DOCKER_REGISTRY-}testntidentityserver
+    build:
+      context: .
+      dockerfile: src/Testnt.IdentityServer/Dockerfile
+
   postgres:
     image: postgres
-    ports:
-    - "5432:5432"
-    environment:
-    - "POSTGRES_PASSWORD=postgres"
+    container_name: postgres
+    

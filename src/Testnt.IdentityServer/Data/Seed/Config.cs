@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
@@ -52,9 +53,10 @@ namespace IdentityServer.Data.Seed
                 {
                     UserClaims = new[]
                     {
-                        "email",
+                        JwtClaimTypes.Name,
+                        JwtClaimTypes.Email,
+                        JwtClaimTypes.Profile,
                         "tenant_id",
-                        "name"
                     }
                 }
             };
@@ -116,7 +118,6 @@ namespace IdentityServer.Data.Seed
 
                     RedirectUris = clientList,
                     PostLogoutRedirectUris = clientList,
-
                     AllowedCorsOrigins =clientList,
 
                     AllowedScopes =

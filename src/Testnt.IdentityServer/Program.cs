@@ -4,6 +4,7 @@
 
 using IdentityServer.Data.Seed;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -45,25 +46,28 @@ namespace Testnt.IdentityServer
 
                 using (var scope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
                 {
+                    var services = scope.ServiceProvider;
+                    var context = services.GetService<TestntIdentityDbContext>();
+                    Log.Information("Migrating database.");
+                    context.Database.Migrate();
+
                     Task.Run(async () =>
                     {
-                        var services = scope.ServiceProvider;
                         var maxAttemps = 3;
                         var delay = 5000;
-                        var testntIdentityDbContext = services.GetService<TestntIdentityDbContext>();
                         for (int i = 0; i < maxAttemps; i++)
                         {
-                            if (testntIdentityDbContext.Database.CanConnect())
+                            if (context.Database.CanConnect())
                             {
                                 Log.Information("successfully connect to database {Attempt}", i);
                                 scope.ServiceProvider.GetService<Users>().EnsureSeedData();
                                 scope.ServiceProvider.GetService<Config>().EnsureSeedData();
                                 return;
                             }
-                            Log.Information("Cannot connect to database {Attempt}", i);
+                            Log.Information("Cannot connect to database {DBContext}, attempt: {Attempt}", nameof(context), i);
                             await Task.Delay(delay);
                         }
-                    });
+                    }).Wait();
                 }
 
                 host.Run();

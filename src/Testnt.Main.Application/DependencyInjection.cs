@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using Testnt.Common.Mappings;
 using Testnt.Main.Application.Middleware.Behaviours;
+using Testnt.Main.Application.Seed;
 
 namespace Testnt.Main.Application
 {
@@ -15,6 +16,7 @@ namespace Testnt.Main.Application
         {
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            services.AddTransient<DataSeed>();
 
             AddAutoMapper();
 

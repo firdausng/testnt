@@ -5,14 +5,21 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM node:12.16.0 AS clientApp
-WORKDIR /src
-RUN npm install -g @angular/cli
-COPY ["src/Testnt.Main.Api.Rest/ClientApp/package.json", "."]
-RUN npm install
-COPY ["src/Testnt.Main.Api.Rest/ClientApp", "."]
-RUN npm run build
+#FROM node:12.16.0 AS clientApp
+#WORKDIR /src
+#RUN npm install -g @angular/cli
+#COPY ["src/Testnt.Main.Api.Rest/ClientApp/package.json", "."]
+#RUN npm install
+#COPY ["src/Testnt.Main.Api.Rest/ClientApp", "."]
+#RUN npm run build
 #COPY ["src/Testnt.Main.Api.Rest/ClientApp/dist/ClientApp/", "dist/"]
+
+FROM node:12.16.0 AS client
+ARG skip_client_build=false 
+WORKDIR /app 
+COPY JrTech.Angular.Docker/ClientApp . 
+RUN [[ ${skip_client_build} = true ]] && echo "Skipping npm install" || npm install 
+RUN [[ ${skip_client_build} = true ]] && mkdir dist || npm run-script build
 
 
 
@@ -24,7 +31,7 @@ COPY ["src/Testnt.Common/Testnt.Common.csproj", "src/Testnt.Common/"]
 COPY ["src/Testnt.Main.Domain/Testnt.Main.Domain.csproj", "src/Testnt.Main.Domain/"]
 COPY ["src/Testnt.Main.Infrastructure/Testnt.Main.Infrastructure.csproj", "src/Testnt.Main.Infrastructure/"]
 RUN dotnet restore "src/Testnt.Main.Api.Rest/Testnt.Main.Api.Rest.csproj"
-COPY --from=clientApp "src/dist/ClientApp/" "src/Testnt.Main.Api.Rest/wwwroot/"
+#COPY --from=clientApp "src/dist/ClientApp/" "src/Testnt.Main.Api.Rest/wwwroot/"
 COPY . .
 WORKDIR "/src/src/Testnt.Main.Api.Rest"
 RUN dotnet build "Testnt.Main.Api.Rest.csproj" -c Release -o /app/build
@@ -35,4 +42,5 @@ RUN dotnet publish "Testnt.Main.Api.Rest.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY --from=client /app/dist /app/dist
 ENTRYPOINT ["dotnet", "Testnt.Main.Api.Rest.dll"]

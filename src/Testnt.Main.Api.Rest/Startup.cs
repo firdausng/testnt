@@ -1,33 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using FluentValidation;
-using IdentityModel;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using Testnt.Common.Interface;
-using Testnt.Common.Mappings;
 using Testnt.Main.Api.Rest.Middleware;
 using Testnt.Main.Api.Rest.Services;
 using Testnt.Main.Application;
 using Testnt.Main.Infrastructure;
-using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Api.Rest
 {
@@ -66,23 +49,23 @@ namespace Testnt.Main.Api.Rest
 
             services.AddAuthentication("Bearer")
                 .AddCookie()
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.Authority = Configuration.GetValue<string>("IdentityServer:Url");
-                    options.RequireHttpsMetadata = false;
-                    options.ApiName = "testnt.main.api";
-                    options.ApiSecret = "secret";
-
-                    options.EnableCaching = true;
-                    options.CacheDuration = TimeSpan.FromMinutes(10); // that's the default	
-                })
-                //.AddJwtBearer("Bearer", options =>
+                //.AddIdentityServerAuthentication(options =>
                 //{
                 //    options.Authority = Configuration.GetValue<string>("IdentityServer:Url");
                 //    options.RequireHttpsMetadata = false;
+                //    options.ApiName = "testnt.main.api";
+                //    options.ApiSecret = "secret";
 
-                //    options.Audience = "testnt.main.api";
+                //    options.EnableCaching = true;
+                //    options.CacheDuration = TimeSpan.FromMinutes(10); // that's the default	
                 //})
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = Configuration.GetValue<string>("IdentityServer:Url");
+                    options.RequireHttpsMetadata = true;
+
+                    options.Audience = "testnt.main.api";
+                })
                 ;
 
             services.AddAuthorization();
@@ -144,7 +127,9 @@ namespace Testnt.Main.Api.Rest
                 //spa.Options.DefaultPageStaticFileOptions.co
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://testnt.angular.app:4200");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }

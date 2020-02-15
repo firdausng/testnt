@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -44,21 +45,28 @@ namespace Testnt.Main.Api.Rest
 
                 using (var scope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
                 {
+                    var services = scope.ServiceProvider;
+                    var context = services.GetService<TestntDbContext>();
+                    Log.Information("Migrating database.");
+                    context.Database.Migrate();
+
                     Task.Run(async ()=> 
                     {
-                        var services = scope.ServiceProvider;
+                        
                         var maxAttemps = 12;
                         var delay = 5000;
-                        var context = services.GetService<TestntDbContext>();
+                        
                         for (int i = 0; i < maxAttemps; i++)
                         {
                             if (context.Database.CanConnect())
                             {
+                                Log.Information("Cannot connect to database {DBContext}, attempt: {Attempt}", nameof(TestntDbContext), i);
+                                scope.ServiceProvider.GetService<DataSeed>().EnsureSeedData();
                                 return;
                             }
                             await Task.Delay(delay);
                         }
-                    });
+                    }).Wait();
                     //Data.EnsureSeedData(serviceScope);
                 }
 

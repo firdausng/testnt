@@ -39,38 +39,14 @@ namespace Testnt.IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // seed class
-            services.AddTransient<Config>();
-            services.AddTransient<Users>();
+            services.AddData(Configuration);
 
             // setup dummy data
             services.AddTransient<IEmailSender, DummyEmailSender>();
             services.Configure<DummyAuthMessageSenderOptions>(Configuration);
 
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-
-            services.AddTransient<IUserStore<ApplicationUser>, TestntUserStore>();
-            services.AddDbContext<TestntIdentityDbContext>(cfg =>
-            {
-                cfg.UseNpgsql(connectionString,
-                    options =>
-                    {
-                        options.EnableRetryOnFailure(3);
-                        options.MigrationsAssembly(migrationsAssembly);
-                    });
-            });
-
-            // uncomment, if you want to add an MVC-based UI
             services.AddControllersWithViews();
             services.AddRazorPages();
-
-            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-                {
-                    options.SignIn.RequireConfirmedEmail = false;
-                })
-                .AddEntityFrameworkStores<TestntIdentityDbContext>()
-                .AddDefaultTokenProviders();
 
             services.AddCors(options =>
             {
@@ -92,12 +68,14 @@ namespace Testnt.IdentityServer
                     });
             });
 
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
             var builder = services.AddIdentityServer(options =>
                 {
-                    options.Events.RaiseErrorEvents = true;
-                    options.Events.RaiseInformationEvents = true;
-                    options.Events.RaiseFailureEvents = true;
-                    options.Events.RaiseSuccessEvents = true;
+                    //options.Events.RaiseErrorEvents = true;
+                    //options.Events.RaiseInformationEvents = true;
+                    //options.Events.RaiseFailureEvents = true;
+                    //options.Events.RaiseSuccessEvents = true;
 
                     options.UserInteraction.LoginUrl = "/Account/Login";
                     options.UserInteraction.LogoutUrl = "/Account/Logout";
@@ -146,7 +124,6 @@ namespace Testnt.IdentityServer
 
             app.UseIdentityServer();
 
-            // uncomment, if you want to add MVC
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

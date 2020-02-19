@@ -17,7 +17,7 @@ namespace Testnt.IdentityServer.Data
         {
         }
 
-        public override async Task<IdentityResult> CreateAsync(ApplicationUser user,
+        public override Task<IdentityResult> CreateAsync(ApplicationUser user,
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -25,11 +25,11 @@ namespace Testnt.IdentityServer.Data
 
             if (user.TenantId == null)
             {
-                throw new ArgumentNullException(nameof(user.TenantId));
+                user.TenantId = this.TenantId;
+                //throw new ArgumentNullException(nameof(user.TenantId));
             }
 
-
-            return await base.CreateAsync(user, cancellationToken);
+            return base.CreateAsync(user, cancellationToken);
         }
     }
 }

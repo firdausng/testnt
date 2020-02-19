@@ -4,6 +4,8 @@ Example Multi-tenant Test Management system Project using
 2. IdentityServer4
 3. EF Core using PostgreSQL
 
+identityserver4 with docker ref https://brainwipe.github.io/docker/dotnet/oauth/identityserver/2017/10/30/oauth-on-docker-part2/
+
 ## Domain Driven Design - Clean Architecture
 inspired by https://github.com/JasonGT/NorthwindTraders
 

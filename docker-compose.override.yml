@@ -6,7 +6,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionStrings__PostgresTestntMainConnectionString=Host=postgres;Database=Testnt;Username=postgres;Password=postgres
-      - IdentityServer__Url=http://localhost:5000
     ports:
       - "7000:80"
       - "7001:443"
@@ -18,7 +17,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Host=postgres;Database=TestntIdentity;Username=postgres;Password=postgres
-      - Client__Ip__0=http://localhost:7000
     ports:
       - "5000:80"
       - "5001:443"

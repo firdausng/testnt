@@ -76,6 +76,7 @@ namespace Testnt.IdentityServer
             {
                 var clientList = Configuration.GetSection("Client:Ip").GetChildren().Select(s => s.Value).ToList();
                 clientList.Add("http://localhost:4200");
+                clientList.Add("http://127.0.0.1:4200");
 
                 options.AddPolicy("AllowAllOrigins",
                     builder =>
@@ -97,8 +98,12 @@ namespace Testnt.IdentityServer
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
+
                     options.UserInteraction.LoginUrl = "/Account/Login";
                     options.UserInteraction.LogoutUrl = "/Account/Logout";
+
+                    options.IssuerUri = "http://testnt.identityserver";
+
                     options.Authentication = new AuthenticationOptions()
                     {
                         CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
@@ -116,8 +121,6 @@ namespace Testnt.IdentityServer
                     options.EnableTokenCleanup = true;
                 })
                 //.AddCorsPolicyService()
-                //.AddClientStore<ClientStore>()
-                //.AddResourceStore<ResourceStore>()
                 .AddAspNetIdentity<ApplicationUser>()
                 //.AddSigningCredential(new X509Certificate2(Configuration.GetValue<string>("Certificate:Path"), "password"))
                 ;

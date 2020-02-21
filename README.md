@@ -23,5 +23,5 @@ docker build -f src/Testnt.IdentityServer/Dockerfile -t testnt/identity-server .
 ```
 2. Run docker compose(from root solution folder)
 ```sh
-docker-compose -f "C:\Users\Qwerty\source\repos\testnt\docker-compose.yml" -f "C:\Users\Qwerty\source\repos\testnt\docker-compose.override.yml" --no-ansi up -d --no-build
+docker-compose  -f "docker-compose.yml" -f "docker-compose.override.yml"   --no-ansi up -d --no-build
 ```

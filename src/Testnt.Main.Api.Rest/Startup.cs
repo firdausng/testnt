@@ -144,6 +144,7 @@ namespace Testnt.Main.Api.Rest
                     //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
+
         }
     }
 }

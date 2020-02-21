@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,15 +12,15 @@ using Testnt.Main.Domain.Entity.TestSessionEntity;
 
 namespace Testnt.Main.Infrastructure.Data
 {
-    public class TestntDbContext : DbContext
+    public class TestntDbContext : DbContext, IMultitenantDbContext
     {
-        private readonly ICurrentUserService currentUserService;
+        //private readonly ICurrentUserService CurrentUserService;
         private readonly IDateTimeService dateTimeService;
 
         public TestntDbContext(DbContextOptions<TestntDbContext> options, ICurrentUserService currentUserService, IDateTimeService dateTimeService)
            : base(options)
         {
-            this.currentUserService = currentUserService;
+            this.CurrentUserService = currentUserService;
             this.dateTimeService = dateTimeService;
         }
 
@@ -30,6 +31,21 @@ namespace Testnt.Main.Infrastructure.Data
         public DbSet<Session> Sessions { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Tag> Tags { get; set; }
+
+        public ICurrentUserService CurrentUserService
+        {
+            get;
+        }
+
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // ref https://github.com/gpeipman/AspNetCoreMultitenant/blob/master/AspNetCoreMultitenant/AspNetCoreMultitenant.Shared/Data/DynamicModelCacheKeyFactory.cs
+            // ref https://gunnarpeipman.com/ef-core-global-query-filters/
+            // There is class DynamicModelCacheKeyFactory that solves caching issues. Default cache key is replaced by tenant Id
+            // this is to solve issue when ef core cache OnModelCreating method
+            optionsBuilder.ReplaceService<IModelCacheKeyFactory, DynamicModelCacheKeyFactory>();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -94,7 +110,7 @@ namespace Testnt.Main.Infrastructure.Data
                 {
                     var parameter = Expression.Parameter(entityType.ClrType, "entity");
                     var propertyAccessExpr = Expression.MakeMemberAccess(parameter, tenantIdProperty.PropertyInfo);
-                    var guidExpr = Expression.Constant(currentUserService.TenantId);
+                    var guidExpr = Expression.Constant(CurrentUserService.TenantId);
                     var body = Expression.Equal(propertyAccessExpr, guidExpr);
 
                     var lambda = Expression.Lambda(body, parameter);
@@ -135,20 +151,20 @@ namespace Testnt.Main.Infrastructure.Data
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        if (entry.Entity.TenantId != currentUserService.TenantId)
+                        if (entry.Entity.TenantId != CurrentUserService.TenantId)
                         {
-                            entry.Entity.TenantId = currentUserService.TenantId;
+                            entry.Entity.TenantId = CurrentUserService.TenantId;
                         }
-                        entry.Entity.CreatedBy = currentUserService.Name;
+                        entry.Entity.CreatedBy = CurrentUserService.Name;
                         entry.Entity.Created = dateTimeService.Now;
 
                         break;
                     case EntityState.Modified:
-                        if (entry.Entity.TenantId != currentUserService.TenantId)
+                        if (entry.Entity.TenantId != CurrentUserService.TenantId)
                         {
-                            entry.Entity.TenantId = currentUserService.TenantId;
+                            entry.Entity.TenantId = CurrentUserService.TenantId;
                         }
-                        entry.Entity.CreatedBy = currentUserService.Name;
+                        entry.Entity.CreatedBy = CurrentUserService.Name;
                         entry.Entity.Created = dateTimeService.Now;
                         break;
                 }

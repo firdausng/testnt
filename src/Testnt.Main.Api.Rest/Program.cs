@@ -67,7 +67,6 @@ namespace Testnt.Main.Api.Rest
                             await Task.Delay(delay);
                         }
                     }).Wait();
-                    //Data.EnsureSeedData(serviceScope);
                 }
 
                 host.Run();

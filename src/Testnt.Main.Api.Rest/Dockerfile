@@ -17,13 +17,13 @@ EXPOSE 443
 FROM node:12.16.0 AS client
 ARG skip_client_build=false 
 WORKDIR /app 
-COPY JrTech.Angular.Docker/ClientApp . 
+COPY src/Testnt.Main.Api.Rest/ClientApp . 
 RUN [[ ${skip_client_build} = true ]] && echo "Skipping npm install" || npm install 
 RUN [[ ${skip_client_build} = true ]] && mkdir dist || npm run-script build
 
 
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
 COPY ["src/Testnt.Main.Api.Rest/Testnt.Main.Api.Rest.csproj", "src/Testnt.Main.Api.Rest/"]
 COPY ["src/Testnt.Main.Application/Testnt.Main.Application.csproj", "src/Testnt.Main.Application/"]
@@ -42,5 +42,5 @@ RUN dotnet publish "Testnt.Main.Api.Rest.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=client /app/dist /app/dist
+COPY --from=client /app/dist/ClientApp /app/wwwroot
 ENTRYPOINT ["dotnet", "Testnt.Main.Api.Rest.dll"]

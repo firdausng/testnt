@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Testnt.IdentityServer.Common;
 using Testnt.IdentityServer.Entities;
 
 namespace Testnt.IdentityServer.Data
@@ -37,9 +38,11 @@ namespace Testnt.IdentityServer.Data
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedAccount = true;
             })
                 .AddEntityFrameworkStores<TestntIdentityDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddClaimsPrincipalFactory<TenantUserClaimsPrincipalFactory>();
 
             return services;
         }

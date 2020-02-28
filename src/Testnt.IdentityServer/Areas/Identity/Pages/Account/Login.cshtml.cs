@@ -184,8 +184,9 @@ namespace Testnt.IdentityServer.Areas.Identity.Pages.Account
                         };
                     };
 
+                    var userClaims = await _userManager.GetClaimsAsync(user);
                     // issue authentication cookie with subject ID and username
-                    await HttpContext.SignInAsync(userIdinStr, user.UserName, props);
+                    await HttpContext.SignInAsync(userIdinStr, user.UserName, props, userClaims.ToArray());
 
                     if (context != null)
                     {

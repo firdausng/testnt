@@ -24,6 +24,8 @@ using IdentityServer4.EntityFramework.Stores;
 using System.Security.Cryptography.X509Certificates;
 using Testnt.IdentityServer.Entities;
 using IdentityServer4;
+using Testnt.Common.Interface;
+using Testnt.IdentityServer.Common;
 
 namespace Testnt.IdentityServer
 {
@@ -45,6 +47,7 @@ namespace Testnt.IdentityServer
             // setup dummy data
             services.AddTransient<IEmailSender, DummyEmailSender>();
             services.Configure<DummyAuthMessageSenderOptions>(Configuration);
+
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -69,6 +72,40 @@ namespace Testnt.IdentityServer
                     });
             });
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                //options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+                
+            });
+
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
             var builder = services.AddIdentityServer(options =>
@@ -83,12 +120,12 @@ namespace Testnt.IdentityServer
 
                     options.IssuerUri = "http://testnt.identityserver";
 
-                    //options.Authentication = new AuthenticationOptions()
-                    //{
-                    //    CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
-                    //    CookieSlidingExpiration = true
-                    //};
-                    
+                    options.Authentication = new AuthenticationOptions()
+                    {
+                        CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
+                        CookieSlidingExpiration = true
+                    };
+
                 })
                 .AddConfigurationStore(options =>
                 {

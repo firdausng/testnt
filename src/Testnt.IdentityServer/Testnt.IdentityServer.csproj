@@ -102,5 +102,10 @@
   
   <ItemGroup>
     <Folder Include="Entities\Enum\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Testnt.Common\Testnt.Common.csproj" />
   </ItemGroup>
 </Project>

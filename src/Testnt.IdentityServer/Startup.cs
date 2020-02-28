@@ -73,21 +73,21 @@ namespace Testnt.IdentityServer
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
             var builder = services.AddIdentityServer(options =>
                 {
-                    //options.Events.RaiseErrorEvents = true;
-                    //options.Events.RaiseInformationEvents = true;
-                    //options.Events.RaiseFailureEvents = true;
-                    //options.Events.RaiseSuccessEvents = true;
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseInformationEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                    options.Events.RaiseSuccessEvents = true;
 
                     options.UserInteraction.LoginUrl = "/Account/Login";
                     options.UserInteraction.LogoutUrl = "/Account/Logout";
 
                     options.IssuerUri = "http://testnt.identityserver";
 
-                    options.Authentication = new AuthenticationOptions()
-                    {
-                        CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
-                        CookieSlidingExpiration = true
-                    };
+                    //options.Authentication = new AuthenticationOptions()
+                    //{
+                    //    CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
+                    //    CookieSlidingExpiration = true
+                    //};
                     
                 })
                 .AddConfigurationStore(options =>
@@ -108,7 +108,7 @@ namespace Testnt.IdentityServer
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
-            services.AddAuthentication()
+            services.AddAuthentication(IdentityConstants.ExternalScheme)
                 .AddGoogle(options =>
                 {
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
@@ -116,8 +116,8 @@ namespace Testnt.IdentityServer
                     // register your IdentityServer with Google at https://console.developers.google.com
                     // enable the Google+ API
                     // set the redirect URI to http://localhost:5000/signin-google
-                    options.ClientId = "copy client ID from Google here";
-                    options.ClientSecret = "copy client secret from Google here";
+                    options.ClientId = Configuration.GetValue<string>("GoogleTestntClientId");
+                    options.ClientSecret = Configuration.GetValue<string>("GoogleTestntClientSecret");
                     //options.
                 })
                 .AddFacebook(options => 

@@ -114,13 +114,13 @@
 
                     </a>
                 }
-                
-            <div class="columns">
-                <div class="column is-2 is-offset-5">
-                    <div class="is-divider" data-content="OR"></div>
+
+                <div class="columns">
+                    <div class="column is-2 is-offset-5">
+                        <div class="is-divider" data-content="OR"></div>
+                    </div>
                 </div>
-            </div>
-                
+
             </div>
         }
 
@@ -129,7 +129,7 @@
         @if (Model.EnableLocalLogin)
         {
             <form id="account" method="post" class="column is-three-fifths is-offset-one-fifth">
-                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="ReturnUrl" />
                 <div class="field">
                     <p class="control has-icons-left has-icons-right">
                         <input class="input" asp-for="Input.Email" placeholder="Email">

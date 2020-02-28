@@ -38,9 +38,12 @@
         <p class="subtitle has-text-centered">
             Would you like to logout?
         </p>
-        <div class="buttons has-text-centered column is-three-fifths is-offset-one-fifth">
-            <a class="button is-success">Yes</a>
-            <a class="button is-danger">No</a>
-        </div>
+
+        <form id="account" method="post" class="has-text-centered column is-three-fifths is-offset-one-fifth">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input class="button is-success is-rounded" type="submit" value="Yes">
+            <a class="button is-danger" onclick="history.go(-1)">No</a>
+        </form>
+
     </div>
 </div>

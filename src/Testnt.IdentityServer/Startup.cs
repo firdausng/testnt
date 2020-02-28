@@ -78,8 +78,8 @@ namespace Testnt.IdentityServer
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
 
-                    options.UserInteraction.LoginUrl = "/Account/Login";
-                    options.UserInteraction.LogoutUrl = "/Account/Logout";
+                    options.UserInteraction.LoginUrl = "/Identity/Account/Login";
+                    options.UserInteraction.LogoutUrl = "/Identity/Account/Logout";
 
                     options.IssuerUri = "http://testnt.identityserver";
 

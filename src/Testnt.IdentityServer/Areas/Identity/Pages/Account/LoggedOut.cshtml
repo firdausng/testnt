@@ -1,7 +1,7 @@
 ﻿@page
-@model Testnt.IdentityServer.Areas.Identity.Pages.Account.LogoutModel
+@model Testnt.IdentityServer.Areas.Identity.Pages.Account.LoggedOutModel
 @{
-    ViewData["Title"] = "Log out";
+    ViewData["Title"] = "Logged out";
 }
 
 <div class="card">
@@ -34,13 +34,17 @@
             </svg>
 
         </p>
-
-        <p class="subtitle has-text-centered">
-            Would you like to logout?
+        <p class="title has-text-centered">
+            Logout
         </p>
-        <div class="buttons has-text-centered column is-three-fifths is-offset-one-fifth">
-            <a class="button is-success">Yes</a>
-            <a class="button is-danger">No</a>
-        </div>
+        <p class="subtitle has-text-centered">
+            You are now logged out
+        </p>
+        <p class=" has-text-centered">
+            Click <a class="is-link is-warning is-light is-rounded"
+                     href="/">here</a> to return to the
+            <span>client</span> application.
+        </p>
+
     </div>
 </div>

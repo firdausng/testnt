@@ -23,6 +23,7 @@ using Testnt.IdentityServer.Infrastructure.Services.Email;
 using IdentityServer4.EntityFramework.Stores;
 using System.Security.Cryptography.X509Certificates;
 using Testnt.IdentityServer.Entities;
+using IdentityServer4;
 
 namespace Testnt.IdentityServer
 {
@@ -87,7 +88,7 @@ namespace Testnt.IdentityServer
                         CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
                         CookieSlidingExpiration = true
                     };
-
+                    
                 })
                 .AddConfigurationStore(options =>
                 {
@@ -106,6 +107,36 @@ namespace Testnt.IdentityServer
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
+
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+                    // register your IdentityServer with Google at https://console.developers.google.com
+                    // enable the Google+ API
+                    // set the redirect URI to http://localhost:5000/signin-google
+                    //options.ClientId = "copy client ID from Google here";
+                    //options.ClientSecret = "copy client secret from Google here";
+                    options.ClientId = "344532572797-p21qsgaa00l32ccisapc9jgh6qa4hcr5.apps.googleusercontent.com";
+                    options.ClientSecret = "8d7ZGwWRYDm8Hd3Eqj4FQJYY";
+                    //options.
+                })
+                .AddFacebook(options => 
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+                    options.ClientId = "copy client ID from fb here";
+                    options.ClientSecret = "copy client secret from fb here";
+                })
+                .AddMicrosoftAccount(options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+                    options.ClientId = "copy client ID from microsoft here";
+                    options.ClientSecret = "copy client secret from microsoft here";
+                })
+                ;
         }
 
         public void Configure(IApplicationBuilder app)

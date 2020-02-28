@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Testnt.IdentityServer.Areas.Identity.Pages.Account
 {
-    public class LogoutModel : PageModel
+    public class LoggedOutModel : PageModel
     {
         public void OnGet()
         {

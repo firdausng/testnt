@@ -1,30 +1,111 @@
 ﻿@page
-@model IndexModel
+@model Testnt.IdentityServer.Areas.Identity.Pages.Account.Manage.IndexModel
 @{
-    ViewData["Title"] = "Profile";
-    ViewData["ActivePage"] = ManageNavPages.Index;
+    ViewData["Title"] = "Account";
 }
 
-<h4>@ViewData["Title"]</h4>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" disabled />
+<!-- profile info -->
+<section class="section">
+    <div class="container is-fullhd">
+        <div class="columns">
+            <div class="column">
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-48x48">
+                                    <img src="https://bulma.io/images/placeholders/96x96.png"
+                                         alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">@Model.Email</p>
+                                <p class="subtitle is-6">@Model.LastLogin.ToLocalTime()</p>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <form id="profile-form" method="post">
+                                <div asp-validation-summary="All" class="is-danger"></div>
+                                <div class="field is-horizontal">
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <p class="control is-expanded has-icons-left">
+                                                <input class="input" asp-for="Username" disabled>
+                                                <span class="icon is-small is-left">
+                                                    <i class="fas fa-user"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="field">
+                                            <p class="control is-expanded has-icons-left">
+                                                <input class="input" asp-for="Input.PhoneNumber" disabled>
+                                                <span class="icon is-small is-left">
+                                                    <i class="fas fa-user"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.PhoneNumber"></label>
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <button id="update-profile-button" type="submit" class="btn btn-default">Save</button>
-        </form>
+        </div>
     </div>
-</div>
+</section>
+<!-- profile info end-->
+<!-- Grant list info -->
+<section class="section">
+    <!-- <p class="title">Profile</p> -->
+    <div class="container is-fullhd">
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+
+        <p class="title">Grants</p>
+        <div class="columns">
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-48x48">
+                                    <img src="https://bulma.io/images/placeholders/96x96.png"
+                                         alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">Client Name</p>
+                                <p class="subtitle is-6">Created: 17/2/2020</p>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <p>Expires: 17/2/2020</p>
+                            <div>
+                                Identity Grants
+                                <ul>
+                                    <li>Profile</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                API Grants
+                                <ul>
+                                    <li>api1</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+                        <a href="#" class="card-footer-item">Revoke Access</a>
+                        <!-- <a href="#" class="card-footer-item">Edit</a>
+                        <a href="#" class="card-footer-item">Delete</a> -->
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Grant list info end -->

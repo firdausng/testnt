@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,11 +10,10 @@ using Testnt.IdentityServer.Entities;
 
 namespace Testnt.IdentityServer.Areas.Identity.Pages.Account.Manage
 {
-    public partial class IndexModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
@@ -24,6 +23,8 @@ namespace Testnt.IdentityServer.Areas.Identity.Pages.Account.Manage
         }
 
         public string Username { get; set; }
+        public string Email { get; set; }
+        public DateTimeOffset LastLogin { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -42,7 +43,8 @@ namespace Testnt.IdentityServer.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
+            Email = user.Email;
+            LastLogin = user.LastLogin;
             Username = userName;
 
             Input = new InputModel
@@ -83,8 +85,8 @@ namespace Testnt.IdentityServer.Areas.Identity.Pages.Account.Manage
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
+                    var userId = await _userManager.GetUserIdAsync(user);
+                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
 
@@ -94,3 +96,4 @@ namespace Testnt.IdentityServer.Areas.Identity.Pages.Account.Manage
         }
     }
 }
+

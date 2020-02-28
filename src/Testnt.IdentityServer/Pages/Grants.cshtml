@@ -1,0 +1,56 @@
+﻿@page
+@model Testnt.IdentityServer.Pages.GrantsModel
+@{
+    ViewData["Title"] = "Grants";
+}
+
+<!-- grant list -->
+<section class="section">
+
+    <div class="container is-fullhd">
+        <p class="title">Grants</p>
+        <div class="columns">
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-48x48">
+                                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">Client Name</p>
+                                <p class="subtitle is-6">Created: 17/2/2020</p>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <p>Expires: 17/2/2020</p>
+                            <div>
+                                Identity Grants
+                                <ul>
+                                    <li>Profile</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                API Grants
+                                <ul>
+                                    <li>api1</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+                        <a href="#" class="card-footer-item">Revoke Access</a>
+                        <!-- <a href="#" class="card-footer-item">Edit</a>
+                        <a href="#" class="card-footer-item">Delete</a> -->
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- grant list end -->

@@ -8,17 +8,16 @@ using Testnt.IdentityServer.Models;
 
 namespace Testnt.IdentityServer.Areas.Identity.Pages.Account
 {
-    public class AccessDeniedModel : PageModel
+    public class UnauthenticatedUserModel : PageModel
     {
-       
         public StatusMessage StatusMessage { get; set; }
 
         public void OnGet()
         {
             StatusMessage = new StatusMessage
             {
-                Title = "Access Denied",
-                SubTitle = "You do not have access to the resource."
+                Title = "Failed to logged you in",
+                SubTitle = "Something wrong with your Id, contact us for more detail"
             };
         }
     }

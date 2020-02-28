@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    @RenderSection("BulmaExtension", required: false)
+</head>
+<body>
+    <!-- navbar -->
+    <nav id="navbar-vue" class="navbar is-transparent" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="#">
+                    <div class="logo">
+                        <svg width="175" height="49" viewBox="0 0 175 49" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <g filter="url(#filter0_d)">
+                                <path d="M18.625 17.6875V31.0312C18.625 32.6979 18.875 33.8125 19.375 34.375C19.875 34.9375 21.0521 35.2188 22.9062 35.2188C23.7604 35.2188 24.75 35.1771 25.875 35.0938V42C23.1667 42.4583 21.2188 42.6875 20.0312 42.6875C16.1562 42.6875 13.4062 41.9479 11.7812 40.4688C10.1562 38.9688 9.34375 36.2708 9.34375 32.375V17.6875H4.34375V10.4375H9.875L10.625 1.125L18.625 0.5V10.4375H25.4375V17.6875H18.625ZM58.6875 27.7812H38.375C38.3542 28.3438 38.3438 28.8333 38.3438 29.25C38.3438 31.5 38.9375 33.1979 40.125 34.3438C41.3333 35.4896 42.7708 36.0625 44.4375 36.0625C47.5417 36.0625 49.4062 34.4062 50.0312 31.0938L58.4688 31.7188C56.1146 39.0104 51.3333 42.6562 44.125 42.6562C40.9792 42.6562 38.3021 42.0312 36.0938 40.7812C33.9062 39.5104 32.0938 37.6667 30.6562 35.25C29.2396 32.8333 28.5312 29.9375 28.5312 26.5625C28.5312 21.5417 29.9583 17.4896 32.8125 14.4062C35.6875 11.3229 39.375 9.78125 43.875 9.78125C47.9375 9.78125 51.4167 11.2188 54.3125 14.0938C57.2292 16.9479 58.6875 21.5104 58.6875 27.7812ZM38.3438 22.375H49.5625C49.2708 18.0417 47.4896 15.875 44.2188 15.875C40.7188 15.875 38.7604 18.0417 38.3438 22.375ZM88.2188 18.0625L81.4375 19.875C80.6458 17.0208 78.5938 15.5938 75.2812 15.5938C72.1562 15.5938 70.5938 16.5417 70.5938 18.4375C70.5938 19.1875 70.875 19.7917 71.4375 20.25C72.0208 20.6875 73.5208 21.0625 75.9375 21.375C79.5417 21.8542 82.2083 22.4062 83.9375 23.0312C85.6667 23.6562 87.0312 24.7083 88.0312 26.1875C89.0521 27.6667 89.5625 29.4896 89.5625 31.6562C89.5625 34.9062 88.3229 37.5521 85.8438 39.5938C83.3854 41.6354 79.9375 42.6562 75.5 42.6562C67.4583 42.6562 62.6562 39.5417 61.0938 33.3125L68.9375 32.1562C69.5833 34.9896 71.9167 36.4062 75.9375 36.4062C77.4792 36.4062 78.7812 36.1354 79.8438 35.5938C80.9062 35.0312 81.4375 34.2812 81.4375 33.3438C81.4375 31.8854 80.2604 31.0208 77.9062 30.75C71.5312 29.9583 67.3333 28.7396 65.3125 27.0938C63.3125 25.4271 62.3125 23.1146 62.3125 20.1562C62.3125 17.1562 63.4792 14.6771 65.8125 12.7188C68.1458 10.7604 71.4167 9.78125 75.625 9.78125C78.9583 9.78125 81.625 10.4375 83.625 11.75C85.625 13.0625 87.1562 15.1667 88.2188 18.0625ZM105.875 17.6875V31.0312C105.875 32.6979 106.125 33.8125 106.625 34.375C107.125 34.9375 108.302 35.2188 110.156 35.2188C111.01 35.2188 112 35.1771 113.125 35.0938V42C110.417 42.4583 108.469 42.6875 107.281 42.6875C103.406 42.6875 100.656 41.9479 99.0312 40.4688C97.4062 38.9688 96.5938 36.2708 96.5938 32.375V17.6875H91.5938V10.4375H97.125L97.875 1.125L105.875 0.5V10.4375H112.688V17.6875H105.875Z"
+                                      fill="#067FB4" />
+                                <path d="M145.344 42H136.031V24.2812C136.031 22.1354 135.948 20.6667 135.781 19.875C135.615 19.0833 135.208 18.4167 134.562 17.875C133.917 17.3125 133.104 17.0312 132.125 17.0312C128.854 17.0312 127.219 19.4479 127.219 24.2812V42H117.906V10.4375H126.562V15.7812C128 13.2396 129.417 11.6042 130.812 10.875C132.208 10.1458 133.719 9.78125 135.344 9.78125C138.344 9.78125 140.76 10.5938 142.594 12.2188C144.427 13.8229 145.344 16.9896 145.344 21.7188V42Z"
+                                      fill="#00D1FF" />
+                                <path d="M163.5 17.6875V31.0312C163.5 32.6979 163.75 33.8125 164.25 34.375C164.75 34.9375 165.927 35.2188 167.781 35.2188C168.635 35.2188 169.625 35.1771 170.75 35.0938V42C168.042 42.4583 166.094 42.6875 164.906 42.6875C161.031 42.6875 158.281 41.9479 156.656 40.4688C155.031 38.9688 154.219 36.2708 154.219 32.375V17.6875H149.219V10.4375H154.75L155.5 1.125L163.5 0.5V10.4375H170.312V17.6875H163.5Z"
+                                      fill="#067FB4" />
+                            </g>
+                            <defs>
+                                <filter id="filter0_d" x="0.34375" y="0.5" width="174.406" height="50.1875"
+                                        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                                    <feColorMatrix in="SourceAlpha" type="matrix"
+                                                   values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+                                    <feOffset dy="4" />
+                                    <feGaussianBlur stdDeviation="2" />
+                                    <feColorMatrix type="matrix"
+                                                   values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
+                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow"
+                                             result="shape" />
+                                </filter>
+                            </defs>
+                        </svg>
+                    </div>
+                </a>
+
+                <!-- <a role="button"  class="navbar-burger burger" aria-label="menu" aria-expanded="false" -->
+                <a role="button" v-on:click="onNavBarClick"
+                   :class="(navBarActive)?'navbar-burger burger is-active':'navbar-burger burger'"
+                   aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <!-- <div id="navbarBasicExample" class="navbar-menu"> -->
+            <div id="navbarBasicExample" v-bind:class="(navBarActive)?'navbar-menu is-active':'navbar-menu'">
+                <div class="navbar-start">
+                    <a class="navbar-item">
+                        Overview
+                    </a>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Administration
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item">
+                                Profile Setting
+                            </a>
+                            <a class="navbar-item">
+                                Support
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navbar-end">
+                    <a class="navbar-item is-primary" href="Account/Logout.html">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- navbar end -->
+    @RenderBody()
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var navbar = new Vue({
+            el: '#navbar-vue',
+            data: {
+                navBarActive: false
+            },
+            methods: {
+                onNavBarClick: function () {
+                    this.navBarActive = !this.navBarActive;
+                }
+            }
+        })
+    </script>
+    @RenderSection("VueScript", required: false)
+</body>
+
+</html>

@@ -116,10 +116,8 @@ namespace Testnt.IdentityServer
                     // register your IdentityServer with Google at https://console.developers.google.com
                     // enable the Google+ API
                     // set the redirect URI to http://localhost:5000/signin-google
-                    //options.ClientId = "copy client ID from Google here";
-                    //options.ClientSecret = "copy client secret from Google here";
-                    options.ClientId = "344532572797-p21qsgaa00l32ccisapc9jgh6qa4hcr5.apps.googleusercontent.com";
-                    options.ClientSecret = "8d7ZGwWRYDm8Hd3Eqj4FQJYY";
+                    options.ClientId = "copy client ID from Google here";
+                    options.ClientSecret = "copy client secret from Google here";
                     //options.
                 })
                 .AddFacebook(options => 

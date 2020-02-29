@@ -8,6 +8,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Main.Infrastructure.Data;
+using Testnt.Main.Domain.Entity.Projects;
 
 namespace Testnt.Main.Application.Components.ProjectComponents.Projects.Query.Item
 {

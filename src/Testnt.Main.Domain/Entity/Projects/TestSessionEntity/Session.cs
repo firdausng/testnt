@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Testnt.Main.Domain.Entity.Projects;
 
-namespace Testnt.Main.Domain.Entity.TestSessionEntity
+namespace Testnt.Main.Domain.Entity.TestSessionEntity.Projects
 {
     public class Session: ProjectComponentEntity
     {

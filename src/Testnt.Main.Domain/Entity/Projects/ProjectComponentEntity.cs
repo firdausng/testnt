@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Testnt.Main.Domain.Entity
+namespace Testnt.Main.Domain.Entity.Projects
 {
     public class ProjectComponentEntity: AuditableEntity
     {

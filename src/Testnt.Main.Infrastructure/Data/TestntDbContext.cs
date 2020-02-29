@@ -7,8 +7,8 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Common.Interface;
-using Testnt.Main.Domain.Entity;
-using Testnt.Main.Domain.Entity.TestSessionEntity;
+using Testnt.Main.Domain.Entity.Projects;
+using Testnt.Main.Domain.Entity.TestSessionEntity.Projects;
 
 namespace Testnt.Main.Infrastructure.Data
 {

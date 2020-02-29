@@ -1,7 +1,8 @@
 ﻿using Testnt.Main.Domain.Entity.TestSessionEntity;
 using System.Collections.Generic;
+using Testnt.Main.Domain.Entity.TestSessionEntity.Projects;
 
-namespace Testnt.Main.Domain.Entity
+namespace Testnt.Main.Domain.Entity.Projects
 {
     public class Project: AuditableEntity
     {

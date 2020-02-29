@@ -12,6 +12,7 @@ using Testnt.Common.Mappings;
 using Testnt.Main.Application.Common;
 using Testnt.Main.Application.Components.ProjectComponents.Common;
 using Testnt.Main.Domain.Entity;
+using Testnt.Main.Domain.Entity.Projects;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.Components.ProjectComponents.Features.Query.List

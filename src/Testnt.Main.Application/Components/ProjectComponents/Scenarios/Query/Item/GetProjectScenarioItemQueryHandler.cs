@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Common.Exceptions;
 using Testnt.Main.Domain.Entity;
+using Testnt.Main.Domain.Entity.Projects;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.Components.ProjectComponents.Scenarios.Query.Item

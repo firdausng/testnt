@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Testnt.Main.Domain.Entity
+namespace Testnt.Main.Domain.Entity.Projects
 {
     public class Feature: ProjectComponentEntity
     {

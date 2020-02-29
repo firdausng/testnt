@@ -1,0 +1,37 @@
+﻿@page
+@model Testnt.IdentityServer.Areas.Admin.Pages.Account.IndexModel
+@{
+    ViewData["Title"] = "Admin - Account";
+}
+
+<!-- main section column -->
+<div class="column">
+    <table class="table is-striped is-narrow is-hoverable">
+        <thead>
+            <tr>
+                <th>IsEnabled</th>
+                <th>Email</th>
+                <th>Last Login</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+            <tr>
+                <td>@user.IsEnabled</td>
+                <td>@user.Email</td>
+                <td>@user.LastLogin</td>
+                <td>
+                    <div class="buttons">
+                        <button class="button is-info">Edit</button>
+                        <button class="button is-danger">Delete</button>
+                    </div>
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<!-- main section column end -->

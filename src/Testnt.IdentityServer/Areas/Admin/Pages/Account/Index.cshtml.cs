@@ -7,12 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Testnt.Common.Interface;
 using Testnt.IdentityServer.Common.Attribute;
 using Testnt.IdentityServer.Data;
 using Testnt.IdentityServer.Entities;
 
-namespace Testnt.IdentityServer.Areas.Tenant.Pages.Account
+namespace Testnt.IdentityServer.Areas.Admin.Pages.Account
 {
     [SecurityHeaders]
     [Authorize]

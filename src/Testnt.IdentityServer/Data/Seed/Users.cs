@@ -18,12 +18,14 @@ namespace IdentityServer.Data.Seed
     {
         private readonly TestntIdentityDbContext testntIdentityDbContext;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly ILogger<Users> logger;
 
-        public Users(TestntIdentityDbContext testntIdentityDbContext, UserManager<ApplicationUser> userManager, ILogger<Users> logger)
+        public Users(TestntIdentityDbContext testntIdentityDbContext, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, ILogger<Users> logger)
         {
             this.testntIdentityDbContext = testntIdentityDbContext;
             this.userManager = userManager;
+            this.roleManager = roleManager;
             this.logger = logger;
         }
 

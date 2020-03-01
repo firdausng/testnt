@@ -1,12 +1,5 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
-using IdentityServer.Data.Seed;
+﻿
 using IdentityServer4.Configuration;
-using IdentityServer4.Stores;
-using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -20,12 +13,8 @@ using System.Linq;
 using System.Reflection;
 using Testnt.IdentityServer.Data;
 using Testnt.IdentityServer.Infrastructure.Services.Email;
-using IdentityServer4.EntityFramework.Stores;
-using System.Security.Cryptography.X509Certificates;
 using Testnt.IdentityServer.Entities;
 using IdentityServer4;
-using Testnt.Common.Interface;
-using Testnt.IdentityServer.Common;
 
 namespace Testnt.IdentityServer
 {
@@ -136,7 +125,6 @@ namespace Testnt.IdentityServer
                     options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
                     options.EnableTokenCleanup = true;
                 })
-                //.AddCorsPolicyService()
                 .AddAspNetIdentity<ApplicationUser>()
                 //.AddSigningCredential(new X509Certificate2(Configuration.GetValue<string>("Certificate:Path"), "password"))
                 ;
@@ -172,6 +160,14 @@ namespace Testnt.IdentityServer
                     options.ClientSecret = "copy client secret from microsoft here";
                 })
                 ;
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("", policy =>
+                {
+                    //policy.RequireClaim();
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app)

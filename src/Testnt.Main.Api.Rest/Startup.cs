@@ -2,6 +2,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Security.Authentication;
+using IdentityServer4.AccessTokenValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,22 +36,19 @@ namespace Testnt.Main.Api.Rest
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddHttpContextAccessor();
-            //services.AddScoped<TenantIdFilter>();
 
             services.AddMiniProfiler().AddEntityFramework();
             services.AddHealthChecks();
             services.AddMediatR(assembly);
 
-            services.AddControllersWithViews(options => {
-                
-            })
+            services.AddControllersWithViews()
                 .AddFeatureFolders()
                 .AddNewtonsoftJson();
 
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
-            services.AddAuthentication("Bearer")
-                .AddCookie()
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                //.AddCookie()
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = Configuration.GetValue<string>("IdentityServer:Url");
@@ -60,15 +58,7 @@ namespace Testnt.Main.Api.Rest
 
                     options.EnableCaching = true;
                     options.CacheDuration = TimeSpan.FromMinutes(10); // that's the default	
-                })
-                //.AddJwtBearer("Bearer", options =>
-                //{
-                //    options.Authority = Configuration.GetValue<string>("IdentityServer:Url");
-                //    options.RequireHttpsMetadata = true;
-
-                //    options.Audience = "testnt.main.api";
-                //})
-                ;
+                });
 
             services.AddAuthorization();
 

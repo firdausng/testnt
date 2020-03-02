@@ -15,6 +15,7 @@ using Testnt.IdentityServer.Data;
 using Testnt.IdentityServer.Infrastructure.Services.Email;
 using Testnt.IdentityServer.Entities;
 using IdentityServer4;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Testnt.IdentityServer
 {
@@ -36,7 +37,6 @@ namespace Testnt.IdentityServer
             // setup dummy data
             services.AddTransient<IEmailSender, DummyEmailSender>();
             services.Configure<DummyAuthMessageSenderOptions>(Configuration);
-
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -92,30 +92,30 @@ namespace Testnt.IdentityServer
                 options.LogoutPath = "/Identity/Account/Logout";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
-                
+
             });
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
             var builder = services.AddIdentityServer(options =>
+            {
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+
+                options.UserInteraction.LoginUrl = "/Identity/Account/Login";
+                options.UserInteraction.LogoutUrl = "/Identity/Account/Logout";
+
+                options.IssuerUri = "http://testnt.identityserver";
+
+                options.Authentication = new AuthenticationOptions()
                 {
-                    options.Events.RaiseErrorEvents = true;
-                    options.Events.RaiseInformationEvents = true;
-                    options.Events.RaiseFailureEvents = true;
-                    options.Events.RaiseSuccessEvents = true;
+                    CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
+                    CookieSlidingExpiration = true
+                };
 
-                    options.UserInteraction.LoginUrl = "/Identity/Account/Login";
-                    options.UserInteraction.LogoutUrl = "/Identity/Account/Logout";
-
-                    options.IssuerUri = "http://testnt.identityserver";
-
-                    options.Authentication = new AuthenticationOptions()
-                    {
-                        CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
-                        CookieSlidingExpiration = true
-                    };
-
-                })
+            })
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
@@ -125,6 +125,7 @@ namespace Testnt.IdentityServer
                     options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
                     options.EnableTokenCleanup = true;
                 })
+                //.AddCorsPolicyService()
                 .AddAspNetIdentity<ApplicationUser>()
                 //.AddSigningCredential(new X509Certificate2(Configuration.GetValue<string>("Certificate:Path"), "password"))
                 ;
@@ -133,7 +134,7 @@ namespace Testnt.IdentityServer
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
-            services.AddAuthentication(IdentityConstants.ExternalScheme)
+            services.AddAuthentication()
                 .AddGoogle(options =>
                 {
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
@@ -141,11 +142,13 @@ namespace Testnt.IdentityServer
                     // register your IdentityServer with Google at https://console.developers.google.com
                     // enable the Google+ API
                     // set the redirect URI to http://localhost:5000/signin-google
+                    //options.ClientId = "copy client ID from Google here";
+                    //options.ClientSecret = "copy client secret from Google here";
                     options.ClientId = Configuration.GetValue<string>("GoogleTestntClientId");
                     options.ClientSecret = Configuration.GetValue<string>("GoogleTestntClientSecret");
                     //options.
                 })
-                .AddFacebook(options => 
+                .AddFacebook(options =>
                 {
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
 
@@ -160,14 +163,6 @@ namespace Testnt.IdentityServer
                     options.ClientSecret = "copy client secret from microsoft here";
                 })
                 ;
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("", policy =>
-                {
-                    //policy.RequireClaim();
-                });
-            });
         }
 
         public void Configure(IApplicationBuilder app)

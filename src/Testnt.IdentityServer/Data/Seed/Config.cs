@@ -108,11 +108,13 @@ namespace IdentityServer.Data.Seed
                     ClientName = "Testnt Web Client",
                     ClientId = "testnt.main.spa.client",
 
+                    
                     AllowedGrantTypes = GrantTypes.Code,
                     RequireClientSecret = false,
                     RequireConsent = false,
                     RequirePkce = true,
 
+                    //refresh token config
                     AllowOfflineAccess = true,
                     UpdateAccessTokenClaimsOnRefresh = true,
 

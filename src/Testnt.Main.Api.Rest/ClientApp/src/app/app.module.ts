@@ -1,7 +1,7 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { FormsModule } from '@angular/forms';
 
@@ -34,7 +34,7 @@ const oidc_configuration = 'assets/auth.clientConfiguration.json';
 // const oidc_configuration = ${window.location.origin}/api/ClientAppSettings
 
 export function loadConfig(oidcConfigService: OidcConfigService) {
-    return () => oidcConfigService.load(oidc_configuration);
+  return () => oidcConfigService.load(oidc_configuration);
 }
 
 @NgModule({
@@ -42,10 +42,10 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
     AppComponent,
     NavComponent,
     DashboardComponent,
-    
+
     UnauthorizedComponent,
     AutoLoginComponent,
-    
+
   ],
   imports: [
     BrowserModule,
@@ -68,52 +68,55 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
     MatMenuModule
   ],
   entryComponents: [
-    
+
   ],
   providers: [
     OidcConfigService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: loadConfig,
-            deps: [OidcConfigService],
-            multi: true,
-        },
-        AuthorizationGuard,
-        AuthService,
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: TokenInterceptor,
-          multi: true
-        }
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadConfig,
+      deps: [OidcConfigService],
+      multi: true,
+    },
+    AuthorizationGuard,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(private oidcSecurityService: OidcSecurityService, private oidcConfigService: OidcConfigService) {
-      this.oidcConfigService.onConfigurationLoaded.subscribe((configResult: ConfigResult) => {
-  
-          // Use the configResult to set the configurations
-    
-          const config: OpenIdConfiguration = {
-              stsServer: configResult.customConfig.stsServer,
-              redirect_url: 'http://localhost:7000',
-              client_id: 'testnt.main.spa.client',
-              scope: 'testnt.main.api openid profile Tenant',
-              response_type: 'code',
-              post_logout_redirect_uri: 'http://localhost:7000/unauthorized',
-              start_checksession: false,
-              silent_renew: false,
-              silent_renew_url: 'http://localhost:7000/silent-renew.html',
-              post_login_route: '/dashboard',
-              forbidden_route: '/forbidden',
-              unauthorized_route: '/unauthorized',
-              log_console_warning_active: true,
-              log_console_debug_active: true,
-              max_id_token_iat_offset_allowed_in_seconds: 30,
-              history_cleanup_off: true
-          };
+    this.oidcConfigService.onConfigurationLoaded.subscribe((configResult: ConfigResult) => {
 
-          this.oidcSecurityService.setupModule(config, configResult.authWellknownEndpoints);
-      });
+      // Use the configResult to set the configurations
+
+      const config: OpenIdConfiguration = {
+        stsServer: configResult.customConfig.stsServer,
+        redirect_url: 'http://localhost:7000',
+        client_id: 'testnt.main.spa.client',
+        scope: 'testnt.main.api openid profile Tenant offline_access',
+        response_type: 'code',
+        post_logout_redirect_uri: 'http://localhost:7000/unauthorized',
+        start_checksession: false,
+        silent_renew: true,
+        silent_renew_url: 'http://localhost:7000/silent-renew.html',
+        use_refresh_token: true,
+        trigger_authorization_result_event: true,
+        history_cleanup_off: true,
+        post_login_route: '/dashboard',
+        forbidden_route: '/forbidden',
+        unauthorized_route: '/unauthorized',
+        log_console_warning_active: true,
+        log_console_debug_active: true,
+        max_id_token_iat_offset_allowed_in_seconds: 30,
+        history_cleanup_off: true
+      };
+
+      this.oidcSecurityService.setupModule(config, configResult.authWellknownEndpoints);
+    });
   }
 }

@@ -48,16 +48,11 @@ namespace Testnt.Main.Api.Rest
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                //.AddCookie()
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = Configuration.GetValue<string>("IdentityServer:Url");
                     options.RequireHttpsMetadata = false;
                     options.ApiName = Configuration.GetValue<string>("IdentityServer:ApiName");
-                    //options.ApiSecret = "secret";
-
-                    options.EnableCaching = true;
-                    options.CacheDuration = TimeSpan.FromMinutes(10); // that's the default	
                 });
 
             services.AddAuthorization();

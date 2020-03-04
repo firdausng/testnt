@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
-using Testnt.Main.Application.Common;
+using Testnt.Common.Models;
 using Testnt.Main.Infrastructure.Data;
 
 namespace Testnt.Main.Application.Components.ProjectComponents.Projects.Query.List

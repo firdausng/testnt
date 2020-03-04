@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Testnt.Main.Application.Common;
+using Testnt.Common.Models;
 using Testnt.Main.Application.Components.ProjectComponents.Tags.Command.Create;
 using Testnt.Main.Application.Components.ProjectComponents.Tags.Query.Item;
 using Testnt.Main.Application.Components.ProjectComponents.Tags.Query.List;

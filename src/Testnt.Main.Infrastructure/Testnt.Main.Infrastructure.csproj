@@ -11,6 +11,8 @@
     <Compile Remove="Data\Migrations\20200206173146_initialMigration2.Designer.cs" />
     <Compile Remove="Data\Migrations\20200209062721_addtenantIdConstructor.cs" />
     <Compile Remove="Data\Migrations\20200209062721_addtenantIdConstructor.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200209072033_addtenantIdConstructor.cs" />
+    <Compile Remove="Data\Migrations\20200209072033_addtenantIdConstructor.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

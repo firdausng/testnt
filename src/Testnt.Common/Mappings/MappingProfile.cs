@@ -9,7 +9,9 @@ namespace Testnt.Common.Mappings
     {
         public MappingProfile()
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.FullName.Contains("Testnt.Main.Application", StringComparison.InvariantCultureIgnoreCase)).ToList();
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => a.FullName.Contains("Testnt.Main.Application", StringComparison.InvariantCultureIgnoreCase) || a.FullName.Contains("Testnt.Idp.App", StringComparison.InvariantCultureIgnoreCase))
+                .ToList();
             assemblies.ForEach(a => ApplyMappingsFromAssembly(a));
             //ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
         }

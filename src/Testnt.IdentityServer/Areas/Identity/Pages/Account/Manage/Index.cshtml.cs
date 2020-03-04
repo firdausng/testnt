@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Testnt.IdentityServer.Entities;
+using Testnt.Idp.Domain.Entities;
 
 namespace Testnt.IdentityServer.Areas.Identity.Pages.Account.Manage
 {

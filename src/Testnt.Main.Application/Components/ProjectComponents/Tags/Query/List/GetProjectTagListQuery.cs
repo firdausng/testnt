@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Testnt.Common.Mappings;
-using Testnt.Main.Application.Common;
+using Testnt.Common.Models;
 using Testnt.Main.Application.Components.ProjectComponents.Common;
 using Testnt.Main.Domain.Entity;
 using Testnt.Main.Domain.Entity.Projects;

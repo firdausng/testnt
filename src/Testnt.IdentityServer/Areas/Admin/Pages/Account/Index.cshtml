@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var user in Model.Users)
+            @foreach (var user in Model.AccountlistWithTenantVm.Data)
             {
             <tr>
                 <td>@user.IsEnabled</td>

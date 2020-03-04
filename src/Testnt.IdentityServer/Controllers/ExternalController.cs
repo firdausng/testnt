@@ -15,7 +15,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Testnt.IdentityServer.Common.Attribute;
-using Testnt.IdentityServer.Entities;
+using Testnt.Idp.Domain.Entities;
 
 namespace Testnt.IdentityServer.Controllers
 {

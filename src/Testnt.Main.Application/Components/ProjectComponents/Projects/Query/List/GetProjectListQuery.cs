@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Testnt.Main.Application.Common;
+using Testnt.Common.Models;
 
 namespace Testnt.Main.Application.Components.ProjectComponents.Projects.Query.List
 {

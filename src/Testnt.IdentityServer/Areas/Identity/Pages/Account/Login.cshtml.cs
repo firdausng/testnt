@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Testnt.IdentityServer.Entities;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using IdentityServer4.Events;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
 using Testnt.IdentityServer.Common.Extensions;
+using Testnt.Idp.Domain.Entities;
 
 namespace Testnt.IdentityServer.Areas.Identity.Pages.Account
 {

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Testnt.IdentityServer.Common.Attribute;
-using Testnt.IdentityServer.Data;
-using Testnt.IdentityServer.Entities;
+using Testnt.Idp.App.Admin.Account.Query.List;
+using Testnt.Idp.Domain.Entities;
 
 namespace Testnt.IdentityServer.Areas.Admin.Pages.Account
 {
@@ -17,33 +18,38 @@ namespace Testnt.IdentityServer.Areas.Admin.Pages.Account
     [Authorize]
     public class IndexModel : PageModel
     {
-        private readonly TestntIdentityDbContext dbContext;
+        private readonly IMediator mediator;
 
-        public IndexModel(TestntIdentityDbContext dbContext)
+        public IndexModel(IMediator mediator)
         {
-            this.dbContext = dbContext;
+            this.mediator = mediator;
         }
 
-        public Entities.Tenant Tenant { get; set; }
-        public List<ApplicationUser> Users { get; set; }
+        public GetObjectListWithTenantVm<GetAccountListVm> AccountlistWithTenantVm { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
             var identity = User?.Identity as ClaimsIdentity;
             var userClaims = identity.Claims;
             var tenantId = Guid.Parse(userClaims.FirstOrDefault(c => c.Type == "tenant_id").Value);
-            Tenant = await dbContext
-                .Tenants
-                .FirstOrDefaultAsync(t => t.Id.Equals(tenantId));
+            AccountlistWithTenantVm = await mediator.Send(new GetAccountListQuery(tenantId));
 
-            if (Tenant == null)
+            if (AccountlistWithTenantVm == null)
             {
                 return RedirectToPage("/Account/Login");
             }
+            //Tenant = await dbContext
+            //    .Tenants
+            //    .FirstOrDefaultAsync(t => t.Id.Equals(tenantId));
 
-            Users = await dbContext.Users
-                .Where(u => u.TenantId.Equals(tenantId))
-                .ToListAsync();
+            //if (Tenant == null)
+            //{
+            //    return RedirectToPage("/Account/Login");
+            //}
+
+            //Users = await dbContext.Users
+            //    .Where(u => u.TenantId.Equals(tenantId))
+            //    .ToListAsync();
 
             return Page();
 

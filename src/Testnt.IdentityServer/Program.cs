@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityServer.Data.Seed;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,8 +12,10 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
+using System.IO;
 using System.Threading.Tasks;
-using Testnt.IdentityServer.Data;
+using Testnt.Idp.Infra.Data;
+using Testnt.Idp.Infra.Data.Seed;
 
 namespace Testnt.IdentityServer
 {
@@ -91,5 +93,17 @@ namespace Testnt.IdentityServer
                     webBuilder.UseStartup<Startup>();
                     webBuilder.UseSerilog();
                 });
+
+        
+        // This is only invoked by EF
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((ctx, cfg) =>
+            {
+                cfg.SetBasePath(Directory.GetCurrentDirectory())
+                  .AddJsonFile("appSettings.json", true) // require the appsettings file!
+                  .AddEnvironmentVariables();
+            })
+                .UseStartup<Startup>().UseSetting("DesignTime", "true").Build();
     }
 }

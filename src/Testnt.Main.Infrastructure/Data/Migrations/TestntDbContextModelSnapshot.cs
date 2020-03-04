@@ -16,10 +16,10 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.Feature", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.Feature", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,7 +58,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("Features");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.Project", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.Project", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +94,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.ProjectUser", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.ProjectUser", b =>
                 {
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
@@ -109,7 +109,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("ProjectUser");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.Scenario", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.Scenario", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -159,7 +159,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("Scenarios");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.ScenarioStep", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.ScenarioStep", b =>
                 {
                     b.Property<Guid>("ScenarioId")
                         .HasColumnType("uuid");
@@ -174,7 +174,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("ScenarioStep");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.Step", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.Step", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -214,7 +214,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("Steps");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.Tag", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.Tag", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -250,7 +250,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.TagLink", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.TagLink", b =>
                 {
                     b.Property<Guid>("ScenarioId")
                         .HasColumnType("uuid");
@@ -265,7 +265,44 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("TagLink");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.ScenarioSnapshot", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.UserProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("UserProfiles");
+                });
+
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.Projects.ScenarioSnapshot", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -310,7 +347,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("ScenarioSnapshot");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.Session", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.Projects.Session", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -352,7 +389,7 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("Sessions");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.StepSnapshot", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.Projects.StepSnapshot", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -391,138 +428,101 @@ namespace Testnt.Main.Infrastructure.Data.Migrations
                     b.ToTable("StepSnapshot");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.UserProfile", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.Feature", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("UserProfiles");
-                });
-
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.Feature", b =>
-                {
-                    b.HasOne("Testnt.Main.Domain.Entity.Project", "Project")
+                    b.HasOne("Testnt.Main.Domain.Entity.Projects.Project", "Project")
                         .WithMany("Features")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.ProjectUser", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.ProjectUser", b =>
                 {
-                    b.HasOne("Testnt.Main.Domain.Entity.UserProfile", "UserProfile")
+                    b.HasOne("Testnt.Main.Domain.Entity.Projects.UserProfile", "UserProfile")
                         .WithMany("Projects")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Testnt.Main.Domain.Entity.Project", "Project")
+                    b.HasOne("Testnt.Main.Domain.Entity.Projects.Project", "Project")
                         .WithMany("Members")
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.Scenario", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.Scenario", b =>
                 {
-                    b.HasOne("Testnt.Main.Domain.Entity.Feature", null)
+                    b.HasOne("Testnt.Main.Domain.Entity.Projects.Feature", null)
                         .WithMany("Scenarios")
                         .HasForeignKey("FeatureId");
 
-                    b.HasOne("Testnt.Main.Domain.Entity.Project", "Project")
+                    b.HasOne("Testnt.Main.Domain.Entity.Projects.Project", "Project")
                         .WithMany("Scenarios")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.ScenarioStep", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.ScenarioStep", b =>
                 {
-                    b.HasOne("Testnt.Main.Domain.Entity.Scenario", "Scenario")
+                    b.HasOne("Testnt.Main.Domain.Entity.Projects.Scenario", "Scenario")
                         .WithMany("ScenarioSteps")
                         .HasForeignKey("ScenarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Testnt.Main.Domain.Entity.Step", "Step")
+                    b.HasOne("Testnt.Main.Domain.Entity.Projects.Step", "Step")
                         .WithMany("ScenarioSteps")
                         .HasForeignKey("StepId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.Tag", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.Tag", b =>
                 {
-                    b.HasOne("Testnt.Main.Domain.Entity.Project", null)
+                    b.HasOne("Testnt.Main.Domain.Entity.Projects.Project", null)
                         .WithMany("Tags")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.TagLink", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.Projects.TagLink", b =>
                 {
-                    b.HasOne("Testnt.Main.Domain.Entity.Tag", "Tag")
+                    b.HasOne("Testnt.Main.Domain.Entity.Projects.Tag", "Tag")
                         .WithMany("TagLinks")
                         .HasForeignKey("ScenarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Testnt.Main.Domain.Entity.Scenario", "Scenario")
+                    b.HasOne("Testnt.Main.Domain.Entity.Projects.Scenario", "Scenario")
                         .WithMany("Tags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.ScenarioSnapshot", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.Projects.ScenarioSnapshot", b =>
                 {
-                    b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.Session", null)
+                    b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.Projects.Session", null)
                         .WithMany("ScenarioSnapshot")
                         .HasForeignKey("SessionId");
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.Session", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.Projects.Session", b =>
                 {
-                    b.HasOne("Testnt.Main.Domain.Entity.Project", "Project")
+                    b.HasOne("Testnt.Main.Domain.Entity.Projects.Project", "Project")
                         .WithMany("Sessions")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.StepSnapshot", b =>
+            modelBuilder.Entity("Testnt.Main.Domain.Entity.TestSessionEntity.Projects.StepSnapshot", b =>
                 {
-                    b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.ScenarioSnapshot", null)
+                    b.HasOne("Testnt.Main.Domain.Entity.TestSessionEntity.Projects.ScenarioSnapshot", null)
                         .WithMany("StepSnapshot")
                         .HasForeignKey("ScenarioSnapshotId");
                 });

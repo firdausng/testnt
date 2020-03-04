@@ -3,7 +3,6 @@ using IdentityServer4.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,11 +10,14 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using System.Reflection;
-using Testnt.IdentityServer.Data;
-using Testnt.IdentityServer.Infrastructure.Services.Email;
-using Testnt.IdentityServer.Entities;
 using IdentityServer4;
 using Microsoft.AspNetCore.Authorization;
+using Testnt.Idp.Domain.Entities;
+using Testnt.Idp.Infra;
+using Testnt.Main.Infrastructure.Data;
+using MediatR;
+using Testnt.Idp.App.Admin.Account.Query.List;
+using Testnt.Idp.App;
 
 namespace Testnt.IdentityServer
 {
@@ -33,10 +35,8 @@ namespace Testnt.IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddData(Configuration);
-
-            // setup dummy data
-            services.AddTransient<IEmailSender, DummyEmailSender>();
-            services.Configure<DummyAuthMessageSenderOptions>(Configuration);
+            services.AddIdentityApplication();
+            services.AddMediatR(typeof(GetAccountListQuery));
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -96,7 +96,7 @@ namespace Testnt.IdentityServer
             });
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+            var migrationsAssembly = typeof(TestntDbContext).GetTypeInfo().Assembly.GetName().Name;
             var builder = services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -161,8 +161,7 @@ namespace Testnt.IdentityServer
 
                     options.ClientId = "copy client ID from microsoft here";
                     options.ClientSecret = "copy client secret from microsoft here";
-                })
-                ;
+                });
         }
 
         public void Configure(IApplicationBuilder app)

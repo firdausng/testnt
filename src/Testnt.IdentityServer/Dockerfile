@@ -7,6 +7,9 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
 COPY ["src/Testnt.IdentityServer/Testnt.IdentityServer.csproj", "src/Testnt.IdentityServer/"]
+COPY ["src/Testnt.Idp.App/Testnt.Idp.App.csproj", "src/Testnt.Idp.App/"]
+COPY ["src/Testnt.Idp.Domain/Testnt.Idp.Domain.csproj", "src/Testnt.Idp.App/"]
+COPY ["src/Testnt.Idp.Infra/Testnt.Idp.Infra.csproj", "src/Testnt.Idp.Infra/"]
 RUN dotnet restore "src/Testnt.IdentityServer/Testnt.IdentityServer.csproj"
 COPY . .
 WORKDIR "/src/src/Testnt.IdentityServer"

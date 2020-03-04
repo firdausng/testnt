@@ -14,10 +14,10 @@ using IdentityServer4;
 using Microsoft.AspNetCore.Authorization;
 using Testnt.Idp.Domain.Entities;
 using Testnt.Idp.Infra;
-using Testnt.Main.Infrastructure.Data;
 using MediatR;
 using Testnt.Idp.App.Admin.Account.Query.List;
 using Testnt.Idp.App;
+using Testnt.Idp.Infra.Data;
 
 namespace Testnt.IdentityServer
 {
@@ -96,7 +96,7 @@ namespace Testnt.IdentityServer
             });
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            var migrationsAssembly = typeof(TestntDbContext).GetTypeInfo().Assembly.GetName().Name;
+            var migrationsAssembly = typeof(TestntIdentityDbContext).GetTypeInfo().Assembly.GetName().Name;
             var builder = services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;

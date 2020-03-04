@@ -139,7 +139,7 @@ namespace Testnt.Idp.Infra.Data.Seed
 
         public void EnsureSeedData()
         {
-            persistedGrantDbContext.Database.Migrate();
+            
 
             //var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
             //var configuration = serviceScope.ServiceProvider.GetRequiredService<IConfiguration>();
@@ -148,7 +148,9 @@ namespace Testnt.Idp.Infra.Data.Seed
             var clientList = configuration.GetSection("Client:Ip").GetChildren().Select(s => s.Value).ToList();
 
             configurationDbContext.Database.Migrate();
+            persistedGrantDbContext.Database.Migrate();
 
+            logger.LogInformation("looking for client");
             if (!configurationDbContext.Clients.Any())
             {
                 logger.LogInformation("Adding Client operation");

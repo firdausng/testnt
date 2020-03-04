@@ -55,6 +55,5 @@
     <ProjectReference Include="..\Testnt.Idp.App\Testnt.Idp.App.csproj" />
     <ProjectReference Include="..\Testnt.Idp.Domain\Testnt.Idp.Domain.csproj" />
     <ProjectReference Include="..\Testnt.Idp.Infra\Testnt.Idp.Infra.csproj" />
-    <ProjectReference Include="..\Testnt.Main.Infrastructure\Testnt.Main.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

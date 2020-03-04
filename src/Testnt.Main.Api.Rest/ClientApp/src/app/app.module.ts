@@ -113,7 +113,6 @@ export class AppModule {
         log_console_warning_active: true,
         log_console_debug_active: true,
         max_id_token_iat_offset_allowed_in_seconds: 30,
-        history_cleanup_off: true
       };
 
       this.oidcSecurityService.setupModule(config, configResult.authWellknownEndpoints);

@@ -10,7 +10,7 @@ using Testnt.Main.Infrastructure.Data;
 namespace Testnt.Main.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(TestntDbContext))]
-    [Migration("20200304121826_addtenantIdConstructor")]
+    [Migration("20200304161755_addtenantIdConstructor")]
     partial class addtenantIdConstructor
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

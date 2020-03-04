@@ -13,6 +13,8 @@
     <Compile Remove="Data\Migrations\20200209062721_addtenantIdConstructor.Designer.cs" />
     <Compile Remove="Data\Migrations\20200209072033_addtenantIdConstructor.cs" />
     <Compile Remove="Data\Migrations\20200209072033_addtenantIdConstructor.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200304121826_addtenantIdConstructor.cs" />
+    <Compile Remove="Data\Migrations\20200304121826_addtenantIdConstructor.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +23,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.2" />
   </ItemGroup>
 
   <ItemGroup>

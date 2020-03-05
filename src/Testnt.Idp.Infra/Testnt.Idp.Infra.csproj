@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Testnt.Idp.Domain\Testnt.Idp.Domain.csproj" />
+    <ProjectReference Include="..\Testnt.PolicyProvider\Testnt.PolicyProvider.csproj" />
   </ItemGroup>
 
 </Project>

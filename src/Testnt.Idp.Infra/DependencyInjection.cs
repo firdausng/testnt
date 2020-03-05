@@ -11,6 +11,7 @@ using Testnt.Idp.Domain.Entities;
 using Testnt.Idp.Infra.Data;
 using Testnt.Idp.Infra.Data.Seed;
 using Testnt.Idp.Infra.Services.Email;
+using Testnt.PolicyProvider.Extension;
 
 namespace Testnt.Idp.Infra
 {
@@ -44,6 +45,18 @@ namespace Testnt.Idp.Infra
                 .AddEntityFrameworkStores<TestntIdentityDbContext>()
                 .AddDefaultTokenProviders()
                 .AddClaimsPrincipalFactory<TenantUserClaimsPrincipalFactory>();
+
+
+            services.AddPolicyServerClient(cfg =>
+            {
+                cfg.UseNpgsql(configuration.GetConnectionString("PolicyConnection"),
+                    options =>
+                    {
+                        options.EnableRetryOnFailure(3);
+                        options.MigrationsAssembly(migrationsAssembly);
+                    });
+            })
+                .AddAuthorizationPermissionPolicies();
 
 
             // setup dummy data

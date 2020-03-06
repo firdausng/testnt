@@ -10,6 +10,7 @@ COPY ["src/Testnt.IdentityServer/Testnt.IdentityServer.csproj", "src/Testnt.Iden
 COPY ["src/Testnt.Idp.App/Testnt.Idp.App.csproj", "src/Testnt.Idp.App/"]
 COPY ["src/Testnt.Idp.Domain/Testnt.Idp.Domain.csproj", "src/Testnt.Idp.App/"]
 COPY ["src/Testnt.Idp.Infra/Testnt.Idp.Infra.csproj", "src/Testnt.Idp.Infra/"]
+COPY ["src/Testnt.PolicyProvider/Testnt.PolicyProvider.csproj", "src/Testnt.PolicyProvider/"]
 RUN dotnet restore "src/Testnt.IdentityServer/Testnt.IdentityServer.csproj"
 COPY . .
 WORKDIR "/src/src/Testnt.IdentityServer"
